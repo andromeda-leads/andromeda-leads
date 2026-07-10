@@ -45,9 +45,14 @@ function sortTable(th, idx) {
   rows.sort(function(a, b) {
     var va = (a.children[idx] ? a.children[idx].textContent.trim() : '').toLowerCase();
     var vb = (b.children[idx] ? b.children[idx].textContent.trim() : '').toLowerCase();
-    var na = va.replace(/[^0-9]/g,'');
-    var nb = vb.replace(/[^0-9]/g,'');
-    if (na.length >= 10 && nb.length >= 10) { va = na; vb = nb; }
+    var na = parseFloat(va.replace(/[^0-9.\-]/g,'')) || 0;
+    var nb = parseFloat(vb.replace(/[^0-9.\-]/g,'')) || 0;
+    if (idx === 12) {
+      return asc ? (na - nb) : (nb - na);
+    }
+    var sa = va.replace(/[^0-9]/g,'');
+    var sb = vb.replace(/[^0-9]/g,'');
+    if (sa.length >= 10 && sb.length >= 10) { va = sa; vb = sb; }
     return asc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
   });
   th.setAttribute('data-s', asc ? '2' : '1');
@@ -97,14 +102,14 @@ function sortTable(th, idx) {
   </colgroup>
       <thead>
         <tr class="bg-slate-50 text-left font-semibold text-slate-500 uppercase tracking-wider sticky-header">
-          <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,0)">📅 Дата обзвона <span class="sort-arrow">↕</span></th>
-          <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,1)">👤 Имя ЛПР <span class="sort-arrow">↕</span></th>
-          <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,2)">📞 Телефон <span class="sort-arrow">↕</span></th>
-          <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,3)">🏢 Компания <span class="sort-arrow">↕</span></th>
+          <th class="px-3 py-3 whitespace-nowrap">📅 Дата обзвона <span class="sort-arrow">↕</span></th>
+          <th class="px-3 py-3 whitespace-nowrap">👤 Имя ЛПР <span class="sort-arrow">↕</span></th>
+          <th class="px-3 py-3 whitespace-nowrap">📞 Телефон <span class="sort-arrow">↕</span></th>
+          <th class="px-3 py-3 whitespace-nowrap">🏢 Компания <span class="sort-arrow">↕</span></th>
           <th class="px-2 py-2 bg-yellow-50 text-yellow-800 whitespace-nowrap sortable" onclick="sortTable(this,4)">🔢 ИНН <span class="sort-arrow">↕</span></th>
           <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,5)">🌐 Лендинг <span class="sort-arrow">↕</span></th>
-          <th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,6)">💬 Комментарии <span class="sort-arrow">↕</span></th>
-          <th class="px-2 py-2 whitespace-nowrap cell-small sortable" onclick="sortTable(this,7)">📋 ОС по лидам <span class="sort-arrow">↕</span></th>
+          <th class="px-3 py-3 whitespace-nowrap">💬 Комментарии <span class="sort-arrow">↕</span></th>
+          <th class="px-2 py-2 whitespace-nowrap cell-small">📋 ОС по лидам <span class="sort-arrow">↕</span></th>
           <th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 Анкета</th>
           <th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 КП</th>
           <th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 Аналитика</th>
@@ -139,7 +144,7 @@ function sortTable(th, idx) {
           <td class="px-2 py-1.5 text-center"><a href="https://raw.githubusercontent.com/andromeda-leads/andromeda-leads/main/clients/borey/anketa_BOREY.docx" download target="_blank" class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-100 text-emerald-700 border border-emerald-200 hover:bg-emerald-200 hover:shadow-sm transition-all">📄 Анкета</a></td>
           <td class="px-2 py-1.5 text-center"><a href="https://raw.githubusercontent.com/andromeda-leads/andromeda-leads/main/clients/borey/KP_BOREY.docx" download target="_blank" class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-100 text-blue-700 border border-blue-200 hover:bg-blue-200 hover:shadow-sm transition-all">📄 КП</a></td>
           <td class="px-2 py-1.5 text-center"><a href="https://raw.githubusercontent.com/andromeda-leads/andromeda-leads/main/clients/borey/analiz_i_vygoda_BOREY.docx" download target="_blank" class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-violet-100 text-violet-700 border border-violet-200 hover:bg-violet-200 hover:shadow-sm transition-all">📄 Анализ и выгода</a></td>
-        
+          <td class="px-2 py-1.5 text-center">—</td>
           <td class="px-2 py-1.5 text-center font-semibold text-slate-800">335</td>
         </tr>
 <tr class="bg-slate-50/30 hover:bg-slate-100 transition">
