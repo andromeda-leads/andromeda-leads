@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Реестр компаний — загрузка…</title>
+<style>
+  body { background:#0f172a; color:#94a3b8; font-family:-apple-system,sans-serif; display:flex; align-items:center; justify-content:center; height:90vh; text-align:center; margin:0; }
+  .spinner { width:40px; height:40px; border:4px solid #1e293b; border-top:4px solid #f59e0b; border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .err { color:#ef4444; font-size:14px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="spinner" id="spin"></div>
+  <p id="status">Загружаем реестр…</p>
+</div>
+<script>
+(async function(){
+  var status = document.getElementById('status');
+  var spin = document.getElementById('spin');
+  try {
+    // Fetch with cache-busting timestamp — уникальный URL каждый раз
+    var r = await fetch('db.html?v=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    var html = await r.text();
+    // Полностью заменяем страницу на загруженный HTML
+    document.open();
+    document.write(html);
+    document.close();
+  } catch(e) {
+    if (status) {
+      spin.style.display = 'none';
+      status.innerHTML = 'Ошибка загрузки. <a href="https://andromeda-leads.github.io/andromeda-leads/db.html" style="color:#f59e0b">Открыть напрямую</a>';
+      var errDiv = document.createElement('div');
+      errDiv.className = 'err';
+      errDiv.textContent = e.message;
+      document.getElementById('root').appendChild(errDiv);
+    }
+  }
+})();
+</script>
+</body>
+</html>
