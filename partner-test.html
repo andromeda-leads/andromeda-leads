@@ -110,6 +110,27 @@ body { background: #0f172a; min-height: 100vh; display: flex; justify-content: c
 <body>
 <div class="wrapper">
 
+
+<!-- NAME MODAL -->
+<div id="nameModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-icon">👤</div>
+    <h3>Представьтесь, пожалуйста</h3>
+    <p>Введите ваше имя для сохранения результатов</p>
+    <input type="text" id="partnerNameInput" class="name-input" placeholder="Например: Иван Петров" maxlength="50">
+    <button class="btn btn-primary" onclick="setPartnerName()" style="margin-top:12px;width:100%;">Продолжить</button>
+  </div>
+</div>
+
+<style>
+.modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:1000; }
+.modal-box { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:32px; max-width:400px; width:90%; text-align:center; }
+.modal-icon { font-size:48px; margin-bottom:12px; }
+.modal-box h3 { color:#fff; font-size:18px; margin-bottom:8px; }
+.modal-box p { color:#94a3b8; font-size:13px; margin-bottom:16px; }
+.name-input { width:100%; padding:12px 16px; background:#0f172a; border:1px solid #334155; border-radius:8px; color:#fff; font-size:15px; outline:none; }
+.name-input:focus { border-color:#d4a843; }
+</style>
 <div class="header">
   <div class="header-logo">
     <div class="header-logo-icon">A</div>
@@ -2109,6 +2130,40 @@ function showResults(percent, passed, results, timeout) {
   
   // Show all correct answers in questions
   // Actually we've already replaced content, so the table above serves as the review
+  // Send result to Telegram
+  var timeElapsed = 0;
+  try { timeElapsed = (TIMER_START ? Math.floor((Date.now() - TIMER_START) / 1000) : 0); } catch(e) {}
+  sendToTelegram(percent, passed, currentLevel, timeElapsed);
+
+
+// ====================== TELEGRAM ======================
+const BOT_TOKEN = '8228037950:AAHGCTHrTMMT3vfieVUSr9ubt3WaOkmsZ5s';
+const ADMIN_CHAT_ID = '353309197';
+
+function getPartnerName() {
+  try { return localStorage.getItem('skolkovo_partner_name') || 'Неизвестный'; } catch(e) { return 'Неизвестный'; }
+}
+
+function setPartnerName() {
+  const name = document.getElementById('partnerNameInput').value.trim();
+  if (!name) { alert('Пожалуйста, введите ваше имя'); return; }
+  try { localStorage.setItem('skolkovo_partner_name', name); } catch(e) {}
+  document.getElementById('nameModal').style.display = 'none';
+}
+
+function sendToTelegram(percent, passed, level, timeSpent) {
+  const name = getPartnerName();
+  const lvlNames = {1: 'Базовый', 2: 'Продвинутый', 3: 'Эксперт'};
+  const status = passed ? '✅ ПРОЙДЕН' : '❌ НЕ ПРОЙДЕН';
+  const text = `📊 РЕЗУЛЬТАТ ТЕСТА\n👤 Партнёр: ${name}\n📚 Уровень ${level}: ${lvlNames[level]}\n${status}\n🎯 Результат: ${Math.round(percent)}%\n⏱ Время: ${Math.round(timeSpent)} сек.\n🎯 Проходной: ${PASS_THRESHOLDS[level]}%`;
+  
+  fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: text })
+  }).catch(function(e) { console.log('Telegram error:', e); });
+}
+
 }
 
 // ====================== PROGRESS ======================
@@ -2180,6 +2235,15 @@ function shuffleArray(arr) {
 }
 
 // Init on load
+
+// Check partner name
+(function() {
+  try {
+    if (!localStorage.getItem('skolkovo_partner_name')) {
+      document.getElementById('nameModal').style.display = 'flex';
+    }
+  } catch(e) {}
+})();
 init();
 </script>
 </body>
