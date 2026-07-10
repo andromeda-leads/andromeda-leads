@@ -2236,6 +2236,17 @@ function shuffleArray(arr) {
 
 // Init on load
 
+
+// Read partner name from URL
+(function() {
+  try {
+    var urlParams = new URLSearchParams(window.location.search);
+    var partnerFromUrl = urlParams.get('partner');
+    if (partnerFromUrl) {
+      localStorage.setItem('skolkovo_partner_name', partnerFromUrl);
+    }
+  } catch(e) {}
+})();
 // Check partner name
 (function() {
   try {
