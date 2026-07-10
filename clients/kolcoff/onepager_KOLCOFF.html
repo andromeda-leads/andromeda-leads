@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Анализ — КольцоФФ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background: #f5f5f5; display: flex; justify-content: center; padding: 30px; }
+.card { max-width: 210mm; width: 100%; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 4px; overflow: hidden; }
+.letterhead { background: #1a1a2e; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+.letterhead-brand { display: flex; align-items: center; gap: 12px; }
+.letterhead-logo { width: 36px; height: 36px; background: linear-gradient(135deg, #d4a843, #b8860b); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #1a1a2e; font-weight: 900; font-size: 18px; }
+.letterhead-name { color: #fff; font-weight: 700; font-size: 14px; }
+.letterhead-sub { color: #8899aa; font-size: 9px; }
+.letterhead-contacts { text-align: right; color: #667788; font-size: 8px; line-height: 1.5; }
+.hero { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 22px 24px; }
+.hero-label { color: #d4a843; font-size: 8px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+.hero-title h1 { color: #fff; font-size: 24px; font-weight: 900; }
+.hero-desc { color: #ccddee; font-size: 12px; font-weight: 300; margin-top: 4px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px; color: #667788; font-size: 9px; }
+.hero-meta span::before { content: "•"; color: #d4a843; margin-right: 4px; }
+.section { padding: 16px 24px; }
+.section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.section-title .icon { width: 24px; height: 24px; background: #1a1a2e; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #d4a843; font-size: 11px; font-weight: 700; }
+.section-title h2 { font-size: 10px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 1px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stat-card { background: #f8fafc; padding: 12px; border-radius: 6px; text-align: center; border: 1px solid #e2e8f0; }
+.stat-value { font-size: 20px; font-weight: 900; color: #1a1a2e; }
+.stat-label { font-size: 9px; color: #64748b; margin-top: 3px; }
+.savings-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.savings-table th { background: #1a1a2e; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
+.savings-table td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
+.savings-table tr:nth-child(even) td { background: #f8fafc; }
+.savings-table .highlight { color: #059669; font-weight: 700; }
+.badge-green { display: inline-block; background: #d1fae5; color: #065f46; padding: 1px 8px; border-radius: 3px; font-size: 8px; font-weight: 600; }
+.innovation-box { background: #fefce8; border: 1px solid #fde68a; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; }
+.innovation-box .label { font-size: 8px; font-weight: 700; color: #92400e; text-transform: uppercase; }
+.innovation-box .text { font-size: 10px; color: #1a1a2e; margin-top: 2px; }
+.roadmap { display: flex; justify-content: space-between; gap: 6px; margin-top: 10px; }
+.roadmap-step { flex: 1; background: #f8fafc; padding: 10px; border-radius: 6px; text-align: center; border: 1px solid #e2e8f0; }
+.roadmap-step .step-num { width: 22px; height: 22px; background: #1a1a2e; color: #d4a843; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+.roadmap-step .step-title { font-size: 9px; font-weight: 600; color: #1a1a2e; }
+.roadmap-step .step-dur { font-size: 8px; color: #64748b; }
+.cta-block { background: linear-gradient(135deg, #1a1a2e, #0f3460); padding: 18px 24px; color: #fff; text-align: center; }
+.cta-title { color: #d4a843; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="card">
+<div class="letterhead">
+<div class="letterhead-brand">
+<div class="letterhead-logo">A</div>
+<div><div class="letterhead-name">ANDROMEDA CONSULT</div><div class="letterhead-sub">Консалтинговая компания</div></div>
+</div>
+<div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru<br>@andromedaconsult</div>
+</div>
+<div class="hero">
+<div class="hero-label">Экстерриториальное резидентство Сколково</div>
+<div class="hero-title"><h1>КольцоФФ</h1> <span class="badge-green">23.69</span></div>
+<div class="hero-desc">Производство бетонных колец, колодцев, ж/б изделий для строительства инженерных сетей, водоснабжения и канализации.</div>
+<div class="hero-meta"><span>ИНН 1646035271</span><span>Елабуга</span><span>Производство изделий из гипса, бетона, цемента</span></div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon">📊</div><h2>Ключевые показатели</h2></div>
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-value">1118.0 млн</div><div class="stat-label">Выручка 2025</div></div>
+<div class="stat-card"><div class="stat-value">79.3 млн</div><div class="stat-label">Прибыль 2025</div></div>
+<div class="stat-card"><div class="stat-value">46.6 млн</div><div class="stat-label">Экономия / год</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon">💡</div><h2>Инновационная гипотеза</h2></div>
+<div class="innovation-box"><div class="label">Гипотеза</div><div class="text">Разработка технологии производства высокопрочных бетонных колец с армированием композитными материалами для увеличения срока службы.</div></div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon">💰</div><h2>Расчёт налоговой экономии</h2></div>
+<table class="savings-table">
+<tr><th>Показатель</th><th>ОСН</th><th>Сколково</th><th>Экономия/год</th></tr>
+<tr><td>Налог на прибыль</td><td>15,862,000 ₽</td><td>0 ₽</td><td class="highlight">15,862,000 ₽</td></tr>
+<tr><td>Страховые взносы</td><td>50,310,000 ₽</td><td>25,155,000 ₽</td><td class="highlight">25,155,000 ₽</td></tr>
+<tr><td>Налог на имущество</td><td>5,590,000 ₽</td><td>0 ₽</td><td class="highlight">5,590,000 ₽</td></tr>
+<tr style="background:#f0fdf4;"><td><strong>ИТОГО</strong></td><td><strong>71,762,000 ₽</strong></td><td><strong>25,155,000 ₽</strong></td><td class="highlight"><strong>46,607,000 ₽</strong></td></tr>
+</table>
+<div style="margin-top:10px;text-align:center;font-size:11px;color:#1a1a2e;"><strong>Прогноз на 10 лет: 466 млн руб.</strong></div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon">📋</div><h2>Дорожная карта</h2></div>
+<div class="roadmap">
+<div class="roadmap-step"><div class="step-num">1</div><div class="step-title">Аудит</div><div class="step-dur">3-5 дней</div></div>
+<div class="roadmap-step"><div class="step-num">2</div><div class="step-title">Патент</div><div class="step-dur">4-5 мес.</div></div>
+<div class="roadmap-step"><div class="step-num">3</div><div class="step-title">Заявка Сколково</div><div class="step-dur">4-6 мес.</div></div>
+<div class="roadmap-step"><div class="step-num">4</div><div class="step-title">МТК</div><div class="step-dur">2-3 мес.</div></div>
+<div class="roadmap-step"><div class="step-num">5</div><div class="step-title">Экономия</div><div class="step-dur">10 лет</div></div>
+</div>
+</div>
+<div class="cta-block">
+<div class="cta-title">Уважаемый !</div>
+<h3>Станьте экстерриториальным резидентом Сколково за 3-4 месяца</h3>
+<p>Ваша экономия — до 466 млн руб. за 10 лет.<br>Каждый год промедления стоит 46.6 млн руб.</p>
+<p style="margin-top:8px;color:#d4a843;font-weight:600;">info@andromedaconsult.ru | @andromedaconsult</p>
+</div>
+</div>
+</body>
+</html>
