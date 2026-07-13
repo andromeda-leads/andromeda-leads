@@ -2134,7 +2134,6 @@ function showResults(percent, passed, results, timeout) {
   var timeElapsed = 0;
   try { timeElapsed = (TIMER_START ? Math.floor((Date.now() - TIMER_START) / 1000) : 0); } catch(e) {}
   sendToTelegram(percent, passed, currentLevel, timeElapsed);
-}
 
 
 // ====================== TELEGRAM ======================
@@ -2166,8 +2165,6 @@ function sendToTelegram(percent, passed, level, timeSpent) {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: text })
   }).catch(function(e) { console.log('Telegram error:', e); });
-}
-
 }
 
 // ====================== PROGRESS ======================
