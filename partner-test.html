@@ -1842,7 +1842,7 @@ let userAnswers = {};
 let questionOrder = [];
 
 const TIME_LIMITS = {1: 15, 2: 40, 3: 120};
-const PASS_THRESHOLDS = {1: 100, 2: 80, 3: 80};
+const PASS_THRESHOLDS = {1: 100, 2: 80, 3: 70};
 
 function init() {
   loadProgress();
@@ -2013,7 +2013,7 @@ function finishTest(timeout) {
   stopTimer();
   
   const questions = QUESTIONS['level' + currentLevel];
-  let totalPossible = 0;
+  const totalQuestions = questions.length;
   let totalEarned = 0;
   let results = [];
   
@@ -2022,42 +2022,57 @@ function finishTest(timeout) {
     const q = questions[qIdx];
     const userAns = userAnswers[qIdx] || [];
     const correct = q.correct;
+    const totalOptions = q.options.length;
     
-    // Scoring: partial credit for multiple correct answers
-    let correctCount = 0;
-    let wrongCount = 0;
-    for (const a of userAns) {
-      if (correct.includes(a)) correctCount++;
-      else wrongCount++;
+    if (currentLevel === 1) {
+      // Level 1: один ответ = один балл
+      const isCorrect = userAns.length === 1 && correct.length === 1 && userAns[0] === correct[0];
+      const qScore = isCorrect ? 1 : 0;
+      totalEarned += qScore;
+      results.push({qIdx, q, userAns, correct, qScore, maxForQ: 1});
+    } else {
+      // Levels 2 & 3: пропорциональная оценка
+      
+      // Античитерство: выбрал все варианты → 0 баллов
+      if (userAns.length >= totalOptions) {
+        results.push({qIdx, q, userAns, correct, qScore: 0, maxForQ: 1});
+        continue;
+      }
+      
+      let correctCount = 0;
+      let wrongCount = 0;
+      for (const a of userAns) {
+        if (correct.includes(a)) correctCount++;
+        else wrongCount++;
+      }
+      
+      // База: правильно выбрано / всего правильных вариантов
+      let qScore = correct.length > 0 ? correctCount / correct.length : 0;
+      qScore = Math.min(qScore, 1);
+      
+      // Штраф: выбрано больше опций, чем правильных, и есть неверные
+      if (userAns.length > correct.length && wrongCount > 0) {
+        qScore = Math.max(0, qScore - 0.3);
+      }
+      
+      totalEarned += qScore;
+      results.push({qIdx, q, userAns, correct, qScore, maxForQ: 1, correctCount, wrongCount});
     }
-    for (const c of correct) {
-      if (!userAns.includes(c)) wrongCount++; // missed correct answers count as wrong
-    }
-    
-    // Actually let's use a fairer scoring: score = correct_selected / total_correct * max_points
-    // But also penalize wrong selections
-    // Simple approach: each correct answer tick = 1 point, each wrong = -1 point, min 0
-    const maxForQ = correct.length;
-    const raw = correctCount - wrongCount;
-    const qScore = Math.max(0, raw);
-    totalPossible += maxForQ;
-    totalEarned += Math.min(qScore, maxForQ);
-    
-    results.push({qIdx, q, userAns, correct, qScore, maxForQ, wrongCount});
   }
   
-  const percent = totalPossible > 0 ? (totalEarned / totalPossible) * 100 : 0;
+  const maxPoints = totalQuestions;
+  const percent = maxPoints > 0 ? (totalEarned / maxPoints) * 100 : 0;
   const passed = percent >= PASS_THRESHOLDS[currentLevel];
   
   // Save progress
-  saveProgress(currentLevel, percent, passed);
+  saveProgress(currentLevel, totalEarned, maxPoints, percent, passed);
   
   // Show results
-  showResults(percent, passed, results, timeout);
+  showResults(totalEarned, maxPoints, percent, passed, results, timeout);
   updateLevelStatus();
 }
 
-function showResults(percent, passed, results, timeout) {
+function showResults(points, maxPoints, percent, passed, results, timeout) {
   const lvlNames = {1: 'Базовый', 2: 'Продвинутый', 3: 'Эксперт'};
   const letters = 'АБВГДЕЖЗИКЛМНОП';
   let html = '<div class="summary">';
@@ -2074,8 +2089,8 @@ function showResults(percent, passed, results, timeout) {
   }
   
   const colorClass = passed ? 'pass' : 'fail';
-  html += '<div class="score ' + colorClass + '">' + Math.round(percent) + '%</div>';
-  html += '<div class="detail">Проходной порог: <strong>' + PASS_THRESHOLDS[currentLevel] + '%</strong></div>';
+  html += '<div class="score ' + colorClass + '">' + parseFloat(points).toFixed(1) + ' / ' + maxPoints + ' баллов</div>';
+  html += '<div class="detail">' + Math.round(percent) + '% • Проходной: ' + PASS_THRESHOLDS[currentLevel] + '%</div>';
   
   if (passed && currentLevel < 3) {
     html += '<div class="detail mt-4" style="color: #4ade80;">✅ Уровень ' + lvlNames[currentLevel] + ' пройден! Открыт следующий уровень.</div>';
@@ -2133,7 +2148,7 @@ function showResults(percent, passed, results, timeout) {
   // Send result to Telegram
   var timeElapsed = 0;
   try { timeElapsed = (TIMER_START ? Math.floor((Date.now() - TIMER_START) / 1000) : 0); } catch(e) {}
-  sendToTelegram(percent, passed, currentLevel, timeElapsed);
+  sendToTelegram(points, maxPoints, percent, passed, currentLevel, timeElapsed);
 }
 
 
@@ -2155,11 +2170,11 @@ function setPartnerName() {
   void m.offsetHeight;
 }
 
-function sendToTelegram(percent, passed, level, timeSpent) {
+function sendToTelegram(points, maxPoints, percent, passed, level, timeSpent) {
   const name = getPartnerName();
   const lvlNames = {1: 'Базовый', 2: 'Продвинутый', 3: 'Эксперт'};
   const status = passed ? '✅ ПРОЙДЕН' : '❌ НЕ ПРОЙДЕН';
-  const text = `📊 РЕЗУЛЬТАТ ТЕСТА\n👤 Партнёр: ${name}\n📚 Уровень ${level}: ${lvlNames[level]}\n${status}\n🎯 Результат: ${Math.round(percent)}%\n⏱ Время: ${Math.round(timeSpent)} сек.\n🎯 Проходной: ${PASS_THRESHOLDS[level]}%`;
+  const text = `📊 РЕЗУЛЬТАТ ТЕСТА\n👤 Партнёр: ${name}\n📚 Уровень ${level}: ${lvlNames[level]}\n${status}\n🎯 Результат: ${parseFloat(points).toFixed(1)} / ${maxPoints} баллов\n📈 ${Math.round(percent)}%\n⏱ Время: ${Math.round(timeSpent)} сек.\n🎯 Проходной: ${PASS_THRESHOLDS[level]}%`;
   
   fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
     method: 'POST',
@@ -2169,12 +2184,12 @@ function sendToTelegram(percent, passed, level, timeSpent) {
 }
 
 // ====================== PROGRESS ======================
-function saveProgress(level, score, passed) {
+function saveProgress(level, points, maxPoints, percent, passed) {
   try {
     const key = 'skolkovo_test_progress';
     let data = JSON.parse(localStorage.getItem(key)) || {};
-    if (!data[level] || data[level].score < score) {
-      data[level] = {score: score, passed: passed, date: new Date().toISOString()};
+    if (!data[level] || data[level].percent < percent) {
+      data[level] = {points: points, maxPoints: maxPoints, percent: percent, score: percent, passed: passed, date: new Date().toISOString()};
     }
     localStorage.setItem(key, JSON.stringify(data));
   } catch(e) {}
@@ -2190,10 +2205,12 @@ function loadProgress() {
       const st = document.getElementById('status' + l);
       if (data[l]) {
         if (data[l].passed) {
-          st.textContent = '✅ Пройден: ' + Math.round(data[l].score) + '%';
+          const pts = data[l].points !== undefined ? data[l].points + '/' + data[l].maxPoints + ' баллов' : Math.round(data[l].score) + '%';
+          st.textContent = '✅ Пройден: ' + pts;
           st.className = 'status passed';
         } else {
-          st.textContent = '❌ ' + Math.round(data[l].score) + '% (нужно ' + PASS_THRESHOLDS[l] + '%)';
+          const pts2 = data[l].points !== undefined ? data[l].points + '/' + data[l].maxPoints + ' баллов' : Math.round(data[l].score) + '%';
+          st.textContent = '❌ ' + pts2 + ' (нужно ' + PASS_THRESHOLDS[l] + '%)';
           st.className = 'status failed';
         }
       } else {
@@ -2223,7 +2240,7 @@ function updateLevelStatus() {
 function getBestScore(level) {
   try {
     const data = JSON.parse(localStorage.getItem('skolkovo_test_progress')) || {};
-    return data[level] ? data[level].score : null;
+    return data[level] ? (data[level].percent || data[level].score) : null;
   } catch(e) { return null; }
 }
 
