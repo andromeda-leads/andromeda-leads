@@ -2134,6 +2134,7 @@ function showResults(percent, passed, results, timeout) {
   var timeElapsed = 0;
   try { timeElapsed = (TIMER_START ? Math.floor((Date.now() - TIMER_START) / 1000) : 0); } catch(e) {}
   sendToTelegram(percent, passed, currentLevel, timeElapsed);
+}
 
 
 // ====================== TELEGRAM ======================
