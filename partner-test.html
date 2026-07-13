@@ -118,7 +118,7 @@ body { background: #0f172a; min-height: 100vh; display: flex; justify-content: c
     <h3>Представьтесь, пожалуйста</h3>
     <p>Введите ваше имя для сохранения результатов</p>
     <input type="text" id="partnerNameInput" class="name-input" placeholder="Например: Иван Петров" maxlength="50">
-    <button class="btn btn-primary" onclick="setPartnerName()" style="margin-top:12px;width:100%;">Продолжить</button>
+    <button class="btn btn-primary" onclick="setPartnerName()" ontouchend="setPartnerName()" style="margin-top:12px;width:100%;">Продолжить</button>
   </div>
 </div>
 
@@ -2148,7 +2148,10 @@ function setPartnerName() {
   const name = document.getElementById('partnerNameInput').value.trim();
   if (!name) { alert('Пожалуйста, введите ваше имя'); return; }
   try { localStorage.setItem('skolkovo_partner_name', name); } catch(e) {}
-  document.getElementById('nameModal').style.display = 'none';
+  var m = document.getElementById('nameModal');
+  m.style.display = 'none';
+  // Force reflow for iOS Safari
+  void m.offsetHeight;
 }
 
 function sendToTelegram(percent, passed, level, timeSpent) {
