@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Аналитическая справка — ХИМСЕРВИС</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#f5f5f5;display:flex;justify-content:center;padding:30px}
+.card{max-width:210mm;width:100%;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.08);border-radius:4px;overflow:hidden}
+.letterhead{background:#1a1a2e;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
+.letterhead-brand{display:flex;align-items:center;gap:14px}
+.letterhead-logo{width:40px;height:40px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:20px}
+.letterhead-name{color:#fff;font-weight:700;font-size:16px}
+.letterhead-sub{color:#8899aa;font-size:10px}
+.letterhead-contacts{text-align:right;color:#667788;font-size:9px;line-height:1.6}
+.hero{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:26px 28px 20px}
+.hero-label{color:#d4a843;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.hero-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.hero-title h1{color:#fff;font-size:28px;font-weight:900}
+.hero-title .badge{color:#d4a843;font-size:11px;font-weight:600;border:1px solid #d4a843;padding:2px 10px;border-radius:4px}
+.hero-desc{color:#ccddee;font-size:13px;margin-top:6px;line-height:1.5}
+.content{padding:28px}
+.section{margin-bottom:28px}
+.section-title{font-size:14px;font-weight:700;color:#1a1a2e;letter-spacing:.5px;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid #d4a843;margin-bottom:14px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-item{padding:10px 14px;background:#f8f9fa;border-radius:6px;border-left:3px solid #d4a843}
+.info-item .label{font-size:9px;color:#889;font-weight:600;text-transform:uppercase}
+.info-item .value{font-size:13px;color:#1a1a2e;font-weight:600;margin-top:2px}
+.info-item .value.small{font-size:11px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-card{background:#1a1a2e;border-radius:8px;padding:16px;text-align:center}
+.stat-card .stat-label{font-size:8px;color:#8899aa;text-transform:uppercase}
+.stat-card .stat-value{font-size:20px;font-weight:800;color:#fff;margin:4px 0 2px}
+.stat-card .stat-change{font-size:9px;font-weight:500;color:#8899aa}
+.savings-block{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:10px;padding:22px;color:#fff}
+.savings-block h3{color:#d4a843;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:14px}
+.savings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.saving-item{text-align:center}
+.saving-item .saving-label{font-size:9px;color:#8899aa}
+.saving-item .saving-value{font-size:22px;font-weight:800;margin:4px 0}
+.saving-item .saving-sub{font-size:10px;color:#d4a843}
+.cta-block{background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:10px;padding:24px;text-align:center;margin-bottom:28px}
+.cta-block h3{color:#1a1a2e;font-size:18px;font-weight:800}
+.cta-block p{color:#1a1a2e;font-size:13px;font-weight:500;margin-top:6px;line-height:1.5}
+.roadmap{list-style:none;counter-reset:step}
+.roadmap li{counter-increment:step;position:relative;padding:12px 14px 12px 50px;margin-bottom:8px;background:#f8f9fa;border-radius:8px;font-size:13px;line-height:1.4}
+.roadmap li::before{content:counter(step);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:#1a1a2e;color:#d4a843;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.footer{background:#1a1a2e;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
+.footer .conf{color:#667788;font-size:9px}
+.footer .contacts{text-align:right;color:#8899aa;font-size:9px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="letterhead">
+<div class="letterhead-brand"><div class="letterhead-logo">A</div><div><div class="letterhead-name">ANDROMEDA CONSULT</div><div class="letterhead-sub">Консалтинговая компания</div></div></div>
+<div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru</div>
+</div>
+<div class="hero">
+<div class="hero-label">Аналитическая справка</div>
+<div class="hero-title"><h1>ООО «ХИМСЕРВИС»</h1><span class="badge">ИНН 7743149719</span></div>
+<div class="hero-desc">Производство мыла и моющих средств • г. Москва (Коммунарка)</div>
+</div>
+<div class="content">
+<div class="section">
+<div class="section-title">Основные реквизиты</div>
+<div class="info-grid">
+<div class="info-item"><div class="label">Руководитель</div><div class="value">Диков Олег Станиславович</div></div>
+<div class="info-item"><div class="label">ИНН / ОГРН</div><div class="value small">7743149719 / 1167746345832</div></div>
+<div class="info-item"><div class="label">ОКВЭД</div><div class="value small">20.41 — Производство мыла и моющих средств</div></div>
+<div class="info-item"><div class="label">Дата регистрации</div><div class="value small">06 апреля 2016 г.</div></div>
+<div class="info-item"><div class="label">Юридический адрес</div><div class="value small">108811, г. Москва, д. Саларьево, ул. 1-я Новая, д. 7</div></div>
+<div class="info-item"><div class="label">Налоговый режим</div><div class="value small">ОСН</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-title">Финансовые показатели</div>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-label">Выручка 2025</div><div class="stat-value">547 млн</div><div class="stat-change" style="color:#2ecc71;">▲ Рост +34%</div></div>
+<div class="stat-card"><div class="stat-label">Прибыль 2025</div><div class="stat-value">29,3 млн</div><div class="stat-change" style="color:#667788;">▼ -21%</div></div>
+<div class="stat-card"><div class="stat-label">На рынке</div><div class="stat-value">10 лет</div><div class="stat-change">с 2016 г.</div></div>
+<div class="stat-card"><div class="stat-label">Стоимость</div><div class="stat-value">215 млн</div><div class="stat-change">оценка компании</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-title">Продукция</div>
+<p style="font-size:13px;line-height:1.6;color:#333;">
+ООО «ХИМСЕРВИС» занимается производством мыла и моющих, чистящих и полирующих средств 
+(ОКВЭД 20.41). Компания также осуществляет деятельность по 11 дополнительным направлениям, 
+включая оптовую торговлю химическими продуктами. Заказчик — АО «Ата».
+</p>
+</div>
+<div class="section">
+<div class="section-title">Налоговая экономия при статусе резидента Сколково</div>
+<div class="savings-block">
+<h3>Прогноз экономии на 10 лет</h3>
+<div class="savings-grid">
+<div class="saving-item"><div class="saving-label">В год</div><div class="saving-value">≈7,5 млн</div><div class="saving-sub">налог на прибыль + страховые</div></div>
+<div class="saving-item"><div class="saving-label">За 10 лет</div><div class="saving-value">≈75 млн</div><div class="saving-sub">совокупная экономия</div></div>
+<div class="saving-item"><div class="saving-label">Каждый год промедления</div><div class="saving-value" style="color:#e74c3c;">−7,5 млн</div><div class="saving-sub">упущенной выгоды</div></div>
+</div>
+</div>
+</div>
+<div class="cta-block">
+<h3>Уважаемый Олег Станиславович!</h3>
+<p>Предлагаем вам стать экстерриториальным резидентом «Сколково» за 3–4 месяца. Это даёт вашей компании нулевую ставку налога на прибыль и пониженные страховые взносы.</p>
+</div>
+<div class="section">
+<div class="section-title">План действий</div>
+<ol class="roadmap">
+<li><strong>Анализ компании:</strong> сбор данных, выявление инновации в рецептурах/производстве</li>
+<li><strong>Подача заявки в Сколково:</strong> подготовка пакета документов</li>
+<li><strong>Получение статуса:</strong> 2–3 месяца</li>
+<li><strong>Параллельно — патентование:</strong> полезная модель (4–5 мес.)</li>
+<li><strong>Отчётность:</strong> 4 квартальных + 1 годовой</li>
+</ol>
+</div>
+</div>
+<div class="footer">
+<div class="conf">Конфиденциально</div>
+<div class="contacts">ANDROMEDA CONSULT • ИНН 7702464831</div>
+</div>
+</div>
+</body>
+</html>
