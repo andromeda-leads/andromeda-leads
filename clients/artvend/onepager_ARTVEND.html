@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аналитическая справка — АРТВЕНД</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background: #f5f5f5; display: flex; justify-content: center; padding: 30px; -webkit-font-smoothing: antialiased; }
+@media print { body { background: #fff; padding: 0; } @page { margin: 15mm; } }
+
+.card {
+  max-width: 210mm;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Letterhead */
+.letterhead {
+  background: #1a1a2e;
+  padding: 18px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.letterhead-brand { display: flex; align-items: center; gap: 14px; }
+.letterhead-logo {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #d4a843, #b8860b);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #1a1a2e; font-weight: 900; font-size: 20px;
+}
+.letterhead-name { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; }
+.letterhead-sub { color: #8899aa; font-size: 10px; margin-top: 1px; }
+.letterhead-contacts { text-align: right; color: #667788; font-size: 9px; line-height: 1.6; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 26px 28px 20px;
+}
+.hero-label {
+  color: #d4a843; font-size: 9px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;
+}
+.hero-title { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.hero-title h1 { color: #fff; font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
+.hero-title .badge {
+  color: #d4a843; font-size: 11px; font-weight: 600;
+  border: 1px solid #d4a843; padding: 2px 10px; border-radius: 4px;
+}
+.hero-desc { color: #ccddee; font-size: 13px; font-weight: 300; margin-top: 6px; line-height: 1.5; }
+
+/* Content */
+.content { padding: 28px; }
+
+/* Section */
+.section { margin-bottom: 28px; }
+.section-title {
+  font-size: 14px; font-weight: 700; color: #1a1a2e;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  padding-bottom: 8px; border-bottom: 2px solid #d4a843; margin-bottom: 14px;
+}
+
+/* Company info */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.info-item { padding: 10px 14px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #d4a843; }
+.info-item .label { font-size: 9px; color: #889; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.info-item .value { font-size: 13px; color: #1a1a2e; font-weight: 600; margin-top: 2px; }
+.info-item .value.small { font-size: 11px; }
+
+/* Stats */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.stat-card {
+  background: #1a1a2e; border-radius: 8px; padding: 16px; text-align: center;
+}
+.stat-card .stat-label { font-size: 8px; color: #8899aa; text-transform: uppercase; letter-spacing: 0.8px; }
+.stat-card .stat-value { font-size: 20px; font-weight: 800; color: #fff; margin: 4px 0 2px; }
+.stat-card .stat-change { font-size: 10px; font-weight: 500; }
+.stat-card .stat-change.down { color: #e74c3c; }
+.stat-card .stat-change.up { color: #2ecc71; }
+
+/* Revenue table */
+table.revenue { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.revenue th {
+  background: #1a1a2e; color: #fff; padding: 8px 12px;
+  text-align: center; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+table.revenue td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #eee; }
+table.revenue tr:nth-child(even) { background: #f8f9fa; }
+
+/* Savings block */
+.savings-block {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-radius: 10px; padding: 22px; color: #fff;
+}
+.savings-block h3 { color: #d4a843; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+.savings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.saving-item { text-align: center; }
+.saving-item .saving-label { font-size: 9px; color: #8899aa; }
+.saving-item .saving-value { font-size: 22px; font-weight: 800; color: #fff; margin: 4px 0; }
+.saving-item .saving-sub { font-size: 10px; color: #d4a843; }
+
+/* CTA */
+.cta-block {
+  background: linear-gradient(135deg, #d4a843, #b8860b);
+  border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 28px;
+}
+.cta-block h3 { color: #1a1a2e; font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.cta-block p { color: #1a1a2e; font-size: 13px; font-weight: 500; line-height: 1.5; }
+
+/* Roadmap */
+.roadmap { list-style: none; counter-reset: step; }
+.roadmap li {
+  counter-increment: step; position: relative;
+  padding: 12px 14px 12px 50px; margin-bottom: 8px;
+  background: #f8f9fa; border-radius: 8px; font-size: 13px; line-height: 1.4;
+}
+.roadmap li::before {
+  content: counter(step);
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 28px; background: #1a1a2e; color: #d4a843;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 12px;
+}
+.roadmap li strong { color: #1a1a2e; }
+
+/* Footer */
+.footer {
+  background: #1a1a2e; padding: 18px 28px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer .conf { color: #667788; font-size: 9px; }
+.footer .contacts { text-align: right; color: #8899aa; font-size: 9px; line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .savings-grid { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .hero-title { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Letterhead -->
+  <div class="letterhead">
+    <div class="letterhead-brand">
+      <div class="letterhead-logo">A</div>
+      <div>
+        <div class="letterhead-name">ANDROMEDA CONSULT</div>
+        <div class="letterhead-sub">Консалтинговая компания</div>
+      </div>
+    </div>
+    <div class="letterhead-contacts">
+      info@andromedaconsult.ru<br>
+      andromedaconsult.ru<br>
+      @andromedaconsult
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Аналитическая справка</div>
+    <div class="hero-title">
+      <h1>ООО «АРТВЕНД»</h1>
+      <span class="badge">ИНН 7415082726</span>
+    </div>
+    <div class="hero-desc">
+      Производство грузовых автомобилей • г. Миасс, Челябинская область
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Company info -->
+    <div class="section">
+      <div class="section-title">Основные реквизиты</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Руководитель</div>
+          <div class="value">Пономарев Иван Николаевич</div>
+        </div>
+        <div class="info-item">
+          <div class="label">ИНН / ОГРН</div>
+          <div class="value small">7415082726 / 1137415003956</div>
+        </div>
+        <div class="info-item">
+          <div class="label">ОКВЭД</div>
+          <div class="value small">29.10.4 — Производство грузовых автомобилей</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Дата регистрации</div>
+          <div class="value small">16 октября 2013 г.</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Юридический адрес</div>
+          <div class="value small">456306, Челябинская обл., г. Миасс, ул. Готвальда, д. 1/1</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Налоговый режим</div>
+          <div class="value small">ОСН</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial stats -->
+    <div class="section">
+      <div class="section-title">Финансовые показатели (2025)</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Выручка</div>
+          <div class="stat-value">140 млн</div>
+          <div class="stat-change down">▼ 71%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Чистая прибыль</div>
+          <div class="stat-value">0,9 млн</div>
+          <div class="stat-change up">▲ 293%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Сотрудники</div>
+          <div class="stat-value">7</div>
+          <div class="stat-change up">▲ +2</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">На рынке</div>
+          <div class="stat-value">12 лет</div>
+          <div class="stat-change" style="color:#8899aa;">с 2013 г.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Отрасль -->
+    <div class="section">
+      <div class="section-title">Отрасль и продукция</div>
+      <p style="font-size:13px; line-height:1.6; color:#333;">
+        Основной вид деятельности — <strong>производство грузовых автомобилей</strong> (ОКВЭД 29.10.4).
+        Компания также занимается производством автомобилей специального назначения, торговлей
+        автотранспортными средствами и запчастями, ремонтом и обслуживанием автомобилей.
+        <br><br>
+        Компания зарегистрирована в <strong>г. Миасс</strong> (Челябинская область), который относится
+        к категории <strong>моногородов</strong>, что открывает доступ к дополнительным программам
+        льготного финансирования.
+      </p>
+    </div>
+
+    <!-- Savings -->
+    <div class="section">
+      <div class="section-title">Налоговая экономия при статусе резидента Сколково</div>
+      <div class="savings-block">
+        <h3>Прогноз экономии на 10 лет</h3>
+        <div class="savings-grid">
+          <div class="saving-item">
+            <div class="saving-label">В год</div>
+            <div class="saving-value">≈0,4 млн</div>
+            <div class="saving-sub">налог на прибыль + страховые</div>
+          </div>
+          <div class="saving-item">
+            <div class="saving-label">За 10 лет</div>
+            <div class="saving-value">≈3,9 млн</div>
+            <div class="saving-sub">совокупная экономия</div>
+          </div>
+          <div class="saving-item">
+            <div class="saving-label">Каждый год промедления</div>
+            <div class="saving-value">−0,4 млн</div>
+            <div class="saving-sub">упущенной выгоды</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:11px; color:#666; margin-top:6px;">
+        * Расчёт: налог на прибыль 0% (экономия ~185 тыс/год) + пониженные страховые взносы 15%
+        (экономия ~206 тыс/год) + освобождение от налога на имущество.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <h3>Уважаемый Иван Николаевич!</h3>
+      <p>
+        Предлагаем вам стать экстерриториальным резидентом «Сколково» за 3–4 месяца.
+        Это даёт вашей компании нулевую ставку налога на прибыль, пониженные страховые взносы
+        и доступ к грантовым программам до 30 млн ₽.
+      </p>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="section">
+      <div class="section-title">План действий</div>
+      <ol class="roadmap">
+        <li><strong>Анализ компании (1–2 дня):</strong> сбор данных о продукции, патентах, рынке.</li>
+        <li><strong>Подача заявки в Сколково (2–3 недели):</strong> подготовка пакета документов.</li>
+        <li><strong>Получение статуса (2–3 месяца):</strong> экспертиза и одобрение заявки.</li>
+        <li><strong>Параллельно — патентование:</strong> регистрация полезной модели (4–5 мес.).</li>
+        <li><strong>МТК (при необходимости):</strong> упрощённый вход через промышленный кластер.</li>
+        <li><strong>Отчётность:</strong> 4 квартальных + 1 годовой отчёт (возможно ведение на аутсорсе).</li>
+      </ol>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="conf">Конфиденциально • Для служебного пользования</div>
+    <div class="contacts">
+      ANDROMEDA CONSULT • ИНН 7702464831<br>
+      info@andromedaconsult.ru • +7 (495) 000-00-00
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
