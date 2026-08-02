@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>СтройИндустрия — Анализ и расчёт налоговой экономии Сколково</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background: #f5f5f5; display: flex; justify-content: center; padding: 30px; -webkit-font-smoothing: antialiased; }
+@media print { body { background: #fff; padding: 0; } @page { margin: 15mm; } }
+.card { max-width: 210mm; width: 100%; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 4px; overflow: hidden; }
+.letterhead { background: #1a1a2e; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.letterhead-brand { display: flex; align-items: center; gap: 14px; }
+.letterhead-logo { width: 40px; height: 40px; background: linear-gradient(135deg, #d4a843, #b8860b); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1a1a2e; font-weight: 900; font-size: 20px; }
+.letterhead-name { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; }
+.letterhead-sub { color: #8899aa; font-size: 10px; margin-top: 1px; }
+.letterhead-contacts { text-align: right; color: #667788; font-size: 9px; line-height: 1.6; }
+.hero { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 26px 28px; }
+.hero-label { color: #d4a843; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.hero-title { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.hero-title h1 { color: #fff; font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
+.hero-title .badge { color: #8899aa; font-size: 11px; font-weight: 500; border: 1px solid #334455; padding: 2px 10px; border-radius: 4px; }
+.hero-desc { color: #ccddee; font-size: 13px; font-weight: 300; margin-top: 6px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; color: #667788; font-size: 10px; }
+.hero-meta span::before { content: "\\2022"; color: #d4a843; margin-right: 6px; }
+.section { padding: 20px 28px; }
+.section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.section-title .icon { width: 28px; height: 28px; background: #1a1a2e; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #d4a843; font-size: 13px; font-weight: 700; }
+.section-title h2 { font-size: 11px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 1.2px; }
+.info-row { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; }
+.info-cell { padding: 12px 16px; }
+.info-cell:first-child { border-right: 1px solid #e0e0e0; }
+.info-cell .label { font-size: 9px; font-weight: 600; color: #8899aa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.info-cell .value { font-size: 13px; font-weight: 600; color: #222; }
+.info-cell .sub { font-size: 10px; color: #8899aa; margin-top: 2px; }
+table.ft { width: 100%; border-collapse: collapse; font-size: 11px; }
+table.ft th { background: #1a1a2e; color: #d4a843; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; }
+table.ft td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #444; }
+table.ft tr:nth-child(even) td { background: #fafafa; }
+.savings-block { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 8px; padding: 20px; color: #fff; margin-top: 14px; }
+.savings-block .label { font-size: 9px; font-weight: 600; color: #d4a843; text-transform: uppercase; letter-spacing: 1.2px; }
+.savings-flex { display: flex; align-items: baseline; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+.savings-flex .big { font-size: 28px; font-weight: 900; }
+.savings-details { display: flex; gap: 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #334455; font-size: 9px; color: #667788; flex-wrap: wrap; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.content-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 16px; }
+.content-card .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.content-card .card-title { font-size: 9px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 1px; }
+.content-card p { font-size: 12px; color: #444; line-height: 1.6; }
+.deep-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 6px; font-size: 12px; background: #fafafa; }
+.deep-item .icon-cell { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+.icon-green { background: #e8f5e9; color: #2e7d32; }
+.icon-amber { background: #fff3e0; color: #e65100; }
+.roadmap { border: 1px solid #e0e0e0; border-radius: 6px; }
+.roadmap-step { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; align-items: start; }
+.roadmap-step:last-child { border-bottom: none; }
+.roadmap-step:nth-child(even) { background: #fafafa; }
+.roadmap-num { width: 32px; height: 32px; background: #1a1a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; }
+.roadmap-step:last-child .roadmap-num { background: #2e7d32; }
+.roadmap-step .step-title { font-size: 12px; font-weight: 600; color: #222; }
+.roadmap-step .step-desc { font-size: 10px; color: #667788; margin-top: 2px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.stat-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 14px; }
+.stat-card .label { font-size: 9px; font-weight: 600; color: #8899aa; text-transform: uppercase; letter-spacing: 1px; }
+.stat-card .value { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-top: 4px; }
+.stat-card .sub { font-size: 10px; color: #667788; margin-top: 2px; }
+.stat-card.green { background: #e8f5e9; border-color: #c8e6c9; }
+.stat-card.green .value { color: #2e7d32; }
+.footer { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+.footer .label { font-size: 8px; font-weight: 600; color: #d4a843; text-transform: uppercase; letter-spacing: 1.2px; }
+.footer .result { color: #fff; font-size: 14px; font-weight: 700; margin-top: 1px; }
+.footer-logo { width: 36px; height: 36px; background: linear-gradient(135deg, #d4a843, #b8860b); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1a1a2e; font-weight: 900; font-size: 18px; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 0 28px; }
+@media (max-width: 640px) { .info-row, .two-col { grid-template-columns: 1fr; } .info-cell:first-child { border-right: none; border-bottom: 1px solid #e0e0e0; } .stats-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="letterhead">
+    <div class="letterhead-brand">
+      <div class="letterhead-logo">A</div>
+      <div>
+        <div class="letterhead-name">ANDROMEDA CONSULT</div>
+        <div class="letterhead-sub">Консалтинговая компания</div>
+      </div>
+    </div>
+    <div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru<br>@andromedaconsult</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Анализ и расчёт налоговой экономии</div>
+    <div class="hero-title">
+      <h1>СтройИндустрия</h1>
+      <span class="badge">23.32</span>
+    </div>
+    <div class="hero-desc">Производство кирпича и строительных керамических изделий.</div>
+    <div class="hero-meta">
+      <span>Калач</span>
+      <span>ИНН 3662094655</span>
+      <span>ОГРН 1053600011618</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">📋</div><h2>Основные реквизиты</h2></div>
+    <div class="info-row">
+      <div class="info-cell">
+        <div class="label">Руководитель</div>
+        <div class="value">Труфанов Александр Федорович</div>
+      </div>
+      <div class="info-cell">
+        <div class="label">Юридический адрес</div>
+        <div class="value">397602, Воронежская обл., г. Калач, ул. Строителей, д. 4</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">📊</div><h2>Финансовые показатели</h2></div>
+    <table class="ft">
+      <tr><th>Показатель</th><th style="text-align:right">Значение</th></tr>
+      <tr><td>Выручка 2025</td><td style="text-align:right;font-weight:600">439,6 млн</td></tr>
+      <tr><td>Прибыль 2025</td><td style="text-align:right;font-weight:600">0,0 млн</td></tr>
+      <tr><td>Сотрудники</td><td style="text-align:right;font-weight:600">80 чел.</td></tr>
+    </table>
+  </div>
+
+  <hr>  <div class="section">
+    <div class="section-title"><div class="icon">💰</div><h2>Расчёт налоговой экономии</h2></div>
+    <p style="font-size:12px;color:#666;margin-bottom:12px;">При текущих показателях: выручка 439,6 млн, численность 80 чел..</p>
+    <table class="ft">
+      <tr><th>Показатель</th><th style="text-align:right">Без статуса</th><th style="text-align:right">Со статусом</th></tr>
+      <tr><td>Налог на прибыль</td><td style="text-align:right">25%</td><td style="text-align:right;color:#2e7d32;font-weight:600">0%</td></tr>
+      <tr><td>Страховые взносы</td><td style="text-align:right">30%</td><td style="text-align:right;color:#2e7d32;font-weight:600">15%</td></tr>
+      <tr><td>Налог на имущество</td><td style="text-align:right">до 2,2%</td><td style="text-align:right;color:#2e7d32;font-weight:600">0%</td></tr>
+    </table>
+
+    <div class="savings-block">
+      <div class="label">Итоговая экономия</div>
+      <div class="savings-flex">
+        <span class="big">9,2–13,8 млн ₽</span>
+        <span style="color:#8899aa;font-size:11px;">в год</span>
+      </div>
+      <div class="savings-details">
+        <span>Прогноз на 10 лет: 92–138 млн ₽</span>
+        <span>Весь льготный период</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>  <div class="section">
+    <div class="section-title"><div class="icon">🏗️</div><h2>Описание деятельности и продукции</h2></div>
+    <p style="font-size:12px;color:#444;line-height:1.6;">Производство кирпича и строительных керамических изделий.</p>
+  </div>
+
+  <hr>  <div class="section">
+    <div class="section-title"><div class="icon">💡</div><h2>Инновационный потенциал</h2></div>
+    <p style="font-size:12px;color:#444;line-height:1.6;">Разработка технологии производства кирпича с улучшенными теплоизоляционными свойствами (уточняется после созвона).</p>
+    <div style="margin-top:10px;font-size:10px;color:#667788;">→ Требуется патент на полезную модель (4–5 месяцев)</div>
+  </div>
+
+  <hr>  <div class="section">
+    <div class="section-title"><div class="icon">→</div><h2>План действий</h2></div>
+    <div class="roadmap">
+      <div class="roadmap-step"><div class="roadmap-num">1</div><div><div class="step-title">Экспресс-аудит документов</div><div class="step-desc">3–5 дней · Проверка учредительных и бухгалтерских документов</div></div></div>
+      <div class="roadmap-step"><div class="roadmap-num">2</div><div><div class="step-title">Подача заявки на полезную модель</div><div class="step-desc">4–5 месяцев · Патент по тематике производства</div></div></div>
+      <div class="roadmap-step"><div class="roadmap-num">3</div><div><div class="step-title">Подготовка и подача заявки в Сколково</div><div class="step-desc">4–6 месяцев · Сбор пакета документов, подача в Фонд</div></div></div>
+      <div class="roadmap-step"><div class="roadmap-num">4</div><div><div class="step-title">Получение статуса резидента</div><div class="step-desc">Экономия с первого квартала после включения в реестр</div></div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="label">Потенциальный результат</div>
+      <div class="result">до 138 млн ₽ за 10 лет</div>
+    </div>
+    <div class="footer-logo">A</div>
+  </div>
+
+</div>
+</body>
+</html>
