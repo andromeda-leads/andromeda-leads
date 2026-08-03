@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<title>Новая база компаний клиентов Андромеда Консалтинг</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+* { font-family: 'Inter', sans-serif; }
+body { background: #f8fafc; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+tbody tr:nth-child(odd) { background: #ffffff; }
+tbody tr:hover { background: #e2e8f0 !important; }
+.card { background: white; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.sticky-header { position: sticky; top: 0; z-index: 10; }
+.cell-text { max-width: 1480px; white-space: normal; word-break: break-word; }
+.cell-small { max-width: 140px; white-space: normal; word-break: break-word; }
+.tbl-wrap { max-height: 75vh; overflow-y: auto; }
+
+.sortable { cursor: pointer; user-select: none; }
+.sortable:hover { background: #e2e8f0 !important; }
+.sortable .sort-arrow { opacity: 0.3; margin-left: 3px; font-size: 9px; }
+.sortable:hover .sort-arrow { opacity: 0.7; }
+.sortable.asc .sort-arrow { opacity: 1; }
+.sortable.desc .sort-arrow { opacity: 1; }
+
+</style>
+<script>
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+document.addEventListener('keydown', function(e){
+  if(e.ctrlKey && (e.key==='c'||e.key==='C'||e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S')) e.preventDefault();
+  if(e.metaKey && (e.key==='c'||e.key==='C'||e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S')) e.preventDefault();
+  if(e.key==='PrintScreen'||e.key==='F12') e.preventDefault();
+});
+function sortTable(th, idx) {
+  var table = th;
+  while (table && table.tagName !== 'TABLE') table = table.parentNode;
+  if (!table) return;
+  var tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  var rows = [];
+  var trs = tbody.querySelectorAll('tr');
+  for (var r = 0; r < trs.length; r++) rows.push(trs[r]);
+  var asc = th.getAttribute('data-s') === '1';
+  var allH = table.querySelectorAll('thead th');
+  for (var h = 0; h < allH.length; h++) allH[h].setAttribute('data-s', '0');
+  rows.sort(function(a, b) {
+    var va = (a.children[idx] ? a.children[idx].textContent.trim() : '').toLowerCase();
+    var vb = (b.children[idx] ? b.children[idx].textContent.trim() : '').toLowerCase();
+    var na = parseFloat(va.replace(/[^0-9.\-]/g,'')) || 0;
+    var nb = parseFloat(vb.replace(/[^0-9.\-]/g,'')) || 0;
+    if (idx === 13) {
+      return asc ? (na - nb) : (nb - na);
+    }
+    var sa = va.replace(/[^0-9]/g,'');
+    var sb = vb.replace(/[^0-9]/g,'');
+    if (sa.length >= 10 && sb.length >= 10) { va = sa; vb = sb; }
+    return asc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+  });
+  th.setAttribute('data-s', asc ? '2' : '1');
+  for (var r = 0; r < rows.length; r++) tbody.appendChild(rows[r]);
+}
+</script>
+</head>
+<body class="p-3 md:p-6">
+<div class="max-w-7xl mx-auto">
+<!-- HEADER -->
+<div class="card p-4 mb-4">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div>
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Консалтинговая компания</p>
+<h1 class="text-2xl font-extrabold text-slate-900">ANDROMEDA CONSULT</h1>
+<p class="text-xs text-slate-400 mt-0.5">ИНН 7702464831 · ОГРН 1197746181038 · andromedaconsult.ru</p>
+<p class="text-sm font-bold text-slate-700 mt-2">🗂 Новая база (№2) — лиды по первичным звонкам</p>
+</div>
+<div class="text-right text-xs text-slate-400">
+<p>info@andromedaconsult.ru</p>
+<p>@andromedaconsult</p>
+<p class="font-semibold text-slate-500">03.08.2026</p>
+<p class="text-[10px]">Всего: 37 записей · новые сверху</p>
+</div>
+</div>
+</div>
+<!-- LINKS BAR -->
+<div class="flex gap-3 mb-3 flex-wrap">
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-all" href="https://andromeda-leads.github.io/andromeda-leads/" target="_blank">📊 База №1 (реестр)</a>
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200 transition-all" href="https://andromeda-leads.github.io/andromeda-leads/partner-test.html" target="_blank">📝 Тест для партнёров</a>
+</div>
+<!-- TABLE -->
+<div class="card overflow-hidden">
+<div class="tbl-wrap">
+<table class="w-full text-xs">
+<colgroup>
+<col class="w-[50px]"/>
+<col class="w-[100px]"/>
+<col class="w-[180px]"/>
+<col class="w-[130px]"/>
+<col class="w-[140px]"/>
+<col class="w-[120px]"/>
+<col class="w-[130px]"/>
+<col class="w-[1500px]"/>
+<col class="w-[80px]"/>
+<col class="w-[90px]"/>
+<col class="w-[90px]"/>
+<col class="w-[90px]"/>
+<col class="w-[90px]"/>
+<col class="w-[100px]"/>
+</colgroup>
+<thead>
+<tr class="bg-slate-50 text-left font-semibold text-slate-500 uppercase tracking-wider sticky-header">
+<th class="px-2 py-3 text-center whitespace-nowrap w-[50px]">№ <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap">📅 Дата звонка <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap">👤 Имя ЛПР <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap">📞 Телефон <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap">🏢 Компания <span class="sort-arrow">↕</span></th>
+<th class="px-2 py-2 bg-yellow-50 text-yellow-800 whitespace-nowrap sortable" onclick="sortTable(this,5)">🔢 ИНН <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap sortable" onclick="sortTable(this,6)">🌐 Лендинг <span class="sort-arrow">↕</span></th>
+<th class="px-3 py-3 whitespace-nowrap">💬 Комментарии <span class="sort-arrow">↕</span></th>
+<th class="px-2 py-2 whitespace-nowrap cell-small">📋 ОС по лидам <span class="sort-arrow">↕</span></th>
+<th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 Анкета</th>
+<th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 КП</th>
+<th class="px-2 py-2 text-center bg-blue-50 whitespace-nowrap">📄 Аналитика</th>
+<th class="px-2 py-2 text-center bg-amber-50 whitespace-nowrap">📊 Презентация</th>
+<th class="px-2 py-2 text-center bg-emerald-50 whitespace-nowrap sortable" onclick="sortTable(this,13)">💰 Экономия, млн ₽ <span class="sort-arrow">↕</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100"><tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">1</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">03.08.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Смагин Алексей Васильевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">89025126049</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ВОРОТА.РУ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">3812095548</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Смагин Алексей Васильевич ген дир 89025126049 ООО &quot;ВОРОТА.РУ&quot;25.12 Производство металлических дверей и окон ИНН 3812095548 Интерес перезвон на завтра и доп инфо макс 89025126049<br><span class="text-[10px] text-red-500 font-medium">Выручка: 10.9 млн; ОКВЭД: 25.12 (Производство металлических дверей и окон) · Город: г.. Иркутск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">2</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">31.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Виталий Леонидович глав бух</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (347) 253-22-20</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Азат</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">0274007600</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Виталий Леонидович глав бух 7 (347) 253-22-20 ООО &quot;Азат-272.19 Научные исследования и разработки в области естественных и технических наук прочие ИНН 0274007600 Интерес перезвон в понедельник вторая половина дня и доп КП на почту azat2@mail.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 6.8 млн; ОКВЭД: 72.19 (Научные исследования и разработки в области естественных и технических наук прочие) · Город: г.. Уфа<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">3</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">31.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Ольга Валентиновна ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (978) 118-14-17</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ПРОИЗВОДСТВО ЖБИ2</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">9109020587</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Ольга Валентиновна ген дир 7 (978) 118-14-17 ООО &quot;ПРОИЗВОДСТВО ЖБИ23.61 Производство изделий из бетона для использования в строительстве  ИНН 9109020587 Интерес перезвон в понедельник и доп КП на макс 7 (978) 118-14-17<br><span class="text-[10px] text-red-500 font-medium">Выручка: 18 млн; ОКВЭД: 23.61 (Производство изделий из бетона для использования в строительстве) · Город: Республика Крым<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">4</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">31.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Яблонский Вячеслав Андреевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (903) 936-91-15</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;СМК-МОДУЛЬ</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5404096339</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Яблонский Вячеслав Андреевич ген дир 7 (903) 936-91-15 ООО &quot;СМК-МОДУЛЬ&quot;25.11 Производство строительных металлических конструкций, изделий и их частей ИНН 5404096339 Перезвон на понедельник и доп КП на макс 7 (903) 936-91-15<br><span class="text-[10px] text-red-500 font-medium">Выручка: 12 млн; ОКВЭД: 25.11 (Производство строительных металлических конструкций, изделий и их частей) · Город: г. Новосибирск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">5</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">31.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Ишмухаметов Азат Занфирович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">79177564697</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;НГМ-Холдинг</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">0274164346</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Ишмухаметов Азат Занфирович ген дир 79177564697 ООО &quot;НГМ-Холдинг&quot;25.1 Производство строительных металлических конструкций и изделий ИНН 0274164346 Интерес перезвон в понедельник и доп КП на макс 79177564697<br><span class="text-[10px] text-red-500 font-medium">Выручка: 8.1 млн; ОКВЭД: 25.1 (Производство строительных металлических конструкций и изделий) · Город: г.. Уфа<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">6</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">31.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Владимир зам дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (342) 207-32-02</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Лаборатория Новых Технологий&quot;,</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5902829236</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">13</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Владимир зам дир 7 (342) 207-32-02 ООО &quot;Лаборатория Новых Технологий&quot;, ООО &quot;ЛНТ&quot;26.60.4 Производство инструмента, оборудования и приспособлений, применяемых в медицинских целях ИНН 5902829236 отправить КП на опчту labnt@yandex.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 13.4 млн; ОКВЭД: 28.99 (Производство прочих машин и оборудования специального назначения, не включенных в другие группировки) · Город: г.. Пермь<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">7</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">30.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Ищенко Наталия Вячеславовна ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (921) 659-67-05</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;МСД&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7804562852</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">5</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Ищенко Наталия Вячеславовна ген дир 7 (921) 659-67-05 ООО &quot;МСД&quot;25.11 Производство строительных металлических конструкций, изделий и их частей ИНН 7804562852 Интерес отправить КП на макс 7 (921) 659-67-05<br><span class="text-[10px] text-red-500 font-medium">Выручка: 8.2 млн; ОКВЭД: 25.11 (Производство строительных металлических конструкций, изделий и их частей)<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">8</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">30.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Кипнис Иосиф Аншелевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (495) 438-52-65</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;НПФ КАСИОР</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7729603666</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Кипнис Иосиф Аншелевич ген дир 7 (495) 438-52-65 ООО &quot;НПФ КАСИОР&quot;72.19 Научные исследования и разработки в области естественных и технических наук прочие  ИНН 7729603666 Интерес , отправить КП на почту kasior@rambler.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 18.4 млн; ОКВЭД: 72.19 (Научные исследования и разработки в области естественных и технических наук прочие) · Город: г. Москва<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">9</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">30.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Иванов Дмитрий Анатольевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (906) 850-07-77</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО НПО &quot;МАРС</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7445039069</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">11</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Иванов Дмитрий Анатольевич ген дир 7 (906) 850-07-77 ООО НПО &quot;МАРС&quot;72.19 Научные исследования и разработки в области естественных и технических наук прочие ИНН 7445039069 Интерес перезвон на автра и доп инфо на макс 7 (906) 850-07-77<br><span class="text-[10px] text-red-500 font-medium">Выручка: 599 тыс; ОКВЭД: 72.19 (Научные исследования и разработки в области естественных и технических наук прочие) · Город: г.. Челябинск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">10</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">30.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Светлана Петровна глав бух</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">79285408704</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;АНКОР-А</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6168083174</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Светлана Петровна глав бух 79285408704 ООО &quot;АНКОР-А20.41 Производство мыла и моющих, чистящих и полирующих средств  ИНН 6168083174 Интерес перезвон на завтра и доп КП на телеграмм 7928540870<br><span class="text-[10px] text-red-500 font-medium">Выручка: 23.2 млн; ОКВЭД: 20.41 (Производство мыла и моющих, чистящих и полирующих средств) · Город: с.. Краснооктябрьское<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">11</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">30.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Гулеев Алексей Васильевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (910) 649-25-55</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ЗАО &quot;Художественные промыслы</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6931001270</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Гулеев Алексей Васильевич ген дир 7 (910) 649-25-55 ЗАО &quot;Художественные промыслы&quot;32.99.8 Производство изделий народных художественных промыслов ИНН 6931001270 Интерес перезвон на след недели и доп инфо на телеграмм  7 (910) 649-25-55<br><span class="text-[10px] text-red-500 font-medium">Выручка: 17.9 млн; ОКВЭД: 32.99.8 (Производство изделий народных художественных промыслов) · Город: г.. Лихославль<br>не подходит: организационная форма ЗАО; выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">12</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">29.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Гредин Алексей Викторович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (950) 200-06-63</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ПСК&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6684033066</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">11</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Гредин Алексей Викторович ген дир 7 (950) 200-06-63 ООО &quot;ПСК&quot;25.11 Производство строительных металлических конструкций, изделий и их частей ИНН 6684033066 Интерес перезвон на сегодня и доп  КП на макс 7 (950) 200-06-63<br><span class="text-[10px] text-red-500 font-medium">Выручка: 28.8 млн; ОКВЭД: 25.11 (Производство строительных металлических конструкций, изделий и их частей) · Город: г. Первоуральск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">13</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">29.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Воронин Сергей Александрович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (927) 044-22-00</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;МАРС-</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">1650359663</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Воронин Сергей Александрович ген дир 7 (927) 044-22-00 ООО &quot;МАРС-1622.22 Производство пластмассовых изделий для упаковывания товаров ИНН 1650359663 Интерес перезвон на сегодня до 16.00 или на завтра и доп КП на макс  79274776444<br><span class="text-[10px] text-red-500 font-medium">Выручка: 12.8 млн; ОКВЭД: 22.22 (Производство пластмассовых изделий для упаковывания товаров) · Город: г.. Набережные Челны<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">14</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">29.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Сергей Викторович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (922) 373-79-77</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ПК &quot;ЗЕТТА</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5908077529</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">13</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Парамонов Сергей Викторович ген дир 7 (922) 373-79-77 ООО &quot;ПК &quot;ЗЕТТА27.12 Производство электрической распределительной и регулирующей аппаратуры ИНН 5908077529 Интерес перезвон на завтра и доп КП на почту pk-zetta@yandex.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 33.7 млн; ОКВЭД: 27.12 (Производство электрической распределительной и регулирующей аппаратуры) · Город: г.. Пермь<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">15</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">29.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Бэлла глав бух</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (928) 381-99-99</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;КИТ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">0917032050</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Бэлла глав бух 7 (928) 381-99-99 ООО &quot;КИТ&quot;22.23 Производство пластмассовых изделий, используемых в строительстве ИНН 0917032050 Интерес перезвон на завтра и доп КП на макс 7 (928) 381-99-99<br><span class="text-[10px] text-red-500 font-medium">Выручка: 16.4 млн; ОКВЭД: 22.23 (Производство пластмассовых изделий, используемых в строительстве) · Город: г.. Черкесск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">16</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">28.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Кашуба Павел Алексеевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (495) 707-02-00</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Полипаст&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7715244093</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Кашуба Павел Алексеевич ген дир 7 (495) 707-02-00 ООО &quot;Полипаст&quot;20.41 Производство мыла и моющих, чистящих и полирующих средств  ИНН 7715244093 Интерес поппросил перезвон на след-й недели и доп КП на почту pk1507@lift.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 15.3 млн; ОКВЭД: 20.41 (Производство мыла и моющих, чистящих и полирующих средств) · Город: г. Москва<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">17</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">28.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Хмыров Андрей Иванович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">89136151820</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;НПП &quot;ИНТЕХ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5503120222</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Хмыров Андрей Иванович ген дир 89136151820 ООО &quot;НПП &quot;ИНТЕХ&quot;26.51 Производство инструментов и приборов для измерения, тестирования и навигации  ИНН5 503120222 Интерес перезвон в четверг и доп КП на макс 89136151820<br><span class="text-[10px] text-red-500 font-medium">Выручка: 10 млн; ОКВЭД: 26.51 (Производство инструментов и приборов для измерения, тестирования и навигации) · Город: г.. Омск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">18</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">28.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Анастасия комм дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (916) 239-08-87</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Холод-Тепло</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7735541922</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Анастасия комм дир 7 (916) 239-08-87 ООО &quot;Холод-Тепло &quot;28.25 Производство промышленного холодильного и вентиляционного оборудования ИНН7 735541922 Интерес перезвон на завтра и доп КП на макс 7 (916) 239-08-87<br><span class="text-[10px] text-red-500 font-medium">Выручка: 31.7 млн; ОКВЭД: 28.25 (Производство промышленного холодильного и вентиляционного оборудования) · Город: г. Зеленоград<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">19</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">24.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Кудрявцев Иван Николаевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (987) 771-98-68</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ЗАО &quot;УРАЛРЕНТГЕН</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5638056370</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Кудрявцев Иван Николаевич ген дир 7 (987) 771-98-68 ЗАО &quot;УРАЛРЕНТГЕН&quot;32.5 Производство медицинских инструментов и оборудования ИНН 5638056370 Интерес налоги,перезвон на понедельник и доп КП телеграмм 7 (987) 771-98-68<br><span class="text-[10px] text-red-500 font-medium">Выручка: 24.1 млн; ОКВЭД: 32.5 (Производство медицинских инструментов и оборудования) · Город: Оренбургская Область<br>не подходит: организационная форма ЗАО; выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">20</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">24.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Герасимов Валерий Федорович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">89852106335</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО НИЦ &quot;ВЯТИЧ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5046027004</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Герасимов Валерий Федорович ген дир 89852106335 ООО НИЦ &quot;ВЯТИЧ&quot;23.91 Производство абразивных изделий ИНН 5046027004 Интерес перезвон в понедельник и доп КП на почту viatich.b@yandex.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 16.5 млн; ОКВЭД: 25.73 (Производство инструмента) · Город: г.. Троицк<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">21</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">24.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Ольга зам дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">88127150941, 89017150941</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;КОНКОРД</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">4706013489</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">5</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Ольга зам дир 88127150941, 89017150941 ООО &quot;КОНКОРД&quot;22.2 Производство изделий из пластмасс  ИНН 4706013489 Интерес льготный займ перезвон на понедельник вторая половина дня и доп КП на макс и почту konkord.spb@bk.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 17.6 млн; ОКВЭД: 22.2 (Производство изделий из пластмасс) · Город: г.. Шлиссельбург<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">22</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">24.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Балашов Александр Геннадьевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">79296353733</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;БАЗОВЫЕ ТЕХНОЛОГИИ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7731487174</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Балашов Александр Геннадьевич ген дир 79296353733 ООО &quot;БАЗОВЫЕ ТЕХНОЛОГИИ&quot;72.19 Научные исследования и разработки в области естественных и технических наук прочие ИНН 7731487174 Отправить кп на почту general@semitech.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 4.4 млн; ОКВЭД: 72.19 (Научные исследования и разработки в области естественных и технических наук прочие) · Город: г. Москва<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">23</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">24.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Зотов Петр Петрович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (496) 642-16-60</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ОЭП &quot;Инженер&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">5045001074</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Зотов Петр Петрович ген дир 7 (496) 642-16-60 ООО &quot;ОЭП &quot;Инженер&quot;28.29 Производство прочих машин и оборудования общего назначения, не включенного в другие группировки ИНН 5045001074 Интерес отправить КП на почту oep-engineer@inbox.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 19 млн; ОКВЭД: 28.29 (Производство прочих машин и оборудования общего назначения, не включенного в другие группировки) · Город: г.. Ступино<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">24</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">23.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Антон помощник</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (812) 448-65-60</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;МТР ТРЕЙД&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7811617132</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">5</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Антон помощник 7 (812) 448-65-60 ООО &quot;МТР ТРЕЙД&quot;30.99 Производство прочих транспортных средств и оборудования, не включенных в другие группировки  ИНН 7811617132 Отправить КП на почту info@mtrnw.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 19 млн; ОКВЭД: 30.99 (Производство прочих транспортных средств и оборудования, не включенных в другие группировки) · Город: г. Санкт-Петербург<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">25</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">23.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Смирнов Алексей Иванович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (927) 638-62-68</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;СЗНО</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6316242039</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Смирнов Алексей Иванович ген дир 7 (927) 638-62-68 ООО &quot;СЗНО&quot;25.62 Обработка металлических изделий механическая ИНН 6316242039 Отправить  КП на почту office@credinform.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 17.1 млн; ОКВЭД: 25.62 (Обработка металлических изделий механическая) · Город: г. Самара<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">26</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">23.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Владислав Геннадьевич зам дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (842) 235-47-95</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;СМК&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7326038228</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Владислав Геннадьевич зам дир 7 (842) 235-47-95 ООО &quot;СМК&quot;25.11 Производство строительных металлических конструкций, изделий и их частей  ИНН 7326038228 Интерес перезвон на завтра и доп  КП на почту zmz-ooo@mail.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 16.5 млн; ОКВЭД: 25.11 (Производство строительных металлических конструкций, изделий и их частей) · Город: г.. Ульяновск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">27</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">23.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Ломакин Александр Владимирович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (961) 110-85-50</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ЭЛЕМЕНТ СЕРВИС&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">3324124717</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Ломакин Александр Владимирович ген дир  7 (961) 110-85-50 ООО &quot;ЭЛЕМЕНТ СЕРВИС&quot;25.61 Обработка металлов и нанесение покрытий на металлы ИНН 3324124717 Интерес перезвон на сегодня и доп КП на макс 7 (961) 110-85-50<br><span class="text-[10px] text-red-500 font-medium">Выручка: 20 млн; ОКВЭД: 25.61 (Обработка металлов и нанесение покрытий на металлы) · Город: Владимирская Область<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">28</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">23.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Глухов Павел Михайлович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (961) 040-98-31</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ИНТЕХСЕРВИС</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">0258950952</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Глухов Павел Михайлович ген дир 7 (961) 040-98-31 ООО &quot;ИНТЕХСЕРВИС28.41 Производство металлообрабатывающего оборудования ИНН 0258950952 Отправить КП на телеграмм 7 (961) 040-98-31<br><span class="text-[10px] text-red-500 font-medium">Выручка: 20.2 млн; ОКВЭД: 28.41 (Производство металлообрабатывающего оборудования) · Город: г.. Благовещенск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">29</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">22.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Азамат Фаильевич зам дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">79177937760</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО НПП &quot;Август</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">0277004608</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Азамат Фаильевич зам дир 79177937760 ООО НПП &quot;Август28.92 Производство машин и оборудования для добычи полезных ископаемых и строительства ИНН 0277004608 Интерес перезвон на завтра и доп инфо на макс 79177937760<br><span class="text-[10px] text-red-500 font-medium">Выручка: 30.3 млн; ОКВЭД: 28.92 (Производство машин и оборудования для добычи полезных ископаемых и строительства) · Город: г.. Уфа<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">30</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">21.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Владимир зам дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (920) 436-33-85</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ВЕКТОР ПОЛИМИР&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">3666219070</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Владимир зам дир 7 (920) 436-33-85 ООО &quot;ВЕКТОР ПОЛИМИР&quot;22.22 Производство пластмассовых изделий для упаковывания товаров ИНН 3666219070 Интерес КП  на почту vek.polymir@mail.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 22.2 млн; ОКВЭД: 22.22 (Производство пластмассовых изделий для упаковывания товаров) · Город: г.. Воронеж<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">31</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">21.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Евгения бух</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (928) 600-09-33</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ДОР ПЛИТКА</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6155069126</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Евгения бух 7 (928) 600-09-33 ООО &quot;ДОР ПЛИТКА23.69 Производство прочих изделий из гипса, бетона или цемента ИНН 6155069126 Интерес налоги  перезвон на завтра и доп инфо на макс<br><span class="text-[10px] text-red-500 font-medium">Выручка: 21 млн; ОКВЭД: 23.69 (Производство прочих изделий из гипса, бетона или цемента) · Город: г.. Шахты<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">32</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">21.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Боев Димитар Младенов ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (903) 222-00-00</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;ФЛОРИ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7715477972</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">2</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Боев Димитар Младенов ген дир 7 (903) 222-00-00 ООО &quot;ФЛОРИ&quot;20.42 Производство парфюмерных и косметических средств ИНН 7715477972 Интерес отправить инфо на почту boev.dim@gmail.com<br><span class="text-[10px] text-red-500 font-medium">Выручка: 21.6 млн; ОКВЭД: 20.42 (Производство парфюмерных и косметических средств) · Город: г. Москва<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">33</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">21.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Бех-Иванов Дмитрий Эвальдович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (812) 327-19-65</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Смоленские мастерские</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">7801043626</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">5</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Бех-Иванов Дмитрий Эвальдович ген дир  7 (812) 327-19-65 ООО &quot;Смоленские мастерские&quot;23.70.2 Резка, обработка и отделка камня для памятников ИНН 7801043626 Интерес отправить  КП на почту smolmaster@mail.ru<br><span class="text-[10px] text-red-500 font-medium">Выручка: 14.1 млн; ОКВЭД: 96.03 (Организация похорон и представление связанных с ними услуг) · Город: г. Санкт-Петербург<br>не подходит: выручка ниже порога 50 млн ₽; непроизводственный ОКВЭД</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">34</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">21.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Крахмальная Марина Ивановна ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">79185008552</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Фирма &quot;Акант</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">6164008553</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Крахмальная Марина Ивановна ген дир 79185008552 ООО &quot;Фирма &quot;Акант32.12.5 Производство ювелирных изделий, медалей из драгоценных металлов и драгоценных камней ИНН 6164008553 Интерес все темы перезвон на завтра и КП на макс<br><span class="text-[10px] text-red-500 font-medium">Выручка: 18.7 млн; ОКВЭД: 32.12.5 (Производство ювелирных изделий, медалей из драгоценных металлов и драгоценных камней) · Город: г.. Ростов-На-Дону<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">35</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">20.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Колтунов Василий Васильевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (930) 858-33-38</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;МЕТАЛЛТЕХНОСТРОЙ&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">4632235269</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Колтунов Василий Васильевич ген дир 7 (930) 858-33-38 ООО &quot;МЕТАЛЛТЕХНОСТРОЙ&quot;25.11 Производство строительных металлических конструкций, изделий и их частей ИНН 4632235269 Интерес<br><span class="text-[10px] text-red-500 font-medium">Выручка: 13.8 млн; ОКВЭД: 25.11 (Производство строительных металлических конструкций, изделий и их частей) · Город: г.. Курск<br>не подходит: выручка ниже порога 50 млн ₽</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">36</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">20.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Дубинин Алексей Анатольевич ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (978) 764-70-90</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ано &quot;КРЦ &quot;СУДЕБНАЯ ЭКСПЕРТИЗА</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">9102165590</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Дубинин Алексей Анатольевич ген дир  7 (978) 764-70-90 ано &quot;КРЦ &quot;СУДЕБНАЯ ЭКСПЕРТИЗА72.19 Научные исследования и разработки в области естественных и технических наук прочие ИНН 9102165590<br><span class="text-[10px] text-red-500 font-medium">Выручка: 14.4 млн; ОКВЭД: 69.10 (Деятельность в области права) · Город: г.. Симферополь<br>не подходит: организационная форма АНО; выручка ниже порога 50 млн ₽; непроизводственный ОКВЭД</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+<tr>
+<td class="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px] whitespace-nowrap">37</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">20.07.2026</td>
+<td class="px-2 py-1.5 text-slate-800 font-medium whitespace-nowrap">Коростин Валентин Владимирович ген дир</td>
+<td class="px-2 py-1.5 text-slate-600 whitespace-nowrap">7 (919) 904-00-04</td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-medium text-slate-900">ООО &quot;Итерра&quot;</span></td>
+<td class="px-2 py-1.5 whitespace-nowrap"><span class="font-mono text-yellow-700 bg-yellow-50 px-1 rounded">1832055275</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small">9</td>
+<td class="px-2 py-1.5 text-slate-600 cell-text">Коростин Валентин Владимирович ген дир 7 (919) 904-00-04 ООО &quot;Итерра&quot;26.51.6 Производство прочих приборов, датчиков, аппаратуры и инструментов для измерения, контроля и испытаний ИНН 1832055275 Интерес налоги, гранты<br><span class="text-[10px] text-red-500 font-medium">Выручка: 25.4 млн; ОКВЭД: 46.90 (Торговля оптовая неспециализированная) · Город: г. Ижевск<br>не подходит: выручка ниже порога 50 млн ₽; непроизводственный ОКВЭД</span></td>
+<td class="px-2 py-1.5 text-slate-500 cell-small"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center"></td>
+<td class="px-2 py-1.5 text-center font-semibold text-slate-800">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="text-[10px] text-slate-400 mt-3">Обработано 37/37 · скрининг по saby.ru (03.08.2026) · вердикт по выручке и ОКВЭД</p>
+</div>
+</body>
+</html>
