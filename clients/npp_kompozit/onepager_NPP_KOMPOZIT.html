@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:'Segoe UI',-apple-system,sans-serif;display:flex;justify-content:center;padding:20px}
+.card{max-width:800px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.letterhead{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:12px 28px;display:flex;justify-content:space-between;align-items:center}
+.letterhead-brand{display:flex;align-items:center;gap:10px}
+.letterhead-logo{width:32px;height:32px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:16px}
+.letterhead-name{color:#fff;font-weight:700;font-size:14px}
+.letterhead-sub{color:#667788;font-size:9px}
+.letterhead-contacts{color:#667788;font-size:9px;text-align:right;line-height:1.5}
+.hero{padding:24px 28px 20px;background:linear-gradient(to bottom,#f8f9ff,#fff);border-bottom:1px solid #eee}
+.hero-label{font-size:10px;color:#667788;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.hero-title h1{font-size:22px;font-weight:800;color:#1a1a2e;display:inline}
+.badge{background:linear-gradient(135deg,#d4a843,#b8860b);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px}
+.hero-desc{font-size:13px;color:#333;line-height:1.5;margin:8px 0}
+.hero-meta{font-size:11px;color:#667788;font-weight:600}
+.section{padding:14px 28px}
+.info-cell .label{font-size:9px;color:#667788;text-transform:uppercase;margin-bottom:2px}
+.info-cell .value{font-size:14px;font-weight:700;color:#1a1a2e}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat-card{background:#f8f9ff;border-radius:10px;padding:12px 14px}
+.stat-card .label{font-size:9px;color:#667788;text-transform:uppercase}
+.stat-card .value{font-size:18px;font-weight:800;color:#1a1a2e;margin:2px 0}
+.stat-card .sub{font-size:10px;color:#667788}
+.stat-card.green{background:#e8f5e9}.stat-card.green .value{color:#2e7d32}
+.stat-card.amber{background:#fff8e1}.stat-card.amber .value{color:#f57f17}
+.section-title h2{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:10px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.content-card{background:#f8f9ff;border-radius:10px;padding:14px;border:1px solid #eef0f5}
+.content-card p{font-size:12px;color:#333;line-height:1.5;margin-bottom:8px}
+.card-foot{font-size:10px;color:#667788;line-height:1.4}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;margin:2px 0}
+.tag-purple{background:#f3e5f5;color:#7b1fa2}
+.roadmap{display:flex;flex-direction:column;gap:8px}
+.roadmap-step{display:flex;gap:12px;align-items:flex-start}
+.roadmap-num{width:28px;height:28px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step-title{font-weight:700;font-size:13px;color:#1a1a2e}
+.step-desc{font-size:11px;color:#667788}
+.footer{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:12px 28px;display:flex;justify-content:space-between;align-items:center}
+.footer .label{font-size:8px;font-weight:600;color:#d4a843;text-transform:uppercase}
+.footer .result{color:#fff;font-size:15px;font-weight:700}
+.footer-logo{width:36px;height:36px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:18px}
+hr{border:none;border-top:1px solid #eee;margin:0 28px}</style></head>
+<body>
+<div class="card">
+<div class="letterhead"><div class="letterhead-brand"><div class="letterhead-logo">A</div><div><div class="letterhead-name">ANDROMEDA CONSULT</div></div></div>
+<div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru</div></div>
+<div class="hero"><div class="hero-label">Визитка</div>
+<div class="hero-title"><h1>НПП КОМПОЗИТ</h1><span class="badge">ООО</span></div>
+<div class="hero-desc">Дзержинск, Восточное ш. 26, 9 лет | Производство изделий из пластмасс (ОКВЭД 22.29.2)</div>
+<div class="hero-meta">📍 Дзержинск, НО | 📋 ИНН 5249158570 | 👥 42 чел.</div></div>
+<div class="section"><div class="stats-grid">
+<div class="stat-card green"><div class="label">Выручка</div><div class="value">315 млн ₽</div></div>
+<div class="stat-card"><div class="label">Прибыль</div><div class="value">0.0 млн ₽</div></div>
+<div class="stat-card green"><div class="label">Экономия/год</div><div class="value">~3,2 млн ₽</div></div>
+<div class="stat-card green"><div class="label">За 10 лет</div><div class="value">~32 млн ₽</div></div>
+</div></div>
+<hr>
+<div class="section"><div class="two-col">
+<div class="content-card"><b>🛠️ Продукция</b><br><p>Изделия из пластмасс, полимерные композиционные материалы.</p><div class="card-foot"><span class="tag" style="background:#e8eaf6;color:#283593;">ОКВЭД 22.29.2</span></div></div>
+<div class="content-card"><b>💡 Инновация</b><br><p>Технология производства изделий из полимерных композиционных материалов с повышенной термостойкостью и прочностью.</p><div class="card-foot"><span class="tag tag-purple">📄 Патент на полезную модель</span></div></div>
+</div></div>
+<hr>
+<div class="section">
+<div class="section-title"><h2>→ План действий</h2></div>
+<div class="roadmap">
+<div class="roadmap-step"><div class="roadmap-num">1</div><div><div class="step-title">Договор + аванс</div><div class="step-desc">Старт работ</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">2</div><div><div class="step-title">Патент (4-5 мес.)</div><div class="step-desc">Полезная модель</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">3</div><div><div class="step-title">Заявка в Сколково</div><div class="step-desc">Одновременно с патентом</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">4</div><div><div class="step-title">Статус резидента</div><div class="step-desc">4-6 мес.</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">5</div><div><div class="step-title">Экономия ~3,2 млн ₽/год</div><div class="step-desc">Налог 0% + СВ 15%</div></div></div>
+</div></div>
+<div class="footer"><div><div class="label">Результат для НПП КОМПОЗИТ</div>
+<div class="result">Экономия ~32 млн ₽ за 10 лет</div></div>
+<div class="footer-logo">A</div></div></div></body></html>
