@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background: #f5f5f5; display: flex; justify-content: center; padding: 30px; -webkit-font-smoothing: antialiased; }
+@media print { body { background: #fff; padding: 0; } @page { margin: 15mm; } }
+.card { max-width: 210mm; width: 100%; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 4px; overflow: hidden; }
+.letterhead { background: #1a1a2e; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+.letterhead-brand { display: flex; align-items: center; gap: 14px; }
+.letterhead-logo { width: 40px; height: 40px; background: linear-gradient(135deg, #d4a843, #b8860b); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1a1a2e; font-weight: 900; font-size: 20px; }
+.letterhead-name { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; }
+.letterhead-sub { color: #8899aa; font-size: 10px; margin-top: 1px; }
+.letterhead-contacts { text-align: right; color: #667788; font-size: 9px; line-height: 1.6; }
+.hero { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 26px 28px; }
+.hero-label { color: #d4a843; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.hero-title { display: flex; align-items: baseline; gap: 12px; }
+.hero-title h1 { color: #fff; font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
+.hero-title .badge { color: #8899aa; font-size: 11px; font-weight: 500; border: 1px solid #334455; padding: 2px 10px; border-radius: 4px; }
+.hero-desc { color: #ccddee; font-size: 13px; font-weight: 300; margin-top: 6px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; color: #667788; font-size: 10px; }
+.hero-meta span::before { content: "\2022"; color: #d4a843; margin-right: 6px; }
+.section { padding: 20px 28px; }
+.section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.section-title .icon { width: 28px; height: 28px; background: #1a1a2e; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #d4a843; font-size: 13px; font-weight: 700; }
+.section-title h2 { font-size: 11px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 1.2px; }
+.info-row { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; }
+.info-cell { padding: 12px 16px; }
+.info-cell:first-child { border-right: 1px solid #e0e0e0; }
+.info-cell .label { font-size: 9px; font-weight: 600; color: #8899aa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.info-cell .value { font-size: 13px; font-weight: 600; color: #222; }
+.info-cell .sub { font-size: 10px; color: #8899aa; margin-top: 2px; }
+table.ft { width: 100%; border-collapse: collapse; font-size: 11px; }
+table.ft th { background: #1a1a2e; color: #d4a843; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; }
+table.ft td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #444; }
+table.ft tr:nth-child(even) td { background: #fafafa; }
+.savings-block { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 8px; padding: 20px; color: #fff; margin-top: 14px; }
+.savings-block .label { font-size: 9px; font-weight: 600; color: #d4a843; text-transform: uppercase; letter-spacing: 1.2px; }
+.savings-flex { display: flex; align-items: baseline; gap: 12px; margin-top: 6px; }
+.savings-flex .big { font-size: 28px; font-weight: 900; }
+.savings-details { display: flex; gap: 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #334455; font-size: 9px; color: #667788; }
+.footer { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+.footer .label { font-size: 8px; font-weight: 600; color: #d4a843; text-transform: uppercase; letter-spacing: 1.2px; }
+.footer .result { color: #fff; font-size: 14px; font-weight: 700; margin-top: 1px; }
+.footer-logo { width: 36px; height: 36px; background: linear-gradient(135deg, #d4a843, #b8860b); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1a1a2e; font-weight: 900; font-size: 18px; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 0 28px; }</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="letterhead">
+    <div class="letterhead-brand">
+      <div class="letterhead-logo">A</div>
+      <div>
+        <div class="letterhead-name">ANDROMEDA CONSULT</div>
+        <div class="letterhead-sub">Консалтинговая компания</div>
+      </div>
+    </div>
+    <div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru<br>@andromedaconsult</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Анализ и расчёт налоговой экономии</div>
+    <div class="hero-title">
+      <h1>НефтегазовыеМагистрали</h1>
+      <span class="badge">28.92</span>
+    </div>
+    <div class="hero-desc">Производство машин и оборудования для добычи полезных ископаемых и строительства</div>
+    <div class="hero-meta">
+      <span>Казань, Татарстан</span>
+      <span>ИНН 1656059930</span>
+      <span>ОГРН 1111690044740</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">📋</div><h2>Основные реквизиты</h2></div>
+    <div class="info-row">
+      <div class="info-cell">
+        <div class="label">Юридический адрес</div>
+        <div class="value">ул. Тази Гиззата, д. 3А, г. Казань, 420111</div>
+      </div>
+      <div class="info-cell">
+        <div class="label">Год основания</div>
+        <div class="value">2011</div>
+        <div class="sub">14 лет на рынке</div>
+      </div>
+    </div>
+    <div class="info-row" style="margin-top:6px;">
+      <div class="info-cell">
+        <div class="label">Сотрудники</div>
+        <div class="value">10 чел.</div>
+      </div>
+      <div class="info-cell">
+        <div class="label">Налоговый режим</div>
+        <div class="value">ОСН</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">📊</div><h2>Финансовые показатели</h2></div>
+    <table class="ft">
+      <tr><th>Год</th><th style="text-align:right">Выручка</th><th style="text-align:right">Прибыль</th></tr>
+      <tr><td>2020</td><td style="text-align:right">69,1 млн ₽</td><td style="text-align:right;color:#2e7d32">1,1 млн ₽</td></tr>
+      <tr><td>2021</td><td style="text-align:right">110,0 млн ₽</td><td style="text-align:right;color:#2e7d32">1,5 млн ₽</td></tr>
+      <tr><td>2022</td><td style="text-align:right">90,8 млн ₽</td><td style="text-align:right;color:#2e7d32">2,8 млн ₽</td></tr>
+      <tr><td>2023</td><td style="text-align:right">109,0 млн ₽</td><td style="text-align:right;color:#2e7d32">5,8 млн ₽</td></tr>
+      <tr><td>2024</td><td style="text-align:right">94,5 млн ₽</td><td style="text-align:right;color:#2e7d32">4,3 млн ₽</td></tr>
+      <tr><td>2025</td><td style="text-align:right">56,9 млн ₽</td><td style="text-align:right;color:#2e7d32">2,1 млн ₽</td></tr>
+    </table>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">💰</div><h2>Расчёт налоговой экономии</h2></div>
+    <p style="font-size:12px;color:#666;margin-bottom:12px;">На основе данных 2024 года: выручка ~94 млн, 10 сотрудников.</p>
+    <table class="ft">
+      <tr><th>Показатель</th><th style="text-align:right">Без статуса</th><th style="text-align:right">Со статусом</th></tr>
+      <tr><td>Налог на прибыль</td><td style="text-align:right">25%</td><td style="text-align:right;color:#2e7d32;font-weight:600">0%</td></tr>
+      <tr><td>Страховые взносы</td><td style="text-align:right">30%</td><td style="text-align:right;color:#2e7d32;font-weight:600">15%</td></tr>
+      <tr><td>Налог на имущество</td><td style="text-align:right">до 2,2%</td><td style="text-align:right;color:#2e7d32;font-weight:600">0%</td></tr>
+    </table>
+
+    <div class="savings-block">
+      <div class="label">Итоговая экономия</div>
+      <div class="savings-flex">
+        <span class="big">~3 млн ₽</span>
+        <span style="color:#8899aa;font-size:11px;">в год</span>
+      </div>
+      <div class="savings-details">
+        <span>Прогноз на 10 лет: 25–30 млн ₽</span>
+        <span>Стабильная прибыль на протяжении 5 лет</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">🏗️</div><h2>Описание деятельности и продукции</h2></div>
+    <p style="font-size:12px;color:#444;line-height:1.6;">Производство машин и оборудования для добычи полезных ископаемых и строительства (ОКВЭД 28.92). Компания на рынке с 2011 года, стабильно генерирует выручку от 70 до 110 млн ₽ в год, с положительной чистой прибылью на протяжении последних 5 лет.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">💡</div><h2>Инновационный потенциал</h2></div>
+    <p style="font-size:12px;color:#444;line-height:1.6;">Разработка конструкций бурового и нефтегазового оборудования с повышенной износостойкостью. Технология модернизации насосных агрегатов и компрессорного оборудования для нефтегазового сектора.</p>
+    <div style="margin-top:10px;font-size:10px;color:#667788;">→ Требуется патент на полезную модель (4–5 месяцев)</div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title"><div class="icon">→</div><h2>План действий</h2></div>
+    <div class="roadmap" style="border:1px solid #e0e0e0;border-radius:6px;">
+      <div style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid #f0f0f0;align-items:start;">
+        <div style="width:32px;height:32px;background:#1a1a2e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">1</div>
+        <div><div style="font-size:12px;font-weight:600;color:#222;">Аудит документов и подача патента</div><div style="font-size:10px;color:#667788;margin-top:2px;">Полезная модель по тематике нефтегазового оборудования</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid #f0f0f0;align-items:start;">
+        <div style="width:32px;height:32px;background:#1a1a2e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">2</div>
+        <div><div style="font-size:12px;font-weight:600;color:#222;">Заявка на резидентство Сколково</div><div style="font-size:10px;color:#667788;margin-top:2px;">Экстерриториальный статус, экспертиза 2–3 месяца</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 16px;align-items:start;">
+        <div style="width:32px;height:32px;background:#2e7d32;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">3</div>
+        <div><div style="font-size:12px;font-weight:600;color:#222;">Экономия с первого квартала</div><div style="font-size:10px;color:#667788;margin-top:2px;">~3 млн ₽/год налоговой экономии</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="label">Потенциальный результат</div>
+      <div class="result">до 30 млн ₽ за 10 лет</div>
+    </div>
+    <div class="footer-logo">A</div>
+  </div>
+
+</div>
+</body>
+</html>
