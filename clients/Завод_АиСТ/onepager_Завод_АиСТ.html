@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One-pager — Завод АиСТ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f5f5f7; color: #1d1d1f; }
+.container { max-width: 880px; margin: 0 auto; padding: 16px; }
+.letterhead { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 28px 36px; border-radius: 14px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+.letterhead .title { color: #f0c040; font-size: 20px; font-weight: 700; }
+.letterhead .info { color: #8899aa; font-size: 12px; text-align: right; line-height: 1.6; }
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+.subtitle { color: #6e6e73; font-size: 14px; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h2 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { padding: 10px; background: #f8f8fa; border-radius: 8px; }
+.stat .lbl { font-size: 11px; color: #6e6e73; }
+.stat .val { font-size: 16px; font-weight: 700; margin-top: 2px; }
+.savings-box { background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%); color: #fff; border-radius: 12px; padding: 24px; text-align: center; margin: 12px 0; }
+.savings-box .big { font-size: 32px; font-weight: 800; }
+.savings-box .lbl { color: #a8e6cf; font-size: 13px; margin-top: 4px; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 16px; font-size: 11px; font-weight: 600; }
+.tag.green { background: #d4edda; color: #155724; }
+.tag.orange { background: #fff3cd; color: #856404; }
+.tag.blue { background: #d1ecf1; color: #0c5460; }
+.roadmap { display: flex; justify-content: space-between; margin: 16px 0; }
+.roadmap .step { text-align: center; flex: 1; position: relative; }
+.roadmap .step .circle { width: 32px; height: 32px; border-radius: 50%; background: #1a1a2e; color: #fff; line-height: 32px; font-weight: 700; font-size: 13px; margin: 0 auto 6px; }
+.roadmap .step .text { font-size: 11px; color: #555; }
+.footer { text-align: center; padding: 20px; font-size: 12px; color: #999; }
+@media (max-width:640px){ .grid2{grid-template-columns:1fr} .letterhead{flex-direction:column;text-align:center} .letterhead .info{text-align:center;margin-top:8px} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="letterhead">
+<div class="title">ANDROMEDA CONSULT</div>
+<div class="info">ИНН 7702464831<br>andromedaconsult.ru</div>
+</div>
+
+<h1>ООО «Завод «АиСТ»</h1>
+<div class="subtitle">Производство автомобилей специального назначения • Нижний Новгород</div>
+
+<div class="card">
+<h2>Ключевые факты</h2>
+<div class="grid2">
+<div class="stat"><div class="lbl">Выручка</div><div class="val">53,4 млн ₽</div></div>
+<div class="stat"><div class="lbl">Директор</div><div class="val">Назаров И. Э.</div></div>
+<div class="stat"><div class="lbl">На рынке</div><div class="val">с 2013 года</div></div>
+<div class="stat"><div class="lbl">ОКВЭД</div><div class="val">29.10.5</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Почему Сколково?</h2>
+<div class="grid2">
+<div class="stat"><span class="tag green">0%</span><div class="lbl" style="margin-top:4px;">Налог на прибыль</div></div>
+<div class="stat"><span class="tag green">15%</span><div class="lbl" style="margin-top:4px;">Страховые взносы</div></div>
+<div class="stat"><span class="tag green">0%</span><div class="lbl" style="margin-top:4px;">Налог на имущество</div></div>
+<div class="stat"><span class="tag blue">Гранты</span><div class="lbl" style="margin-top:4px;">до 50 млн ₽</div></div>
+</div>
+</div>
+
+<div class="savings-box">
+<div class="big">~1,3 млн ₽/год</div>
+<div class="lbl">Экономия при статусе резидента Сколково</div>
+<div class="big" style="font-size:24px;margin-top:10px;">~13–15 млн ₽ за 10 лет</div>
+</div>
+
+<div class="card">
+<h2>План действий</h2>
+<div class="roadmap">
+<div class="step"><div class="circle">1</div><div class="text">Аудит</div></div>
+<div class="step"><div class="circle">2</div><div class="text">Патент</div></div>
+<div class="step"><div class="circle">3</div><div class="text">Заявка</div></div>
+<div class="step"><div class="circle">4</div><div class="text">Статус ✅</div></div>
+</div>
+</div>
+
+<div class="footer">КОНСАЛТИНГОВАЯ КОМПАНИЯ ANDROMEDA CONSULT • info@andromedaconsult.ru</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аналитика — Завод АиСТ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f5f5f7; color: #1d1d1f; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 32px 40px; border-radius: 16px; margin-bottom: 24px; color: #fff; }
+.header h1 { font-size: 26px; font-weight: 700; color: #f0c040; margin-bottom: 6px; }
+.header .sub { font-size: 14px; color: #aab; }
+.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h2 { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1a1a2e; border-left: 4px solid #f0c040; padding-left: 12px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat { background: #f8f8fa; border-radius: 8px; padding: 14px; }
+.stat .label { font-size: 12px; color: #6e6e73; text-transform: uppercase; letter-spacing: .5px; }
+.stat .value { font-size: 20px; font-weight: 700; color: #1d1d1f; margin-top: 4px; }
+.stat .value.green { color: #28a745; }
+.stat .value.orange { color: #e67e22; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { background: #1a1a2e; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+tr:nth-child(even) { background: #f8f8fa; }
+.tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.tag.green { background: #d4edda; color: #155724; }
+.tag.orange { background: #fff3cd; color: #856404; }
+.tag.blue { background: #d1ecf1; color: #0c5460; }
+.savings { background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.savings h2 { color: #f0c040; border-left-color: #f0c040; }
+.savings .big-number { font-size: 36px; font-weight: 800; color: #fff; }
+.savings .note { font-size: 13px; color: #a8e6cf; margin-top: 6px; }
+.cta { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 28px; text-align: center; margin: 16px 0; }
+.cta h2 { color: #f0c040; font-size: 20px; border: none; padding: 0; margin-bottom: 8px; }
+.cta p { color: #ccc; font-size: 14px; }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>ООО «Завод «АиСТ»</h1>
+<div class="sub">ИНН 5258106836 • Нижний Новгород • ОКВЭД 29.10.5</div>
+<div class="sub" style="margin-top:4px;">Производство автомобилей специального назначения</div>
+</div>
+
+<div class="card">
+<h2>Общая информация</h2>
+<div class="grid">
+<div class="stat"><div class="label">Генеральный директор</div><div class="value">Назаров И. Э.</div></div>
+<div class="stat"><div class="label">Телефон</div><div class="value">+7 (930) 711-79-12</div></div>
+<div class="stat"><div class="label">Сайт</div><div class="value">plant-aist.ru</div></div>
+<div class="stat"><div class="label">Регистрация</div><div class="value">с 06.02.2013</div></div>
+<div class="stat"><div class="label">Юридический адрес</div><div class="value">Нижний Новгород, Комсомольская пл., 6/2, кв. 74</div></div>
+<div class="stat"><div class="label">Статус</div><div class="value"><span class="tag green">Действует</span></div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Финансовые показатели</h2>
+<table>
+<tr><th>Показатель</th><th>2025 г.</th></tr>
+<tr><td>Выручка</td><td><strong>53,4 млн ₽</strong></td></tr>
+<tr><td>Налоговый режим</td><td>ОСН (предположительно)</td></tr>
+<tr><td>Участие в торгах</td><td>4 (выиграно 3)</td></tr>
+<tr><td>Основной заказчик</td><td>УОЗ ПО, ГКУ</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Ключевые показатели</h2>
+<div class="grid">
+<div class="stat"><div class="label">Выручка</div><div class="value orange">53,4 млн ₽</div></div>
+<div class="stat"><div class="label">Порог для Сколково</div><div class="value">50+ млн ₽</div></div>
+<div class="stat"><div class="label">Лицензии</div><div class="value">5 шт.</div></div>
+<div class="stat"><div class="label">Лизинг / имущество</div><div class="value">3 объекта</div></div>
+</div>
+</div>
+
+<div class="savings">
+<h2>Прогноз экономии при статусе резидента Сколково</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;">
+<div><div class="label" style="color:#a8e6cf;font-size:12px;">В год</div><div class="big-number">~1,3 млн ₽</div></div>
+<div><div class="label" style="color:#a8e6cf;font-size:12px;">За 10 лет</div><div class="big-number">~13–15 млн ₽</div></div>
+<div><div class="label" style="color:#a8e6cf;font-size:12px;">Статус</div><div class="big-number" style="font-size:18px;margin-top:8px;"><span class="tag orange">На грани порога</span></div></div>
+</div>
+<div class="note">Выручка 53,4 млн — выше минимального порога (50 млн), но запас небольшой. Рекомендуется подтвердить тренд роста выручки.</div>
+</div>
+
+<div class="cta">
+<h2>Игорь Эдуардович!</h2>
+<p>Ваш завод производит автомобили специального назначения — это перспективное направление для инновационного развития. Получение статуса резидента Сколково даст вашей компании налоговые льготы на 10 лет и доступ к грантовым программам до 50 млн ₽.</p>
+</div>
+
+<div class="card">
+<h2>План действий</h2>
+<table>
+<tr><th>Этап</th><th>Срок</th><th>Описание</th></tr>
+<tr><td>1. Аудит компании</td><td>1-2 дня</td><td>Сбор документов, проверка соответствия</td></tr>
+<tr><td>2. Патентование</td><td>4-5 мес.</td><td>Подача заявки на полезную модель</td></tr>
+<tr><td>3. Заявка в Сколково</td><td>2-3 мес.</td><td>Подготовка и подача заявки на резидентство</td></tr>
+<tr><td>4. Получение статуса</td><td>~7 мес.</td><td>С момента старта до статуса резидента</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Расчёт экономии на 10 лет</h2>
+<table>
+<tr><th>Статья</th><th>Ставка обычная</th><th>Ставка Сколково</th><th>Экономия в год</th></tr>
+<tr><td>Налог на прибыль</td><td>25%</td><td>0%</td><td>~700 тыс ₽</td></tr>
+<tr><td>Страховые взносы</td><td>30%</td><td>15% (с порогом)</td><td>~400 тыс ₽</td></tr>
+<tr><td>Налог на имущество</td><td>2,2%</td><td>0%</td><td>~200 тыс ₽</td></tr>
+<tr><td colspan="3"><strong>Итого в год</strong></td><td><strong>~1,3 млн ₽</strong></td></tr>
+<tr><td colspan="3"><strong>За 10 лет</strong></td><td><strong>~13–15 млн ₽</strong></td></tr>
+</table>
+</div>
+
+</div>
+</body>
+</html>
