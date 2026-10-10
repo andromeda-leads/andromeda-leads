@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#f5f5f5;display:flex;justify-content:center;padding:30px}
+.card{max-width:210mm;width:100%;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.08);border-radius:4px;overflow:hidden}
+.lh{background:#1a1a2e;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
+.lh-b{display:flex;align-items:center;gap:14px}
+.lh-l{width:40px;height:40px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:20px}
+.lh-n{color:#fff;font-weight:700;font-size:16px}
+.lh-s{color:#8899aa;font-size:10px}
+.lh-c{text-align:right;color:#667788;font-size:9px;line-height:1.6}
+.hero{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:26px 28px}
+.hl{color:#d4a843;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.ht{display:flex;align-items:baseline;gap:12px}
+.ht h1{color:#fff;font-size:28px;font-weight:900;letter-spacing:-.5px}
+.ht .bd{color:#8899aa;font-size:11px;font-weight:500;border:1px solid #334455;padding:2px 10px;border-radius:4px}
+.hd{color:#ccddee;font-size:13px;font-weight:300;margin-top:6px}
+.hm{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:10px;color:#667788;font-size:10px}
+.hm span::before{content:"\2022";color:#d4a843;margin-right:6px}
+.s{padding:20px 28px}
+.st{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.st .ic{width:28px;height:28px;background:#1a1a2e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#d4a843;font-size:13px;font-weight:700}
+.st h2{font-size:11px;font-weight:700;color:#1a1a2e;text-transform:uppercase;letter-spacing:1.2px}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sc{border:1px solid #e0e0e0;border-radius:6px;padding:14px;text-align:center;background:#fafafa}
+.sc .l{font-size:8px;font-weight:600;color:#8899aa;text-transform:uppercase;letter-spacing:.8px}
+.sc .v{font-size:22px;font-weight:800;color:#1a1a2e;margin-top:4px}
+.sc .sb{font-size:9px;color:#667788;margin-top:2px}
+.svb{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:8px;padding:20px;color:#fff}
+.svb .lbl{font-size:9px;font-weight:600;color:#d4a843;text-transform:uppercase;letter-spacing:1.2px}
+.svg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:12px}
+.svi .b{font-size:26px;font-weight:900}
+.svi .d{font-size:10px;color:#8899aa;margin-top:2px}
+.svi:not(:first-child){border-left:1px solid #334455;padding-left:20px}
+.svd{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid #334455;font-size:9px;color:#667788}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cc{border:1px solid #e0e0e0;border-radius:6px;padding:16px}
+.cc .ct{font-size:9px;font-weight:700;color:#1a1a2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.cc p{font-size:12px;color:#444;line-height:1.6}
+.cc .cf{margin-top:10px;padding-top:10px;border-top:1px solid #eee;font-size:10px;color:#667788}
+.tag{display:inline-block;font-size:9px;font-weight:600;padding:3px 8px;border-radius:4px;margin-top:6px}
+.tb{background:#e8eaf6;color:#283593}
+.ob{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:2px solid #2e7d32;border-radius:10px;padding:20px 24px}
+.ft{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+.ft .fl{font-size:8px;font-weight:600;color:#d4a843;text-transform:uppercase;letter-spacing:1.2px}
+.ft .fr{color:#fff;font-size:15px;font-weight:700;margin-top:2px}
+.ft .fs{color:#667788;font-size:9px;margin-top:1px}
+.flo{width:36px;height:36px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:18px}
+hr{border:none;border-top:1px solid #e0e0e0;margin:0 28px}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="lh">
+<div class="lh-b"><div class="lh-l">A</div><div><div class="lh-n">ANDROMEDA CONSULT</div><div class="lh-s">Консалтинговая компания</div></div></div>
+<div class="lh-c">info@andromedaconsult.ru<br>andromedaconsult.ru</div>
+</div>
+<div class="hero">
+<div class="hl">Корпоративная визитка</div>
+<div class="ht"><h1>КОМФОРТЛЮК</h1><span class="bd">ООО</span></div>
+<div class="hd">Производство электрического оборудования</div>
+<div class="hm"><span>Производство</span><span>ОКВЭД: электрооборудование</span></div>
+</div>
+<div class="s"><div class="st"><div class="ic">📊</div><h2>Финансовые показатели</h2></div>
+<div class="sg">
+<div class="sc"><div class="l">Выручка</div><div class="v">–</div><div class="sb">данные уточняются</div></div>
+<div class="sc"><div class="l">Налоговый режим</div><div class="v">–</div><div class="sb">уточняется</div></div>
+<div class="sc"><div class="l">Статус</div><div class="v">Новый</div><div class="sb">лид</div></div>
+<div class="sc"><div class="l">Экономия</div><div class="v">–</div><div class="sb">требуются данные</div></div>
+</div></div>
+<hr>
+<div class="s"><div class="tc">
+<div class="cc"><div class="ct">🔬 Продукция</div><p>Производство прочего электрического оборудования</p></div>
+<div class="cc"><div class="ct">💡 Инновация</div><p>Технология в сфере производства электрического оборудования. Требуется уточнение.</p><div class="cf"><span class="tag" style="background:#f3e5f5;color:#6a1b9a;">Требуется патент</span></div></div>
+</div></div>
+<div class="s"><div class="ob">
+<div style="font-size:11px;font-weight:700;color:#1a1a2e;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">✉️ Наше предложение</div>
+<div style="font-size:14px;font-weight:600;color:#1a1a2e;line-height:1.5;margin-bottom:8px">Предлагаем изучить возможности получения статуса резидента Сколково. Требуется уточнить финансовые показатели компании.</div>
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid #a5d6a7;display:flex;gap:24px;font-size:11px;color:#2e7d32;font-weight:600"><span>🏛️ Сколково</span><span>📅 Требуется уточнение данных</span></div>
+</div></div>
+<div class="ft">
+<div><div class="fl">Потенциальный результат</div><div class="fr">Для расчёта экономии необходимы финансовые данные компании</div><div class="fs">На основе бухгалтерской отчётности и действующих налоговых льгот</div></div>
+<div class="flo">A</div>
+</div>
+</div>
+</body>
+</html>
