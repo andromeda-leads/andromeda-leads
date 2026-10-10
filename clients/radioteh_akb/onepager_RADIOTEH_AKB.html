@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:'Segoe UI',-apple-system,sans-serif;display:flex;justify-content:center;padding:20px}
+.card{max-width:800px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.letterhead{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:12px 28px;display:flex;justify-content:space-between;align-items:center}
+.letterhead-brand{display:flex;align-items:center;gap:10px}
+.letterhead-logo{width:32px;height:32px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:16px}
+.letterhead-name{color:#fff;font-weight:700;font-size:14px}
+.letterhead-sub{color:#667788;font-size:9px}
+.letterhead-contacts{color:#667788;font-size:9px;text-align:right;line-height:1.5}
+.hero{padding:24px 28px 20px;background:linear-gradient(to bottom,#f8f9ff,#fff)}
+.hero-label{font-size:10px;color:#667788;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.hero-title{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.hero-title h1{font-size:22px;font-weight:800;color:#1a1a2e}
+.badge{background:linear-gradient(135deg,#d4a843,#b8860b);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+.hero-desc{font-size:13px;color:#333;line-height:1.5;margin-bottom:10px}
+.hero-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#667788;font-weight:600}
+.section{padding:16px 28px}
+.info-row{display:flex;gap:20px;flex-wrap:wrap}
+.info-cell{flex:1;min-width:200px}
+.info-cell .label{font-size:9px;color:#667788;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.info-cell .value{font-size:14px;font-weight:700;color:#1a1a2e}
+.info-cell .sub{font-size:11px;color:#667788}
+.section-title{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.section-title .icon{font-size:18px}
+.section-title h2{font-size:16px;font-weight:700;color:#1a1a2e}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat-card{background:#f8f9ff;border-radius:10px;padding:12px 14px}
+.stat-card .label{font-size:9px;color:#667788;text-transform:uppercase;letter-spacing:.6px}
+.stat-card .value{font-size:18px;font-weight:800;color:#1a1a2e;margin:2px 0}
+.stat-card .sub{font-size:10px;color:#667788}
+.stat-card.green{background:#e8f5e9}
+.stat-card.green .value{color:#2e7d32}
+.stat-card.amber{background:#fff8e1}
+.stat-card.amber .value{color:#f57f17}
+.savings-block{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border-radius:12px;padding:16px}
+.savings-block>.label{font-size:9px;color:#2e7d32;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.savings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:10px}
+.savings-item .big{font-size:22px;font-weight:800;color:#1b5e20}
+.savings-item .desc{font-size:10px;color:#2e7d32}
+.savings-details{display:flex;gap:16px;flex-wrap:wrap;font-size:10px;color:#2e7d32;font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.content-card{background:#f8f9ff;border-radius:10px;padding:14px;border:1px solid #eef0f5}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.card-icon{font-size:20px}
+.card-title{font-weight:700;font-size:13px;color:#1a1a2e}
+.content-card p{font-size:12px;color:#333;line-height:1.5;margin-bottom:8px}
+.card-foot{font-size:10px;color:#667788;line-height:1.4}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;margin:2px 0}
+.tag-purple{background:#f3e5f5;color:#7b1fa2}
+.deep-table{display:flex;flex-direction:column;gap:8px}
+.deep-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8f9ff;border-radius:8px;font-size:12px;color:#333}
+.icon-cell{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.icon-green{background:#e8f5e9;color:#2e7d32}
+.icon-blue{background:#e3f2fd;color:#1565c0}
+.icon-amber{background:#fff8e1;color:#f57f17}
+.offer-block{background:linear-gradient(135deg,#e8f5e9,#fff);border:1px solid #a5d6a7;border-radius:12px;padding:16px}
+.roadmap{display:flex;flex-direction:column;gap:10px}
+.roadmap-step{display:flex;gap:12px;align-items:flex-start}
+.roadmap-num{width:28px;height:28px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step-title{font-weight:700;font-size:13px;color:#1a1a2e}
+.step-desc{font-size:11px;color:#667788}
+.footer{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+.footer .label{font-size:8px;font-weight:600;color:#d4a843;text-transform:uppercase;letter-spacing:1.2px}
+.footer .result{color:#fff;font-size:15px;font-weight:700;margin-top:2px}
+.footer .result-sub{color:#667788;font-size:9px;margin-top:1px}
+.footer-logo{width:36px;height:36px;background:linear-gradient(135deg,#d4a843,#b8860b);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-weight:900;font-size:18px}
+hr{border:none;border-top:1px solid #e0e0e0;margin:0 28px}
+</style></head>
+<body>
+<div class="card">
+<div class="letterhead"><div class="letterhead-brand"><div class="letterhead-logo">A</div><div><div class="letterhead-name">ANDROMEDA CONSULT</div><div class="letterhead-sub">Консалтинговая компания</div></div></div>
+<div class="letterhead-contacts">info@andromedaconsult.ru<br>andromedaconsult.ru<br>@andromedaconsult</div></div>
+
+<div class="hero"><div class="hero-label">Корпоративная визитка</div>
+<div class="hero-title"><h1>РАДИОТЕХ-АКБ</h1><span class="badge">ООО</span></div>
+<div class="hero-desc">Производство литий-ионных аккумуляторов и аккумуляторных батарей для промышленного, оборонного и гражданского назначения</div>
+<div class="hero-meta"><span>📍 Санкт-Петербург</span><span>📅 13 лет</span><span>📋 ИНН 7804523388</span><span>📄 ОГРН 1137847509227</span></div></div>
+
+<div class="section"><div class="info-row">
+<div class="info-cell"><div class="label">Руководитель</div><div class="value">Иванов Вадим Робертович</div><div class="sub">Генеральный директор</div></div>
+<div class="info-cell"><div class="label">Юридический адрес</div><div class="value">ул. Мебельная, д. 12, к. 1, лит. Б</div><div class="sub">г. Санкт-Петербург, 197374</div></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="section-title"><div class="icon">📊</div><h2>Ключевые финансовые показатели</h2></div>
+<div class="stats-grid">
+<div class="stat-card green"><div class="label">Выручка 2025</div><div class="value">579,2 млн ₽</div><div class="sub">+21,9% к 2024</div></div>
+<div class="stat-card green"><div class="label">Прибыль 2025</div><div class="value">352,6 млн ₽</div><div class="sub">рентабельность 61%</div></div>
+<div class="stat-card green"><div class="label">Стоимость бизнеса</div><div class="value">1,5 млрд ₽</div><div class="sub">оценка Saby</div></div>
+<div class="stat-card green"><div class="label">Экономия/год</div><div class="value">~73,5 млн ₽</div><div class="sub">при статусе Сколково</div></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="section-title"><div class="icon">💰</div><h2>Расчёт налоговой экономии (статус резидента Сколково)</h2></div>
+<div class="savings-block"><div class="label">Налоговые льготы участника</div>
+<div class="savings-grid">
+<div class="savings-item"><div class="big">~73,5 млн ₽</div><div class="desc">в год</div></div>
+<div class="savings-item"><div class="big">~735 млн ₽</div><div class="desc">за 10 лет</div></div>
+<div class="savings-item"><div class="big">0%</div><div class="desc">налог на прибыль</div></div>
+</div>
+<div class="savings-details"><span>Налог на прибыль: ~70,5 млн ₽/год</span><span>Страховые взносы: ~3 млн ₽/год</span></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="two-col">
+<div class="content-card"><div class="card-header"><span class="card-icon">🔋</span><span class="card-title">Продукция</span></div>
+<p>Литий-ионные аккумуляторы, литий-полимерные портативные АКБ (RT-LP), тяговые АКБ, портативные электростанции (RT-L). Индивидуальная сборка под заказ. Выполнение государственных оборонных заказов.</p>
+<div class="card-foot">Li-ion · LiPo · Тяговые · Портативные ЭС<br><span class="tag" style="background:#e8eaf6;color:#283593;">ОКВЭД 27.20</span></div></div>
+<div class="content-card"><div class="card-header"><span class="card-icon">💡</span><span class="card-title">Инновация / предмет заявки</span></div>
+<p>Литий-ионные АКБ с интеллектуальной BMS (системой управления батареями) для увеличенного ресурса и безопасной работы в широком диапазоне температур. Портативные электростанции с инверторным управлением.</p>
+<div class="card-foot">→ BMS · Увеличенный ресурс · Широкий диапазон<br><span class="tag tag-purple">📄 Патент на полезную модель (4–5 мес.)</span></div></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="section-title"><div class="icon">📈</div><h2>Динамика роста</h2></div>
+<div class="deep-table">
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span><strong>2019-2022:</strong> 86→141 млн ₽ (постепенный рост)</span></div>
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span><strong>2023:</strong> скачок до 482 млн ₽ (+242% к 2022)</span></div>
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span><strong>2024:</strong> 475 млн ₽, прибыль 252 млн</span></div>
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span><strong>2025:</strong> 579 млн ₽, прибыль 353 млн (рентабельность 61%)</span></div>
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span>18 выигранных тендеров из 27. Основной заказчик — ФГУП РНИИРС</span></div>
+<div class="deep-row"><span class="icon-cell icon-green">✓</span><span>Оценка стоимости бизнеса: 1,5 млрд ₽</span></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="offer-block">
+<div style="font-size:11px;font-weight:700;color:#1a1a2e;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;">✉️ Наше предложение</div>
+<div style="font-size:15px;font-weight:700;color:#1a1a2e;line-height:1.5;margin-bottom:8px;">Уважаемый Вадим Робертович,</div>
+<div style="font-size:13px;font-weight:500;color:#333;line-height:1.6;">Наша компания предлагает подготовить пакет документов и получить статус экстерриториального резидента особой экономической зоны Сколково. На основе вашей отчётности потенциальная экономия составит ~73,5 млн ₽ в год — это один из самых высоких показателей среди наших клиентов.</div>
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid #a5d6a7;display:flex;gap:24px;font-size:11px;color:#2e7d32;font-weight:600;flex-wrap:wrap;"><span>💰 Экономия ~73,5 млн ₽/год</span><span>📅 Срок: 3–4 месяца</span><span>🏛️ Сколково (экстерриториально)</span></div>
+</div></div>
+
+<hr>
+
+<div class="section"><div class="section-title"><div class="icon">→</div><h2>План действий</h2></div>
+<div class="roadmap">
+<div class="roadmap-step"><div class="roadmap-num">1</div><div><div class="step-title">Заключение договора</div><div class="step-desc">Аванс + success fee</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">2</div><div><div class="step-title">Подача полезной модели</div><div class="step-desc">4–5 мес.</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">3</div><div><div class="step-title">Подача заявки в Сколково</div><div class="step-desc">Одновременно с патентом</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">4</div><div><div class="step-title">Получение статуса</div><div class="step-desc">4–6 мес.</div></div></div>
+<div class="roadmap-step"><div class="roadmap-num">5</div><div><div class="step-title">Ежегодная экономия ~73,5 млн ₽</div><div class="step-desc">Налог на прибыль 0% + СВ 15%</div></div></div>
+</div></div>
+
+<div class="footer"><div><div class="label">Потенциальный результат для ООО «РАДИОТЕХ-АКБ»</div>
+<div class="result">Статус резидента Сколково → экономия ~735 млн ₽ за 10 лет</div>
+<div class="result-sub">На основе бухгалтерской отчётности и действующих налоговых льгот</div></div>
+<div class="footer-logo">A</div></div>
+
+</div>
+</body></html>
