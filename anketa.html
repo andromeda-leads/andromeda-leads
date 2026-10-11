@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Короткая анкета — ANDROMEDA CONSULT</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --navy:#0B192C; --navy2:#16213E; --gold:#d4a843; --line:#243b5c;
+    --ink:#e8eef7; --muted:#9db0c9; --ok:#3ecf8e; --err:#ff6b6b;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:linear-gradient(160deg,#0B192C 0%,#16213E 55%,#0B192C 100%);
+    color:var(--ink); font-family:"Inter","Segoe UI",Roboto,Arial,sans-serif;
+    min-height:100vh; padding:22px 14px 46px;
+  }
+  .wrap{max-width:720px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .logo{
+    width:42px;height:42px;border-radius:10px;background:linear-gradient(140deg,#e6c466,#c39a32);
+    color:#0B192C;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;
+  }
+  .brand b{font-size:15px;letter-spacing:2px;display:block}
+  .brand span{font-size:12px;color:var(--gold)}
+  h1{font-size:26px;line-height:1.2;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:14px;line-height:1.45;margin-bottom:22px}
+  .card{
+    background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:16px;
+  }
+  label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+  .f{margin-bottom:15px}
+  input,select,textarea{
+    width:100%;padding:12px 13px;border-radius:10px;border:1px solid #2c4468;
+    background:#0d1b30;color:var(--ink);font-size:15px;font-family:inherit;outline:none;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+  input.bad,select.bad,textarea.bad{border-color:var(--err);background:#20101a}
+  textarea{min-height:84px;resize:vertical}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>*{flex:1 1 220px}
+  .chk{display:flex;flex-wrap:wrap;gap:8px}
+  .chk label{
+    display:flex;align-items:center;gap:8px;background:#0d1b30;border:1px solid #2c4468;
+    border-radius:999px;padding:9px 14px;font-size:13.5px;color:var(--ink);margin:0;cursor:pointer;
+  }
+  .chk input{width:auto;margin:0}
+  .chk label.on{border-color:var(--gold);background:#1a2846}
+  button{
+    width:100%;padding:15px;border:0;border-radius:12px;cursor:pointer;
+    background:linear-gradient(140deg,#e6c466,#c39a32);color:#0B192C;
+    font-size:16px;font-weight:800;font-family:inherit;
+  }
+  button:disabled{opacity:.6;cursor:default}
+  .note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
+  .req{color:var(--gold)}
+  .hide{display:none}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  #done{text-align:center;padding:26px 18px}
+  #done .ic{font-size:44px;line-height:1;margin-bottom:12px}
+  #done h2{margin:0 0 10px;font-size:22px}
+  #done p{color:var(--muted);font-size:14px;line-height:1.5}
+  .contacts{font-size:13px;color:var(--muted);line-height:1.8;text-align:center;margin-top:18px}
+  .contacts a{color:var(--gold);text-decoration:none}
+  .err{color:var(--err);font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="logo">A</div>
+    <div>
+      <b>ANDROMEDA CONSULT</b>
+      <span>Сколково &middot; МТК &middot; гранты и субсидии</span>
+    </div>
+  </div>
+
+  <div id="form-box">
+    <h1>Короткая анкета</h1>
+    <div class="sub">Достаточно трёх обязательных полей — займёт меньше минуты. Перезвоним и бесплатно оценим, какая мера поддержки подойдёт вашей компании. Поля, отмеченные <span class="req">*</span>, обязательны, остальные можно пропустить.</div>
+
+    <form id="f" novalidate>
+      <div class="card">
+        <div class="row">
+          <div class="f">
+            <label>Имя и фамилия <span class="req">*</span></label>
+            <input name="name" required autocomplete="name" placeholder="Иван Петров">
+          </div>
+          <div class="f">
+            <label>Телефон <span class="req">*</span></label>
+            <input name="phone" required inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00">
+          </div>
+        </div>
+        <div class="row">
+          <div class="f">
+            <label>E-mail <span class="req">*</span></label>
+            <input name="email" type="email" required autocomplete="email" inputmode="email" placeholder="name@company.ru">
+          </div>
+          <div class="f">
+            <label>Город или регион</label>
+            <input name="city" list="cities" autocomplete="address-level2" placeholder="Начните вводить — появятся подсказки">
+            <datalist id="cities">
+              <option>Москва</option><option>Московская область</option><option>Санкт-Петербург</option><option>Ленинградская область</option>
+              <option>Казань</option><option>Набережные Челны</option><option>Нижнекамск</option><option>Альметьевск</option>
+              <option>Екатеринбург</option><option>Нижний Новгород</option><option>Новосибирск</option><option>Самара</option>
+              <option>Ростов-на-Дону</option><option>Краснодар</option><option>Уфа</option><option>Пермь</option>
+              <option>Воронеж</option><option>Волгоград</option><option>Челябинск</option><option>Красноярск</option>
+              <option>Саратов</option><option>Тюмень</option><option>Ижевск</option><option>Киров</option>
+              <option>Оренбург</option><option>Омск</option><option>Барнаул</option><option>Тольятти</option>
+              <option>Владимир</option><option>Тула</option><option>Калуга</option><option>Ярославль</option>
+              <option>Тверь</option><option>Рязань</option><option>Липецк</option><option>Белгород</option>
+              <option>Ставрополь</option><option>Сочи</option><option>Курган</option><option>Череповец</option>
+              <option>Сургут</option><option>Ханты-Мансийск</option><option>Тюменская область</option><option>Свердловская область</option>
+              <option>Республика Татарстан</option><option>Удмуртская Республика</option><option>Башкортостан</option><option>Пермский край</option>
+              <option>Кировская область</option><option>Другой регион</option>
+            </datalist>
+          </div>
+        </div>
+        <div class="row">
+          <div class="f">
+            <label>Компания и ИНН (если есть)</label>
+            <input name="company" placeholder="ООО «Пример», 1650123456">
+          </div>
+          <div class="f">
+            <label>Выручка за последний год</label>
+            <select name="revenue">
+              <option value="">Не указывать</option>
+              <option>до 50 млн ₽</option>
+              <option>50–300 млн ₽</option>
+              <option>300 млн – 1 млрд ₽</option>
+              <option>более 1 млрд ₽</option>
+              <option>работа только начинается</option>
+            </select>
+          </div>
+        </div>
+        <div class="f">
+          <label>Сфера деятельности</label>
+          <select name="activity" id="activity">
+            <option value="">Не указывать</option>
+            <option>Производство: металлообработка, металлоконструкции</option>
+            <option>Производство: пластик, полимеры, упаковка</option>
+            <option>Производство: бетон, ЖБИ, стройматериалы</option>
+            <option>Машиностроение, оборудование, станки</option>
+            <option>Электротехника, приборы, электроника</option>
+            <option>Химия, нефтехимия, удобрения</option>
+            <option>Пищевое производство</option>
+            <option>Деревообработка, мебель, лес</option>
+            <option>Лёгкая промышленность: текстиль, одежда, обувь</option>
+            <option>Медицина, медтехника, фармацевтика</option>
+            <option>ИТ, разработка ПО, цифровые решения</option>
+            <option>Строительство, монтаж, инжиниринг</option>
+            <option>Оптовая или розничная торговля</option>
+            <option>Услуги</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="f hide" id="wrap-activity-other">
+          <label>Уточните сферу деятельности</label>
+          <input name="activity_other" placeholder="Например: производство металлоконструкций">
+        </div>
+        <div class="f">
+          <label>Численность сотрудников</label>
+          <select name="staff">
+            <option value="">Не указывать</option>
+            <option>1–4</option>
+            <option>5–15</option>
+            <option>16–50</option>
+            <option>51–100</option>
+            <option>101–250</option>
+            <option>более 250</option>
+            <option>не знаю</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="f">
+          <label>Что интересует</label>
+          <div class="chk" id="interests">
+            <label><input type="checkbox" value="Сколково"> Сколково</label>
+            <label><input type="checkbox" value="МТК"> МТК</label>
+            <label><input type="checkbox" value="Гранты"> Гранты</label>
+            <label><input type="checkbox" value="Кредит"> Кредит для бизнеса</label>
+            <label><input type="checkbox" value="Торговое финансирование"> Торговое финансирование</label>
+            <label><input type="checkbox" value="Соцконтракт"> Соцконтракт</label>
+            <label><input type="checkbox" value="Нужна консультация"> Не знаю — нужна консультация</label>
+          </div>
+        </div>
+        <div class="f">
+          <label>Комментарий</label>
+          <textarea name="comment" placeholder="Коротко о задаче или удобное время звонка"></textarea>
+        </div>
+        <input class="hp" tabindex="-1" autocomplete="off" name="_honey" placeholder="не заполнять">
+        <button type="submit" id="send">Отправить заявку</button>
+        <div class="err hide" id="err"></div>
+        <div class="note">Нажимая «Отправить заявку», вы соглашаетесь на обработку персональных данных для обратной связи. Заявка уходит специалисту ANDROMEDA CONSULT и на почту info@andromedaconsult.ru.</div>
+      </div>
+    </form>
+  </div>
+
+  <div id="done" class="card hide">
+    <div class="ic">✅</div>
+    <h2>Заявка отправлена</h2>
+    <p>Спасибо! Мы получили данные и свяжемся с вами в рабочее время.<br>Если нужен ответ быстрее — позвоните сами.</p>
+    <div class="contacts">
+      <a href="tel:+79167702555">8 (916) 770-25-55</a><br>
+      <a href="mailto:info@andromedaconsult.ru">info@andromedaconsult.ru</a><br>
+      <a href="https://andromedaconsult.ru" target="_blank" rel="noopener">andromedaconsult.ru</a>
+    </div>
+  </div>
+
+  <div class="contacts" id="foot">
+    ANDROMEDA CONSULT &middot; <a href="https://andromedaconsult.ru" target="_blank" rel="noopener">andromedaconsult.ru</a>
+  </div>
+</div>
+
+<script>
+/* Куда уходят заявки.
+   NTFY_TOPIC — канал, который читает бот и пересылает заявку в Telegram.
+   Форма дополнительно отправляет копию на e-mail через FormSubmit. */
+var NTFY_TOPIC = "andromeda-anketa-k7p2x9q4";
+var MAIL_TO   = "info@andromedaconsult.ru";
+
+var form = document.getElementById("f");
+var btn  = document.getElementById("send");
+var err  = document.getElementById("err");
+
+/* ---- обязательные поля: имя, телефон, e-mail ---- */
+var REQUIRED = ["name", "phone", "email"];
+
+function digits(s) { return String(s || "").replace(/\D/g, ""); }
+function mark(el, bad) { if (el) el.classList.toggle("bad", !!bad); }
+function clearMarks() { REQUIRED.forEach(function (n) { mark(form.elements[n], false); }); }
+
+/* показ поля «Уточните сферу деятельности» только при выборе «Другое» */
+var actSel = document.getElementById("activity");
+var actWrap = document.getElementById("wrap-activity-other");
+function syncActivity() {
+  var other = !!(actSel && actSel.value === "Другое");
+  actWrap.classList.toggle("hide", !other);
+  if (!other) {
+    var f = form.elements["activity_other"];
+    if (f) { f.value = ""; mark(f, false); }
+  }
+}
+
+/* подсветка выбранных интересов */
+document.querySelectorAll("#interests label").forEach(function (l) {
+  l.addEventListener("click", function () {
+    setTimeout(function () {
+      l.classList.toggle("on", l.querySelector("input").checked);
+    }, 0);
+  });
+});
+
+/* сфера деятельности: показать/скрыть поле «Другое» */
+if (actSel) { actSel.addEventListener("change", syncActivity); syncActivity(); }
+
+function val(name) {
+  var el = form.elements[name];
+  return el && el.value ? el.value.trim() : "";
+}
+function interests() {
+  return Array.prototype.slice
+    .call(document.querySelectorAll("#interests input:checked"))
+    .map(function (i) { return i.value; })
+    .join(", ") || "не указано";
+}
+function activityText() {
+  var a = val("activity");
+  if (a === "Другое") {
+    var o = val("activity_other");
+    return o ? "Другое: " + o : "Другое";
+  }
+  return a || "—";
+}
+function buildText() {
+  var d = new Date();
+  var pad = function (n) { return n < 10 ? "0" + n : "" + n; };
+  var stamp = pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear() +
+              " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+  var lines = [
+    "🆕 Заявка с анкеты (презентация ANDROMEDA CONSULT)",
+    "Дата: " + stamp,
+    "",
+    "Имя: " + val("name"),
+    "Телефон: " + val("phone"),
+    "E-mail: " + (val("email") || "—"),
+    "Город: " + (val("city") || "—"),
+    "Компания/ИНН: " + (val("company") || "—"),
+    "Деятельность: " + activityText(),
+    "Численность: " + (val("staff") || "—"),
+    "Выручка: " + (val("revenue") || "—"),
+    "Интересует: " + interests(),
+    "Комментарий: " + (val("comment") || "—"),
+    ""
+  ];
+  return lines.join("\n");
+}
+
+/* канал 1: ntfy -> телеграм-бот */
+function sendNtfy(text, title) {
+  return fetch("https://ntfy.sh", {
+    method: "POST",
+    body: JSON.stringify({
+      topic: NTFY_TOPIC,
+      title: title,
+      message: text,
+      priority: 4,
+      tags: ["incoming_envelope"]
+    })
+  }).then(function (r) { if (!r.ok) throw new Error("ntfy " + r.status); return true; });
+}
+
+/* канал 2: письмо на почту */
+function sendMail(text, title) {
+  return fetch("https://formsubmit.co/ajax/" + MAIL_TO, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      _subject: title,
+      _template: "table",
+      _captcha: "false",
+      "Заявка": text
+    })
+  }).then(function (r) { return r.json().catch(function () { return {}; }); });
+}
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  err.classList.add("hide");
+  clearMarks();
+  if (form.elements["_honey"].value) return;            // ловушка для спам-ботов
+
+  var problems = [];
+  if (!val("name")) {
+    problems.push("укажите имя");
+    mark(form.elements["name"], true);
+  }
+  var phone = val("phone");
+  if (!phone) {
+    problems.push("укажите телефон");
+    mark(form.elements["phone"], true);
+  } else if (digits(phone).length < 10) {
+    problems.push("телефон указан не полностью");
+    mark(form.elements["phone"], true);
+  }
+  var email = val("email");
+  if (!email) {
+    problems.push("укажите e-mail");
+    mark(form.elements["email"], true);
+  } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
+    problems.push("проверьте e-mail");
+    mark(form.elements["email"], true);
+  }
+  if (problems.length) {
+    err.textContent = "Обязательные поля: " + problems.join(", ") + ".";
+    err.classList.remove("hide");
+    var first = document.querySelector(".bad");
+    if (first) {
+      try { first.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (_e1) {}
+      try { first.focus({ preventScroll: true }); } catch (_e2) {}
+    }
+    return;
+  }
+
+  var text = buildText();
+  var title = "Заявка: " + val("name") + (val("city") ? " (" + val("city") + ")" : "");
+  btn.disabled = true;
+  btn.textContent = "Отправляем…";
+
+  var ok = false;
+  Promise.allSettled([sendNtfy(text, title), sendMail(text, title)]).then(function (res) {
+    res.forEach(function (r) { if (r.status === "fulfilled" && r.value) ok = true; });
+    if (ok) {
+      document.getElementById("form-box").classList.add("hide");
+      document.getElementById("done").classList.remove("hide");
+      window.scrollTo(0, 0);
+    } else {
+      btn.disabled = false;
+      btn.textContent = "Отправить заявку";
+      err.innerHTML = 'Не удалось отправить автоматически. Позвоните: ' +
+        '<a style="color:var(--gold)" href="tel:+79167702555">8 (916) 770-25-55</a> ' +
+        'или напишите на <a style="color:var(--gold)" href="mailto:info@andromedaconsult.ru">info@andromedaconsult.ru</a>.';
+      err.classList.remove("hide");
+    }
+  });
+});
+</script>
+</body>
+</html>
