@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff5c8a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Хоккей">
+<meta name="robots" content="noindex, nofollow">
+<title>Хоккей: 8 месяцев</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="petals" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff8fb1"/><stop offset="1" stop-color="#c86bd6"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="30" fill="url(#lg)"/>
+      <circle cx="24" cy="26" r="4.2" fill="#fff"/>
+      <circle cx="41" cy="26" r="4.2" fill="#fff"/>
+      <circle cx="24.6" cy="26.6" r="2" fill="#5b3a52"/>
+      <circle cx="41.6" cy="26.6" r="2" fill="#5b3a52"/>
+      <path d="M25 39c3.4 3.6 10.6 3.6 14 0" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M14 20c4-8 32-10 36 2-6-6-30-6-36-2z" fill="#fff" opacity=".85"/>
+    </svg>
+    <div class="brand-text">
+      <strong>Хоккей: 8 месяцев</strong>
+      <span id="brand-sub">программа, дневник и прогресс</span>
+    </div>
+  </div>
+  <div class="lvbox">
+    <span id="level-badge" class="lv">Ур. 1</span>
+    <div class="xpbar"><i id="xpfill"></i></div>
+  </div>
+</header>
+
+<main id="app">
+  <section class="screen" id="s-today"></section>
+  <section class="screen hidden" id="s-plan"></section>
+  <section class="screen hidden" id="s-tests"></section>
+  <section class="screen hidden" id="s-diary"></section>
+  <section class="screen hidden" id="s-report"></section>
+  <section class="screen hidden" id="s-info"></section>
+</main>
+
+<nav class="tabbar" id="tabbar">
+  <button data-tab="today" class="active"><span>🌸</span>Сегодня</button>
+  <button data-tab="plan"><span>📅</span>План</button>
+  <button data-tab="tests"><span>📏</span>Тесты</button>
+  <button data-tab="diary"><span>💗</span>Дневник</button>
+  <button data-tab="report"><span>📄</span>Итоги</button>
+  <button data-tab="info"><span>⛸️</span>Программа</button>
+</nav>
+
+<div id="toast" class="toast"></div>
+
+<script src="./config.js"></script>
+<script src="./app-core.js"></script>
+<script src="./app-ui.js"></script>
+<script src="./app-report.js"></script>
+<script src="./app-events.js"></script>
+</body>
+</html>
