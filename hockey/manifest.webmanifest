@@ -1,0 +1,17 @@
+{
+  "name": "Хоккей: 8 месяцев",
+  "short_name": "Хоккей",
+  "description": "Программа тренировок, дневник и прогресс",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff5f9",
+  "theme_color": "#ff5c8a",
+  "lang": "ru",
+  "icons": [
+    { "src": "./icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
