@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Хоккей: подключение облака</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#fff5f9;color:#46223a;margin:0;padding:20px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto}h1{font-size:22px}ol{padding-left:22px}li{margin-bottom:8px}
+pre{background:#2b2230;color:#ffe9f1;padding:14px;border-radius:14px;overflow:auto;font-size:12px;max-height:420px}
+button{font:inherit;font-weight:700;border:none;border-radius:12px;padding:11px 16px;background:linear-gradient(135deg,#ff5c8a,#a86bd6);color:#fff;cursor:pointer}
+.card{background:#fff;border:1px solid #ffe3ee;border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(255,92,138,.14);margin-bottom:16px}
+.b{color:#ff5c8a}</style></head><body><div class="wrap">
+<h1>Подключение облачного сохранения 🌸</h1>
+<div class="card"><p>Нужно один раз, около пяти минут, с компьютера. После этого данные тренировок будут сохраняться в вашей Google-таблице, а приложение сможет показывать их на любом устройстве.</p>
+<ol>
+<li>Откройте <a href="https://sheets.new" target="_blank">sheets.new</a> — создастся новая таблица. Назовите её «Хоккей: 8 месяцев».</li>
+<li>В меню таблицы: <b>Расширения → Apps Script</b>.</li>
+<li>В редакторе удалите весь текст и вставьте код ниже (кнопка «Скопировать код»).</li>
+<li><b>Развернуть → Новое развёртывание → тип «Веб-приложение»</b>. «Выполнять от имени» — ваш аккаунт, «У кого есть доступ» — <b>Все</b>. Нажмите «Развернуть», при предупреждении Google — «Дополнительно» → «Перейти» → «Разрешить».</li>
+<li>Скопируйте адрес веб-приложения (заканчивается на <b>/exec</b>) и пришлите его ассистенту — он пропишет адрес в приложении, и синхронизация заработает сама.</li>
+</ol></div>
+<div class="card"><h2>Код для Apps Script</h2><button id="copy">Скопировать код</button>
+<pre id="code">/**
+ * Хоккей: 8 месяцев — приём и хранение данных приложения.
+ *
+ * Как поставить (5 минут, один раз):
+ *  1. Откройте https://sheets.new — создастся новая Google-таблица. Назовите её «Хоккей: 8 месяцев».
+ *  2. В таблице: меню «Расширения» → «Apps Script».
+ *  3. Удалите то, что в редакторе, вставьте весь этот текст.
+ *  4. Нажмите «Развернуть» → «Новое развёртывание» → тип «Веб-приложение»:
+ *       — «Выполнять от имени»: Я (ваш аккаунт)
+ *       — «У кого есть доступ»: Все
+ *     Нажмите «Развернуть» и разрешите доступ (появится предупреждение Google — «Дополнительно» → «Перейти»).
+ *  5. Скопируйте адрес веб-приложения (заканчивается на /exec) — он нужен в приложении.
+ *
+ * Код доступа ниже (TOKEN) должен совпадать с кодом в приложении.
+ */
+
+var TOKEN = &#x27;hockey-8m-2026&#x27;;
+
+function doGet(e) {
+  var p = (e &amp;&amp; e.parameter) || {};
+  if (p.token !== TOKEN) return ok({ ok: false, error: &#x27;bad_token&#x27; });
+
+  if (p.mode === &#x27;get&#x27;) {
+    var sh = ensureSheet(&#x27;state&#x27;, [&#x27;key&#x27;, &#x27;json&#x27;, &#x27;updated&#x27;]);
+    var data = sh.getDataRange().getValues();
+    for (var i = 1; i &lt; data.length; i++) {
+      if (data[i][0] === &#x27;main&#x27;) {
+        return ok({ ok: true, updated: String(data[i][2]), state: JSON.parse(data[i][1] || &#x27;null&#x27;) });
+      }
+    }
+    return ok({ ok: true, state: null });
+  }
+
+  if (p.mode === &#x27;history&#x27;) {
+    var h = ensureSheet(&#x27;history&#x27;, [&#x27;когда&#x27;, &#x27;опыт XP&#x27;, &#x27;уровень&#x27;, &#x27;тренировок выполнено&#x27;, &#x27;пропусков&#x27;, &#x27;дней болезни&#x27;, &#x27;записей в дневнике&#x27;, &#x27;комментарий&#x27;]);
+    var vals = h.getDataRange().getValues();
+    return ok({ ok: true, rows: vals.slice(1).slice(-60) });
+  }
+
+  return ok({ ok: true, message: &#x27;hockey backend alive&#x27;, time: new Date().toISOString() });
+}
+
+function doPost(e) {
+  var body;
+  try { body = JSON.parse((e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || &#x27;{}&#x27;); }
+  catch (err) { return ok({ ok: false, error: &#x27;bad_json&#x27; }); }
+  if (body.token !== TOKEN) return ok({ ok: false, error: &#x27;bad_token&#x27; });
+  var st = body.state;
+  if (!st) return ok({ ok: false, error: &#x27;no_state&#x27; });
+
+  var sh = ensureSheet(&#x27;state&#x27;, [&#x27;key&#x27;, &#x27;json&#x27;, &#x27;updated&#x27;]);
+  var data = sh.getDataRange().getValues();
+  var now = new Date();
+  var json = JSON.stringify(st);
+  var written = false;
+  for (var i = 1; i &lt; data.length; i++) {
+    if (data[i][0] === &#x27;main&#x27;) {
+      sh.getRange(i + 1, 2).setValue(json);
+      sh.getRange(i + 1, 3).setValue(now);
+      written = true;
+      break;
+    }
+  }
+  if (!written) sh.appendRow([&#x27;main&#x27;, json, now]);
+
+  var metrics = summary(st);
+  ensureSheet(&#x27;history&#x27;, [&#x27;когда&#x27;, &#x27;опыт XP&#x27;, &#x27;уровень&#x27;, &#x27;тренировок выполнено&#x27;, &#x27;пропусков&#x27;, &#x27;дней болезни&#x27;, &#x27;записей в дневнике&#x27;, &#x27;комментарий&#x27;])
+    .appendRow([now, metrics.xp, metrics.level, metrics.done, metrics.skipped, metrics.sick, metrics.diary, &#x27;&#x27;]);
+
+  return ok({ ok: true, saved: now.toISOString(), xp: metrics.xp, done: metrics.done });
+}
+
+/* ---------- разбор состояния ---------- */
+function summary(st) {
+  var checks = st.checks || {}, diary = st.diary || {}, tests = st.tests || {};
+  var done = 0, skipped = 0, partial = 0;
+  for (var d in checks) {
+    var rec = checks[d];
+    if (!rec) continue;
+    if (rec.status === &#x27;skipped&#x27;) { skipped++; continue; }
+    var items = rec.items || {}, n = 0;
+    for (var k in items) if (items[k]) n++;
+    if (n &gt; 0) done++;
+  }
+  var testsN = 0;
+  for (var t in tests) testsN += (tests[t] || []).length;
+  var xp = st.xp || 0;
+  return {
+    xp: xp,
+    level: 1 + Math.floor(xp / 150),
+    done: done,
+    skipped: skipped,
+    sick: (st.sick || []).length,
+    diary: Object.keys(diary).length,
+    tests: testsN
+  };
+}
+
+/* ---------- служебное ---------- */
+function ensureSheet(name, header) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  if (sh.getLastRow() === 0) sh.appendRow(header);
+  sh.getRange(1, 1, 1, header.length).setFontWeight(&#x27;bold&#x27;);
+  return sh;
+}
+
+function ok(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function testRun() {
+  var st = { checks: { &#x27;2026-10-19&#x27;: { items: { a: true } } }, diary: {}, tests: {}, sick: [], xp: 120 };
+  Logger.log(doPost({ postData: { contents: JSON.stringify({ token: TOKEN, state: st }) } }).getContent());
+  Logger.log(doGet({ parameter: { token: TOKEN, mode: &#x27;get&#x27; } }).getContent());
+  Logger.log(doGet({ parameter: { token: TOKEN, mode: &#x27;history&#x27; } }).getContent());
+}
+</pre></div>
+<div class="card"><p>Приложение: <a href="https://andromeda-leads.github.io/andromeda-leads/hockey/">https://andromeda-leads.github.io/andromeda-leads/hockey/</a></p></div>
+</div>
+<script>
+document.getElementById("copy").addEventListener("click", function(){
+  var text = document.getElementById("code").textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(function(){document.getElementById("copy").textContent="Скопировано ✓";});
+  else { var r=document.createRange(); r.selectNode(document.getElementById("code")); window.getSelection().removeAllRanges(); window.getSelection().addRange(r); document.execCommand("copy"); document.getElementById("copy").textContent="Скопировано ✓"; }
+});
+</script></body></html>
