@@ -3,326 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Хоккей равных возможностей — Открытый инклюзивный турнир команд с участием глухонемых | Казань, сентябрь 2027</title>
-<meta name="description" content="Открытый инклюзивный хоккейный турнир команд с участием глухонемых «Хоккей равных возможностей»: системная подготовка команды, сурдоперевод, инклюзивные матчи. Казань, сентябрь 2027 года.">
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Хоккей равных возможностей — инклюзивный турнир команд с участием глухонемых | Казань, 2027</title>
+<meta name="description" content="Открытый инклюзивный хоккейный турнир команд с участием глухонемых «Хоккей равных возможностей»: подготовка команды, сурдоперевод на каждой тренировке и матчи, где глухонемые и слышащие играют на равных. Казань, сентябрь 2027 года.">
+<meta property="og:title" content="Хоккей равных возможностей — Казань, 2027">
+<meta property="og:description" content="Инклюзивный турнир команд с участием глухонемых: 30 недель подготовки, сурдоперевод, матчи на одном льду.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-<style>
-  :root{--navy:#0B192C;--navy2:#10233D;--gold:#D4A843;--red:#C1121F;}
-  *{scroll-behavior:smooth;}
-  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0B192C;color:#E8EDF4;}
-  .wrap{max-width:1200px;margin:0 auto;padding:0 20px;}
-  .grad{background:linear-gradient(135deg,#0B192C 0%,#10233D 45%,#16233A 100%);}
-  .gold{color:var(--gold);}
-  .btn-gold{background:linear-gradient(135deg,#D4A843,#E7C264);color:#0B192C;font-weight:700;}
-  .btn-red{background:var(--red);color:#fff;font-weight:700;}
-  .card{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(212,168,67,.22);border-radius:18px;}
-  .card:hover{border-color:rgba(212,168,67,.55);transform:translateY(-3px);transition:.25s;}
-  .kpi{font-weight:900;color:var(--gold);line-height:1;}
-  h1,h2,h3{letter-spacing:-.02em;}
-  .sect{padding:72px 0;}
-  .tag{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;}
-  .divider{height:3px;width:64px;background:var(--red);border-radius:3px;margin:14px 0 26px;}
-  .row-line{border-bottom:1px dashed rgba(255,255,255,.12);}
-  a.link{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,168,67,.4);}
-  @media(max-width:640px){.sect{padding:52px 0;} }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<div class="progress"></div>
 
-<header class="sticky top-0 z-50 backdrop-blur bg-[#0B192C]/90 border-b border-white/10">
-  <div class="wrap flex items-center justify-between py-3">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl grid place-items-center" style="background:linear-gradient(135deg,#D4A843,#E7C264);color:#0B192C;font-weight:900">ХРВ</div>
-      <div class="leading-tight">
-        <div class="font-extrabold text-[15px]">Хоккей равных возможностей</div>
-        <div class="text-[11px] text-white/50">Казань · сентябрь 2027</div>
-      </div>
-    </div>
-    <nav class="hidden lg:flex items-center gap-5 text-[14px] text-white/75">
-      <a href="#project" class="hover:text-white">Проект</a>
-      <a href="#problem" class="hover:text-white">Проблема</a>
-      <a href="#training" class="hover:text-white">Подготовка</a>
-      <a href="#tournament" class="hover:text-white">Турнир</a>
-      <a href="#access" class="hover:text-white">Доступность</a>
-      <a href="#partners" class="hover:text-white">Партнёры</a>
-      <a href="#join" class="hover:text-white">Участие</a>
-      <a href="#contacts" class="hover:text-white">Контакты</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">ХРВ</span>
+      <span class="logo-text"><b>Хоккей равных возможностей</b><span>Казань · сентябрь 2027</span></span>
+    </a>
+    <button class="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav">
+      <a href="index.html" class="active">Главная</a>
+      <a href="proekt.html">Проект</a>
+      <a href="podgotovka.html">Подготовка</a>
+      <a href="turnir.html">Турнир</a>
+      <a href="hronika.html">Хроника</a>
+      <a href="partneram.html">Партнёрам</a>
+      <a href="kontakty.html">Контакты</a>
+      <a href="anketa.html" class="btn btn--red">Стать партнёром</a>
     </nav>
-    <a href="#join" class="btn-gold rounded-xl px-4 py-2 text-[13px]">Стать партнёром</a>
   </div>
 </header>
 
-<section class="grad">
-  <div class="wrap pt-16 pb-14">
-    <div class="tag">Открытый инклюзивный турнир · Республика Татарстан</div>
-    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black mt-4 max-w-4xl">
-      Хоккей равных возможностей:<br><span class="gold">глухонемые и слышащие — на одном льду</span>
-    </h1>
-    <p class="mt-6 text-white/75 text-lg max-w-3xl">
-      Открытый инклюзивный турнир хоккейных команд с участием глухонемых спортсменов. Проект начинается не с турнира,
-      а с 30 недель непрерывной ледовой подготовки: три тренировки в неделю, сурдоперевод на каждом занятии,
-      инклюзивные матчи и финальная фаза для глухонемых детей.
+<section class="hero">
+  <div class="hero-puck"></div>
+  <div class="container hero-inner">
+    <span class="kicker" data-reveal>Открытый инклюзивный турнир · Республика Татарстан</span>
+    <h1 data-reveal>Хоккей <em>равных возможностей</em></h1>
+    <p class="lead" data-reveal>
+      В хоккее всё держится на слухе: свисток судьи, крик партнёра, подсказка тренера. Если ты не слышишь — ты как будто играешь один.
+      Мы делаем турнир, где это перестаёт иметь значение. И начинаем не с турнира, а с тридцати недель настоящей подготовки.
     </p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a href="#join" class="btn-gold rounded-xl px-6 py-3 text-sm">Поддержать проект</a>
-      <a href="#project" class="rounded-xl px-6 py-3 text-sm border border-white/25 hover:border-white/60">О проекте</a>
+    <div class="hero-actions" data-reveal>
+      <a href="anketa.html" class="btn btn--red">Стать партнёром проекта</a>
+      <a href="proekt.html" class="btn btn--ghost">Как всё устроено</a>
     </div>
-  </div>
-  <div class="wrap pb-14">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="card p-5"><div class="kpi text-4xl">5</div><div class="mt-2 text-white/70 text-sm">команд в турнире: команда проекта и четыре команды с участием ветеранов СВО</div></div>
-      <div class="card p-5"><div class="kpi text-4xl">90</div><div class="mt-2 text-white/70 text-sm">ледовых тренировок подготовки — без перерывов, 30 недель</div></div>
-      <div class="card p-5"><div class="kpi text-4xl">127,5</div><div class="mt-2 text-white/70 text-sm">часа ледовой подготовки за тренировочный цикл</div></div>
-      <div class="card p-5"><div class="kpi text-4xl">10</div><div class="mt-2 text-white/70 text-sm">матчей турнира по круговой системе за два игровых дня</div></div>
+    <div class="hero-strip" data-stagger="110" data-reveal>
+      <div><b data-count-to="5">5</b><span>команд в турнире</span></div>
+      <div><b data-count-to="90">90</b><span>ледовых тренировок</span></div>
+      <div><b data-count-to="127.5" data-dec="1">127,5</b><span>часа подготовки на льду</span></div>
+      <div><b data-count-to="10">10</b><span>матчей за два дня</span></div>
     </div>
   </div>
 </section>
 
-<section id="project" class="sect">
-  <div class="wrap">
-    <div class="tag">О проекте</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">От тренировки — к турниру</h2>
-    <div class="divider"></div>
-    <p class="text-white/75 max-w-4xl text-lg">
-      Проект решает главную проблему спорта глухонемых: доступ к тренировке ограничивает не инвалидность,
-      а коммуникационный барьер. Глухонемой спортсмен не слышит тренера, не слышит свисток, не слышит партнёра.
-      Мы убираем этот барьер системно — сурдопереводом на каждом занятии, адаптированной методикой подготовки
-      и средой, где глухонемые и слышащие играют вместе, на равных.
+<section class="sect">
+  <div class="container">
+    <span class="kicker" data-reveal>Что мы делаем</span>
+    <h2 class="h2" data-reveal>Три вещи, из которых состоит проект</h2>
+    <div class="rule"></div>
+    <div class="grid g3" data-stagger="120" data-reveal>
+      <div class="card">
+        <div class="card__ico">🏒</div>
+        <h3>Готовим команду</h3>
+        <p>Тридцать недель без пауз: три занятия на льду в неделю, общая физическая и тактическая подготовка, отдельный тренер по защитникам. Не «вышли поиграть», а полноценный тренировочный цикл.</p>
+      </div>
+      <div class="card">
+        <div class="card__ico">🤝</div>
+        <h3>Проводим турнир</h3>
+        <p>Два игровых дня в сентябре 2027 года. Пять команд, круговая система — каждая играет с каждой. Глухонемые и слышащие выходят на один лёд и играют на равных.</p>
+      </div>
+      <div class="card">
+        <div class="card__ico">🎓</div>
+        <h3>Даём попробовать детям</h3>
+        <p>Глухонемые дети и дети с нарушением слуха выезжают на лёд: занятие «Попробуй хоккей», экипировка напрокат, рядом сурдопереводчик. Чтобы спорт без слуха не заканчивался на одной команде.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--alt">
+  <div class="container">
+    <span class="kicker" data-reveal>Почему это нужно</span>
+    <h2 class="h2" data-reveal>Спорт глухонемых держится на энтузиазме, а не на системе</h2>
+    <div class="rule"></div>
+    <p class="lead" data-reveal>Главный барьер — не инвалидность, а коммуникация. Без перевода спортсмен не получает установку тренера, не слышит партнёра и потихоньку выпадает из общей работы команды.</p>
+    <div class="grid g3 mt-3" data-stagger="110" data-reveal>
+      <div class="card">
+        <div class="kpi" data-count-to="3000" data-group="1">3 000</div>
+        <div class="kpi-lbl">человек — Татарстанское региональное отделение ОООИ «ВОГ», сообщество глухих республики</div>
+      </div>
+      <div class="card">
+        <div class="kpi" data-count-to="6000" data-group="1" data-prefix="≈ ">≈ 6 000</div>
+        <div class="kpi-lbl">инвалидов по слуху живёт в Татарстане по данным общественных организаций</div>
+      </div>
+      <div class="card">
+        <div class="kpi" data-count-to="1">1</div>
+        <div class="kpi-lbl">сюжет телеканала о команде — вот и вся тема в региональных СМИ</div>
+      </div>
+    </div>
+    <div class="note mt-2" data-reveal>
+      <b>Мы просто спросили игроков.</b> В опросе 25 человек команды ответ один и тот же: играть хотят и готовы, не хватает постоянного льда,
+      тренера, который умеет работать с глухонемыми, и сурдоперевода на тренировке. И почти каждый добавил — хотим играть вместе со слышащими, а не в своём отдельном дивизионе.
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <div class="grid g4" data-stagger="100" data-reveal>
+      <div><div class="kpi" data-count-to="5">5</div><div class="kpi-lbl">команд: команда проекта и четыре команды с участием ветеранов СВО</div></div>
+      <div><div class="kpi" data-count-to="10">10</div><div class="kpi-lbl">матчей по круговой системе за два игровых дня</div></div>
+      <div><div class="kpi" data-count-to="100">100</div><div class="kpi-lbl">спортсменов на льду — не менее пяти команд по 20 человек</div></div>
+      <div><div class="kpi" data-count-to="60" data-suffix="+">60+</div><div class="kpi-lbl">публикаций и видеоматериалов о проекте</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="container">
+    <span class="kicker" data-reveal>Хроника</span>
+    <h2 class="h2" data-reveal>Как проект идёт по времени</h2>
+    <div class="rule"></div>
+    <div class="grid g2">
+      <div class="tl" data-reveal>
+        <div class="tl__item"><div class="tl__date">Январь 2027</div><h3 class="h3">Выходим на лёд</h3><p class="muted">Собираем состав, обновляем экипировку, начинаем цикл сразу после новогодних праздников.</p></div>
+        <div class="tl__item"><div class="tl__date">Февраль — июль 2027</div><h3 class="h3">Тренировочный цикл</h3><p class="muted">Три занятия в неделю, тактика, общая физическая подготовка, товарищеские игры. На каждом занятии — сурдопереводчик.</p></div>
+      </div>
+      <div class="tl" data-reveal>
+        <div class="tl__item"><div class="tl__date">Август 2027</div><h3 class="h3">Собираем турнир</h3><p class="muted">Заканчиваем цикл, объявляем турнир, приглашаем команды, запускаем информационную кампанию.</p></div>
+        <div class="tl__item"><div class="tl__date">Сентябрь 2027</div><h3 class="h3">Играем</h3><p class="muted">Два игровых дня, матч открытия с шоу буллитов, финальная фаза для детей, награждение.</p></div>
+      </div>
+    </div>
+    <p class="mt-2"><a href="hronika.html" class="btn btn--line">Смотреть всю хронику</a></p>
+  </div>
+</section>
+
+<section class="sect sect--alt">
+  <div class="container">
+    <span class="kicker" data-reveal>Партнёрам</span>
+    <h2 class="h2" data-reveal>Проект делается вместе</h2>
+    <div class="rule"></div>
+    <p class="lead" data-reveal>
+      Мы ищем организации, которым близка тема: лёд и площадки, экипировка и инвентарь, призы и сертификаты участникам, информационная поддержка, экспертиза.
+      Формат участия согласовываем индивидуально — под возможности партнёра, а не по прайсу.
     </p>
-    <div class="grid md:grid-cols-3 gap-5 mt-10">
-      <div class="card p-6">
-        <div class="text-3xl">🏒</div>
-        <h3 class="font-bold text-lg mt-3">Подготовка команды</h3>
-        <p class="text-white/70 text-sm mt-2">30 недель непрерывного тренировочного цикла: три занятия на льду в неделю,
-        общефизическая и тактическая подготовка, отдельная работа тренера по защитникам.</p>
-      </div>
-      <div class="card p-6">
-        <div class="text-3xl">🤝</div>
-        <h3 class="font-bold text-lg mt-3">Инклюзивный турнир</h3>
-        <p class="text-white/70 text-sm mt-2">Два игровых дня: инклюзивные матчи со слышащими любительскими командами,
-        матч открытия с шоу буллитов и участие приглашённых звёзд хоккейного клуба «Ак Барс».</p>
-      </div>
-      <div class="card p-6">
-        <div class="text-3xl">🎓</div>
-        <h3 class="font-bold text-lg mt-3">Финальная фаза для детей</h3>
-        <p class="text-white/70 text-sm mt-2">Глухонемые дети пробуют хоккей: выездные занятия, экипировка напрокат,
-        сертификаты участникам и сертификаты на обучение программированию и 3D-моделированию.</p>
-      </div>
+    <div class="grid g3 mt-2" data-stagger="110" data-reveal>
+      <div class="card"><h3>Что получает партнёр</h3><p>Присутствие в материалах проекта, на площадке турнира и в медиа, участие в награждении и прямую связь с темой, о которой в республике почти не говорят.</p></div>
+      <div class="card"><h3>Как это выглядит</h3><p>Один короткий разговор, затем согласование формата и письмо поддержки. Никаких длинных процедур и скрытых условий.</p></div>
+      <div class="card"><h3>С чего начать</h3><p>Заполните анкету — мы получим её письмом, свяжемся и предложим формат, который подойдёт именно вам.</p></div>
     </div>
-    <div class="grid md:grid-cols-3 gap-5 mt-5">
-      <div class="card p-6">
-        <div class="text-sm text-white/50">Срок проекта</div>
-        <div class="font-bold mt-1">11 января — 30 сентября 2027</div>
-        <p class="text-white/60 text-sm mt-2">Тренировочный цикл — 25 января — 22 августа 2027 года, турнир — сентябрь 2027 года.</p>
-      </div>
-      <div class="card p-6">
-        <div class="text-sm text-white/50">Место проведения</div>
-        <div class="font-bold mt-1">г. Казань, Республика Татарстан</div>
-        <p class="text-white/60 text-sm mt-2">Ледовые комплексы «Триумф» и «Форвард» — партнёры проекта.</p>
-      </div>
-      <div class="card p-6">
-        <div class="text-sm text-white/50">Результат</div>
-        <div class="font-bold mt-1">Открытый ежегодный турнир</div>
-        <p class="text-white/60 text-sm mt-2">Проект задуман как открытый: с 2028 года к участию приглашаются команды из других регионов России.</p>
-      </div>
-    </div>
+    <p class="mt-2"><a href="anketa.html" class="btn btn--red">Заполнить анкету партнёра</a></p>
   </div>
 </section>
 
-<section id="problem" class="sect" style="background:#10233D">
-  <div class="wrap">
-    <div class="tag">Проблема</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Спорт глухонемых держится на энтузиазме</h2>
-    <div class="divider"></div>
-    <div class="grid lg:grid-cols-3 gap-5">
-      <div class="card p-6"><div class="kpi text-4xl">3 000</div><div class="mt-3 text-white/70 text-sm">членов Татарстанского регионального отделения ОООИ «ВОГ» — сообщества глухих Республики Татарстан.</div></div>
-      <div class="card p-6"><div class="kpi text-4xl">≈ 6 000</div><div class="mt-3 text-white/70 text-sm">инвалидов по слуху проживает в республике по данным общественных организаций.</div></div>
-      <div class="card p-6"><div class="kpi text-4xl">1</div><div class="mt-3 text-white/70 text-sm">сюжет телеканала о команде — практическое отсутствие темы в региональных СМИ.</div></div>
-    </div>
-    <div class="grid md:grid-cols-2 gap-5 mt-6">
-      <div class="card p-6">
-        <h3 class="font-bold">Три составляющие проблемы</h3>
-        <ul class="mt-3 space-y-3 text-white/70 text-sm">
-          <li>• <b class="text-white">Коммуникационный барьер.</b> Без сурдоперевода глухонемой спортсмен не получает установку тренера и выпадает из общей работы команды.</li>
-          <li>• <b class="text-white">Дефицит адаптивных секций.</b> Существующих программ физической культуры и спорта для людей с нарушением слуха недостаточно.</li>
-          <li>• <b class="text-white">Информационная закрытость.</b> О командах глухонемых почти не говорят — общество не знает о самой возможности спорта без слуха.</li>
-        </ul>
-      </div>
-      <div class="card p-6">
-        <h3 class="font-bold">Что говорят сами игроки</h3>
-        <p class="text-white/70 text-sm mt-3">Мы провели опрос 25 игроков команды. Основные ответы: хотят играть регулярно, но не хватает постоянного льда,
-        тренера, который умеет работать с глухонемыми, и сурдоперевода на тренировке. Отдельно игроки говорят о желании играть
-        вместе со слышащими — не в своём закрытом дивизионе.</p>
-        <p class="text-white/50 text-xs mt-4">Именно это и составляет содержание проекта: лёд, тренер, сурдоперевод и совместные матчи.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="training" class="sect">
-  <div class="wrap">
-    <div class="tag">Подготовка</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">30 недель на льду — без перерывов</h2>
-    <div class="divider"></div>
-    <p class="text-white/75 max-w-4xl">Тренировочный цикл идёт с 25 января по 22 августа 2027 года. Три занятия на льду в неделю,
-    всего не менее 90 ледовых тренировок и 127,5 часа ледовой подготовки. Каждое занятие сопровождает сурдопереводчик.</p>
-    <div class="card mt-8 overflow-hidden">
-      <div class="grid grid-cols-4 gap-0 text-sm font-bold text-white/60 px-5 py-3 border-b border-white/10">
-        <div>День</div><div>Формат</div><div>Длительность</div><div>Лёд</div>
-      </div>
-      <div class="grid grid-cols-4 gap-0 text-sm px-5 py-4 row-line">
-        <div class="font-semibold">Суббота</div><div>Тренировка команды</div><div>1 ч 15 мин</div><div class="text-white/60">СК «Триумф» — партнёр, безвозмездно</div>
-      </div>
-      <div class="grid grid-cols-4 gap-0 text-sm px-5 py-4 row-line">
-        <div class="font-semibold">Воскресенье</div><div>Тренировка команды</div><div>1 ч 30 мин</div><div class="text-white/60">СК «Форвард» — партнёр, безвозмездно</div>
-      </div>
-      <div class="grid grid-cols-4 gap-0 text-sm px-5 py-4">
-        <div class="font-semibold">Будний день</div><div>Дополнительное занятие</div><div>1 ч 30 мин</div><div class="text-white/60">арендованный лёд</div>
-      </div>
-    </div>
-    <div class="grid md:grid-cols-3 gap-5 mt-6">
-      <div class="card p-6"><h3 class="font-bold">Тренерский штаб</h3><p class="text-white/70 text-sm mt-2">Главный тренер с опытом адаптивной физической культуры и отдельный тренер по защитникам. Субботние и воскресные тренировки тренеры проводят безвозмездно — это вклад партнёров в проект.</p></div>
-      <div class="card p-6"><h3 class="font-bold">Сурдоперевод</h3><p class="text-white/70 text-sm mt-2">На каждой тренировке работает сурдопереводчик: установки, разбор ошибок, общение внутри команды и со слышащими соперниками.</p></div>
-      <div class="card p-6"><h3 class="font-bold">Экипировка</h3><p class="text-white/70 text-sm mt-2">Команда готовится в новой игровой форме текущего сезона и с обновлённым инвентарём.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="tournament" class="sect" style="background:#10233D">
-  <div class="wrap">
-    <div class="tag">Турнир</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Два игровых дня в сентябре 2027 года</h2>
-    <div class="divider"></div>
-    <div class="grid lg:grid-cols-2 gap-5">
-      <div class="card p-6">
-        <h3 class="font-bold text-lg">Пять команд</h3>
-        <p class="text-white/70 text-sm mt-2">В турнире играют команда проекта — глухонемые хоккеисты Казани — и четыре команды с участием ветеранов боевых действий — участников СВО, в том числе спортсменов с нарушением слуха. Формат — круговая система: каждая команда играет с каждой, всего 10 матчей за два дня. Матч длится 1,5 часа, ещё 30 минут заложены на заливку льда, разминку и непредвиденные обстоятельства.</p>
-        <ul class="mt-4 text-white/70 text-sm space-y-2">
-          <li>• матч открытия — с шоу буллитов и участием приглашённых звёзд ХК «Ак Барс»;</li>
-          <li>• инклюзивные матчи со слышащими любительскими командами — на одном льду и на равных;</li>
-          <li>• награждение: кубки, медали и ценные призы, лучшие игроки каждого матча получают подарочные сертификаты.</li>
-        </ul>
-      </div>
-      <div class="card p-6">
-        <h3 class="font-bold text-lg">Площадка перед ареной</h3>
-        <p class="text-white/70 text-sm mt-2">Оба игровых дня на площадке перед ледовой ареной работает концертная сцена: выступают 12 молодых музыкальных групп и исполнителей с авторскими песнями. Для детей работают аниматоры — весёлые конкурсы, подвижные игры и небольшие подарки.</p>
-        <h3 class="font-bold text-lg mt-5">Финальная фаза для детей</h3>
-        <p class="text-white/70 text-sm mt-2">Глухонемые дети выходят на лёд вместе с командой: выездные занятия «Попробуй хоккей», экипировка напрокат, хоккейные сертификаты участникам и сертификаты на обучение программированию и 3D-моделированию.</p>
-      </div>
-    </div>
-    <div class="grid sm:grid-cols-3 gap-5 mt-6">
-      <div class="card p-6"><div class="kpi text-3xl">100</div><div class="mt-2 text-white/70 text-sm">спортсменов — не менее пяти команд по 20 человек</div></div>
-      <div class="card p-6"><div class="kpi text-3xl">10</div><div class="mt-2 text-white/70 text-sm">матчей турнира по круговой системе</div></div>
-      <div class="card p-6"><div class="kpi text-3xl">60+</div><div class="mt-2 text-white/70 text-sm">публикаций и видеоматериалов о проекте в социальных сетях и СМИ</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="access" class="sect">
-  <div class="wrap">
-    <div class="tag">Доступность</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Среда без барьеров</h2>
-    <div class="divider"></div>
-    <div class="grid md:grid-cols-4 gap-5">
-      <div class="card p-5"><div class="text-2xl">🤟</div><div class="font-semibold mt-3">Сурдоперевод</div><p class="text-white/60 text-sm mt-2">На каждой тренировке и на обоих игровых днях турнира.</p></div>
-      <div class="card p-5"><div class="text-2xl">💬</div><div class="font-semibold mt-3">Субтитры</div><p class="text-white/60 text-sm mt-2">Все видеоматериалы проекта выпускаются с субтитрами.</p></div>
-      <div class="card p-5"><div class="text-2xl">📣</div><div class="font-semibold mt-3">Жестовый перевод</div><p class="text-white/60 text-sm mt-2">Новости и анонсы проекта — с жестовым переводом.</p></div>
-      <div class="card p-5"><div class="text-2xl">🏟</div><div class="font-semibold mt-3">Инклюзивные матчи</div><p class="text-white/60 text-sm mt-2">Глухонемые и слышащие игроки — в одном составе и на одном льду.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="chronicle" class="sect" style="background:#10233D">
-  <div class="wrap">
-    <div class="tag">Хроника проекта</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Этапы</h2>
-    <div class="divider"></div>
-    <div class="grid md:grid-cols-4 gap-5">
-      <div class="card p-6"><div class="text-sm text-white/50">Январь 2027</div><div class="font-bold mt-1">Старт подготовки</div><p class="text-white/60 text-sm mt-2">Формирование состава, экипировка, выход на лёд после новогодних праздников.</p></div>
-      <div class="card p-6"><div class="text-sm text-white/50">Февраль — июль 2027</div><div class="font-bold mt-1">Тренировочный цикл</div><p class="text-white/60 text-sm mt-2">Три занятия в неделю, общефизическая и тактическая подготовка, товарищеские игры.</p></div>
-      <div class="card p-6"><div class="text-sm text-white/50">Август 2027</div><div class="font-bold mt-1">Сбор и готовность</div><p class="text-white/60 text-sm mt-2">Завершение цикла, объявление турнира, приглашение команд, информационная кампания.</p></div>
-      <div class="card p-6"><div class="text-sm text-white/50">Сентябрь 2027</div><div class="font-bold mt-1">Турнир</div><p class="text-white/60 text-sm mt-2">Два игровых дня, матч открытия, финальная фаза для детей, награждение.</p></div>
-    </div>
-    <p class="text-white/50 text-xs mt-5">Раздел новостей и видеоархив проекта наполняются по ходу подготовки.</p>
-  </div>
-</section>
-
-<section id="partners" class="sect">
-  <div class="wrap">
-    <div class="tag">Партнёры</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Проект делается вместе</h2>
-    <div class="divider"></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="card p-6"><h3 class="font-bold text-[15px]">ТРО ОООИ «ВОГ»</h3><p class="text-white/65 text-sm mt-2">Взаимодействие с сообществом глухонемых, сурдоперевод, информирование, формирование состава участников турнира.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">СК «Триумф» и «Форвард»</h3><p class="text-white/65 text-sm mt-2">Безвозмездное предоставление льда и раздевалок для двух тренировок в неделю на всём тренировочном цикле.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">АНО «ЛИС «Техспейс Андромеда»</h3><p class="text-white/65 text-sm mt-2">Сайт проекта — разработка и сопровождение, помещение для подготовки медиаматериалов, образовательные сертификаты для детей.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">ХК «Ак Барс»</h3><p class="text-white/65 text-sm mt-2">Участие приглашённых звёзд в матче открытия турнира и шоу буллитов — нефинансовая поддержка.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">Хоккейный магазин</h3><p class="text-white/65 text-sm mt-2">Сертификаты участникам турнира и лучшим игрокам матчей, помощь в экипировке.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">Казанская епархия</h3><p class="text-white/65 text-sm mt-2">Приход преподобного Сергия Радонежского г. Казани — заявитель проекта, организационная и информационная поддержка.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">Фонд «Защитники Отечества»</h3><p class="text-white/65 text-sm mt-2">Помощь в формировании команд с участием ветеранов боевых действий — участников СВО и в организации совместных тренировок.</p></div>
-      <div class="card p-6"><h3 class="font-bold text-[15px]">Федерация хоккея РТ</h3><p class="text-white/65 text-sm mt-2">Судейство турнира и методическая поддержка подготовки команды.</p></div>
-    </div>
-    <div class="card p-6 mt-6">
-      <h3 class="font-bold">Стать партнёром проекта</h3>
-      <p class="text-white/70 text-sm mt-2">Мы открыты для организаций, которые хотят поддержать спорт глухонемых в Татарстане: информационная поддержка, экипировка и инвентарь, призы и сертификаты участникам, помощь с площадками и специалистами. Формат участия согласовываем индивидуально.</p>
-      <a href="mailto:sergie-kzn@mail.ru?subject=Партнёрство%20в%20проекте%20«Хоккей%20равных%20возможностей»" class="btn-gold inline-block rounded-xl px-5 py-3 text-sm mt-4">Написать оргкомитету</a>
-    </div>
-  </div>
-</section>
-
-<section id="join" class="sect" style="background:#10233D">
-  <div class="wrap">
-    <div class="tag">Участие</div>
-    <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Как присоединиться</h2>
-    <div class="divider"></div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="card p-6"><div class="text-2xl">🏒</div><h3 class="font-bold mt-3">Командам</h3><p class="text-white/65 text-sm mt-2">Заявиться на турнир 2027 года и в лист ожидания следующих сезонов. Участие команд с участием глухонемых спортсменов — приоритетно.</p></div>
-      <div class="card p-6"><div class="text-2xl">🙋</div><h3 class="font-bold mt-3">Волонтёрам</h3><p class="text-white/65 text-sm mt-2">Помощь на тренировках и на турнире, работа с детьми, сурдоперевод, фото и видео, организация площадки.</p></div>
-      <div class="card p-6"><div class="text-2xl">🤝</div><h3 class="font-bold mt-3">Партнёрам</h3><p class="text-white/65 text-sm mt-2">Поддержка проекта: площадки, экипировка, призы, информационное сопровождение, экспертиза.</p></div>
-      <div class="card p-6"><div class="text-2xl">📰</div><h3 class="font-bold mt-3">СМИ</h3><p class="text-white/65 text-sm mt-2">Материалы о проблеме и о команде, съёмки тренировок и турнира, интервью игроков и тренеров.</p></div>
-    </div>
-    <div class="grid md:grid-cols-2 gap-5 mt-6">
-      <div class="card p-6"><h3 class="font-bold">Детям и родителям</h3><p class="text-white/70 text-sm mt-2">Глухонемые дети и дети с нарушением слуха могут попробовать хоккей: выездные занятия, экипировка напрокат, сопровождение сурдопереводчика. Заявки принимает оргкомитет проекта.</p></div>
-      <div class="card p-6"><h3 class="font-bold">Связаться с оргкомитетом</h3><p class="text-white/70 text-sm mt-2">Почта — <a class="link" href="mailto:sergie-kzn@mail.ru">sergie-kzn@mail.ru</a><br>Телефон — <a class="link" href="tel:+79274293257">+7 927 429-32-57</a></p><p class="text-white/50 text-xs mt-3">Руководитель проекта — Петров Сергей Владимирович.</p></div>
-    </div>
-  </div>
-</section>
-
-<footer id="contacts" class="border-t border-white/10 bg-[#0B192C]">
-  <div class="wrap py-12">
-    <div class="grid md:grid-cols-3 gap-8">
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
       <div>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl grid place-items-center" style="background:linear-gradient(135deg,#D4A843,#E7C264);color:#0B192C;font-weight:900">ХРВ</div>
-          <div class="font-extrabold">Хоккей равных возможностей</div>
-        </div>
-        <p class="text-white/60 text-sm mt-4">Открытый инклюзивный турнир хоккейных команд с участием глухонемых. г. Казань, Республика Татарстан.</p>
+        <span class="logo"><span class="logo-mark">ХРВ</span><span class="logo-text"><b>Хоккей равных возможностей</b><span>Казань · сентябрь 2027</span></span></span>
+        <p class="small" style="margin-top:16px;color:rgba(255,255,255,.62)">Открытый инклюзивный турнир хоккейных команд с участием глухонемых. г. Казань, Республика Татарстан.</p>
       </div>
       <div>
-        <div class="font-bold">Оргкомитет</div>
-        <p class="text-white/60 text-sm mt-3">Руководитель проекта — Петров Сергей Владимирович<br>
-        <a class="link" href="mailto:sergie-kzn@mail.ru">sergie-kzn@mail.ru</a><br>
-        <a class="link" href="tel:+79274293257">+7 927 429-32-57</a></p>
-        <p class="text-white/50 text-xs mt-3">Заявитель проекта — Местная православная религиозная организация Приход преподобного Сергия Радонежского г. Казани.</p>
+        <b style="color:#fff">Оргкомитет</b>
+        <p class="small" style="margin-top:12px;color:rgba(255,255,255,.72)">
+          Руководитель проекта — Петров Сергей Владимирович<br>
+          <a href="mailto:sergie-kzn@mail.ru">sergie-kzn@mail.ru</a><br>
+          <a href="tel:+79274293257">+7 927 429-32-57</a>
+        </p>
+        <p class="small" style="color:rgba(255,255,255,.5)">Заявитель проекта — Местная православная религиозная организация Приход преподобного Сергия Радонежского г. Казани.</p>
       </div>
       <div>
-        <div class="font-bold">Сайт проекта</div>
-        <p class="text-white/60 text-sm mt-3">Разработка и сопровождение сайта — партнёр проекта АНО «ЛИС «Техспейс Андромеда».</p>
-        <p class="text-white/40 text-xs mt-4">© 2026—2027 Оргкомитет проекта «Хоккей равных возможностей»</p>
+        <b style="color:#fff">Партнёрам</b>
+        <p class="small" style="margin-top:12px;color:rgba(255,255,255,.72)">
+          <a href="anketa.html">Анкета партнёра</a><br>
+          <a href="partneram.html">Направления участия</a><br>
+          <a href="kontakty.html">Контакты оргкомитета</a>
+        </p>
+        <p class="small" style="color:rgba(255,255,255,.5)">Разработка и сопровождение сайта — партнёр проекта АНО «ЛИС «Техспейс Андромеда».</p>
       </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026—2027 Оргкомитет проекта «Хоккей равных возможностей»</span>
+      <span>Казань · Республика Татарстан</span>
     </div>
   </div>
 </footer>
 
-<script>
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var t = document.querySelector(a.getAttribute('href'));
-      if(t){ e.preventDefault(); try{ t.scrollIntoView({behavior:'smooth', block:'start'}); }catch(err){ window.scrollTo(0, t.offsetTop); } }
-    });
-  });
-</script>
+<script src="assets/app.js"></script>
 </body>
 </html>
