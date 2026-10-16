@@ -127,9 +127,8 @@
     });
   });
 
-  /* ---------- анкета партнёра ---------- */
-  var form = document.querySelector("form[data-partner-form]");
-  if (form) {
+  /* ---------- анкеты: партнёрская и заявка в команду ---------- */
+  document.querySelectorAll("form[data-partner-form], form[data-team-form]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
       var ok = true;
       form.querySelectorAll(".field").forEach(function (f) { f.classList.remove("error"); });
@@ -157,5 +156,5 @@
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = "Отправляем…"; }
     });
-  }
+  });
 })();
