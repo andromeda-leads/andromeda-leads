@@ -265,3 +265,47 @@ ul{margin:0;padding:0;list-style:none}
   body{font-size:16px}
   .kpi{font-size:38px}
 }
+
+/* ── Команда проекта ───────────────────────────────── */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.team__card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--frame);
+  border-radius:var(--radius);padding:26px 24px;text-align:center;
+  transition:transform .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
+.team__card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#e2d2bd}
+.team__photo{position:relative;width:140px;height:140px;margin:0 auto 18px;border-radius:50%;overflow:hidden;
+  background:var(--grad);display:grid;place-items:center;border:4px solid #fff;box-shadow:0 10px 24px rgba(20,20,20,.14)}
+.team__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.team__photo.has-photo .team__mono{display:none}
+.team__mono{font-size:40px;font-weight:900;color:#fff;letter-spacing:.02em;line-height:1}
+.team__name{font-size:19px;font-weight:800}
+.team__role{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-top:7px}
+.team__bio{font-size:14.5px;color:var(--ink-2);margin-top:12px;text-align:left}
+.team__reg{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);text-align:left}
+.team__reg li{position:relative;padding-left:20px;margin-bottom:8px;font-size:13.5px;color:var(--ink-2)}
+.team__reg li::before{content:"";position:absolute;left:0;top:.68em;width:10px;height:3px;border-radius:2px;background:var(--grad)}
+.team__reg li:last-child{margin-bottom:0}
+
+/* ── Материалы хроники ─────────────────────────────── */
+.mats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.mat{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--frame);
+  border-radius:var(--radius);padding:24px;
+  transition:transform .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
+.mat:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#e2d2bd}
+.mat__tag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--copper-deep);background:rgba(217,142,74,.16);border-radius:8px;padding:6px 11px}
+.mat__title{font-size:17px;font-weight:800;margin-top:14px;line-height:1.32}
+.mat__src{font-size:12.5px;color:var(--muted);margin-top:8px}
+.mat__text{font-size:14.5px;color:var(--ink-2);margin-top:10px;flex:1 1 auto}
+.mat__link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:800;
+  color:var(--orange);transition:color .2s var(--ease)}
+.mat__link:hover{color:var(--orange-deep)}
+
+@media(max-width:1000px){
+  .team{grid-template-columns:repeat(2,1fr)}
+  .mats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  .team{grid-template-columns:1fr}
+  .team__card{padding:22px 20px}
+  .mats{grid-template-columns:1fr}
+}
