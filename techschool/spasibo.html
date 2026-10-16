@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Заявка отправлена | Андромеда Техспейс, Казань</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="logo" href="landing_1_5.html"><img src="assets/logo_techspace_02.png" alt="Андромеда Техспейс"></a>
+    <nav class="nav-links">
+      <a href="landing_1_5.html">1–5 класс</a>
+      <a href="landing_6_11.html">6–11 класс</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="success">
+  <div class="check">✓</div>
+  <h2>Спасибо, заявка отправлена!</h2>
+  <p id="spasiboText">Мы получили вашу заявку на бесплатное пробное занятие и свяжемся с вами в течение рабочего дня, чтобы подобрать группу и удобное время.</p>
+  <p style="margin-top:22px">
+    <a class="btn btn-primary btn-lg" href="landing_1_5.html" id="backLink">Вернуться на сайт</a>
+  </p>
+  <p style="margin-top:22px;font-size:15px;color:#4a5568">
+    Нужно быстрее? Позвоните нам:
+    <a href="tel:+79872900593" style="font-weight:700">+7 (987) 290-05-93</a>,
+    <a href="tel:+78432900593" style="font-weight:700">8 (843) 290-05-93</a>
+  </p>
+</section>
+
+<section class="section-dark" id="contacts">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p><strong>Адрес:</strong> 420124, Казань, ул. Чистопольская, 20а, пом. 1021</p>
+        <p><strong>E-mail:</strong> <a href="mailto:andromeda.space@ya.ru" style="color:#38A5FF">andromeda.space@ya.ru</a></p>
+        <p><strong>Telegram:</strong> <a href="https://t.me/andromspace" style="color:#38A5FF">@andromspace</a></p>
+        <p><strong>VK:</strong> <a href="https://vk.com/andromedakzn" style="color:#38A5FF">vk.com/andromedakzn</a></p>
+        <p><strong>Режим работы:</strong> пн–пт, 9:00–18:00</p>
+      </div>
+      <div class="contact-info">
+        <p><strong>Технологическая школа «Андромеда Техспейс»</strong></p>
+        <p>АНО «ЛИС ПТП «Андромеда»</p>
+        <p>ИНН 1655394252 · ОГРН 1171690112582</p>
+        <p>Лицензия на образовательную деятельность № Л035-01272-16/00770538</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <p>© 2017–2026 Технологическая школа «Андромеда Техспейс». АНО «ЛИС ПТП «Андромеда», Казань.</p>
+  <p class="legal">ОГРН 1171690112582 · ИНН 1655394252 · Лицензия № Л035-01272-16/00770538. Информация на сайте не является публичной офертой.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var p = new URLSearchParams(window.location.search);
+  var name = p.get('n') || '';
+  var from = p.get('from') || '';
+
+  if (name) {
+    document.getElementById('spasiboText').innerHTML =
+      'Мы получили заявку на <strong>' + name.replace(/[<>&]/g, '') + '</strong> и свяжемся с вами в течение рабочего дня, ' +
+      'чтобы подобрать группу и удобное время для бесплатного пробного занятия.';
+  }
+  if (from.indexOf('6–11') > -1 || from.indexOf('6-11') > -1) {
+    var link = document.getElementById('backLink');
+    link.href = 'landing_6_11.html';
+    link.textContent = 'Вернуться на страницу программ для 6–11 классов';
+  } else if (from.indexOf('1–5') > -1 || from.indexOf('1-5') > -1) {
+    var link2 = document.getElementById('backLink');
+    link2.href = 'landing_1_5.html';
+    link2.textContent = 'Вернуться на страницу программ для 1–5 классов';
+  }
+})();
+</script>
+</body>
+</html>
