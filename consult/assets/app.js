@@ -230,13 +230,11 @@
     }).join('');
   }
 
-  /* ——— мягкое появление блоков (лёгкая анимация, без перегруза) ——— */
+  /* ——— появление блоков: ровный подъём с шагом в 45 мс ——— */
   var soft = document.querySelectorAll('.card, .case, .step, .consult-band');
   if (soft.length) {
     var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (calm || !('IntersectionObserver' in window)) {
-      /* без анимации — просто показываем */
-    } else {
+    if (!calm && ('IntersectionObserver' in window)) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (en.isIntersecting) {
@@ -247,10 +245,30 @@
       }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
       soft.forEach(function (el, i) {
         el.classList.add('reveal');
-        el.style.transitionDelay = (Math.min(i % 4, 3) * 60) + 'ms';
+        el.style.setProperty('--i', String(i % 4));
         io.observe(el);
       });
     }
+  }
+
+  /* ——— волосяной индикатор прочтения страницы ——— */
+  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+    var raf = 0;
+    var paint = function () {
+      raf = 0;
+      var doc = document.documentElement;
+      var span = doc.scrollHeight - window.innerHeight;
+      var p = span > 0 ? Math.min(1, Math.max(0, window.pageYOffset / span)) : 0;
+      bar.style.width = (p * 100).toFixed(2) + '%';
+    };
+    var onScroll = function () { if (!raf) raf = window.requestAnimationFrame(paint); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    paint();
   }
 
   /* ——— год в подвале ——— */
