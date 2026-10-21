@@ -164,6 +164,18 @@
     el.textContent = text;
   }
 
+  /* ——— кнопка «получить материал» подставляет материал в форму ——— */
+  document.querySelectorAll('[data-material]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var sel = document.getElementById('m-material');
+      if (!sel) return;
+      var want = (link.getAttribute('data-material') || '').trim();
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].text.trim() === want) { sel.selectedIndex = i; break; }
+      }
+    });
+  });
+
   /* ——— «спроси про программу» на главной ——— */
   var askForm = document.getElementById('askForm');
   if (askForm) {
@@ -172,7 +184,13 @@
       var q = (document.getElementById('askInput') || {}).value || '';
       q = q.trim();
       if (q.length < 4) return;
-      location.href = 'consultation.html?q=' + encodeURIComponent(q) + '#form';
+      var text = 'Вопрос с сайта: ' + q;
+      try {
+        var store = JSON.parse(localStorage.getItem('andromeda_questions') || '[]');
+        store.push({ at: new Date().toISOString(), q: q });
+        localStorage.setItem('andromeda_questions', JSON.stringify(store.slice(-20)));
+      } catch (err) {}
+      window.open('https://t.me/andromedaconsult?text=' + encodeURIComponent(text), '_blank');
     });
   }
 
@@ -210,6 +228,29 @@
       return '<div class="news-item"><div class="date">' + fmtDate(p.date) +
         '</div><div class="txt">' + clean(p.html || p.text) + '</div>' + img + '</div>';
     }).join('');
+  }
+
+  /* ——— мягкое появление блоков (лёгкая анимация, без перегруза) ——— */
+  var soft = document.querySelectorAll('.card, .case, .step, .consult-band');
+  if (soft.length) {
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (calm || !('IntersectionObserver' in window)) {
+      /* без анимации — просто показываем */
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            io.unobserve(en.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+      soft.forEach(function (el, i) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (Math.min(i % 4, 3) * 60) + 'ms';
+        io.observe(el);
+      });
+    }
   }
 
   /* ——— год в подвале ——— */
