@@ -176,6 +176,42 @@
     });
   }
 
+  /* ——— новости из Telegram-канала ——— */
+  var newsList = document.getElementById('newsList');
+  var newsPrev = document.getElementById('newsPreview');
+  if (newsList || newsPrev) {
+    fetch('assets/news.json', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var items = (d && d.items) || [];
+        renderNews(newsList, items);
+        renderNews(newsPrev, items.slice(0, 3));
+      })
+      .catch(function () {});
+  }
+  function clean(html) {
+    return String(html || '')
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      .replace(/\son\w+\s*=\s*"[^"]*"/gi, '')
+      .replace(/javascript:/gi, '');
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var dt = new Date(iso);
+    if (isNaN(dt.getTime())) return '';
+    var p = function (n) { return n < 10 ? '0' + n : '' + n; };
+    return p(dt.getDate()) + '.' + p(dt.getMonth() + 1) + '.' + dt.getFullYear() + ' · ' + p(dt.getHours()) + ':' + p(dt.getMinutes());
+  }
+  function renderNews(el, items) {
+    if (!el || !items.length) return;
+    el.innerHTML = items.map(function (p) {
+      var img = p.image ? '<div style="margin:12px 0 0"><img src="' + p.image + '" alt="" style="border-radius:10px;max-width:100%"></div>' : '';
+      return '<div class="news-item"><div class="date">' + fmtDate(p.date) +
+        '</div><div class="txt">' + clean(p.html || p.text) + '</div>' + img + '</div>';
+    }).join('');
+  }
+
   /* ——— год в подвале ——— */
   document.querySelectorAll('[data-year]').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
