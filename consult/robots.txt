@@ -1,3 +1,4 @@
+# ANDROMEDA CONSULT — служебные файлы сайта
 User-agent: *
 Allow: /
 Disallow: /assets/private/
