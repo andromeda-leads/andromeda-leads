@@ -1,8 +1,8 @@
-/* ANDROMEDA CONSULT — интерфейс */
+/* ANDROMEDA CONSULT - интерфейс */
 (function () {
   'use strict';
 
-  /* ——— мобильное меню ——— */
+  /* --- мобильное меню --- */
   var burger = document.querySelector('.burger');
   var nav = document.querySelector('.nav');
   if (burger && nav) {
@@ -12,7 +12,7 @@
     });
   }
 
-  /* ——— выпадающее меню «Услуги» ——— */
+  /* --- выпадающее меню «Услуги» --- */
   document.querySelectorAll('.drop > button').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -27,7 +27,7 @@
     }
   });
 
-  /* ——— cookie ——— */
+  /* --- cookie --- */
   var ck = document.getElementById('cookieBar');
   if (ck) {
     var KEY = 'andromeda_consult_cookie_ok';
@@ -41,7 +41,7 @@
     });
   }
 
-  /* ——— калькулятор Сколково ——— */
+  /* --- калькулятор Сколково --- */
   var calc = document.getElementById('skCalc');
   if (calc) {
     var num = function (id) {
@@ -52,11 +52,11 @@
       return isFinite(n) && n > 0 ? n : 0;
     };
     var fmt = function (v, dec) {
-      if (!isFinite(v)) return '—';
+      if (!isFinite(v)) return '-';
       return v.toLocaleString('ru-RU', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
     };
     var el;
-    var keys = ['rev', 'prof', 'payroll', 'growth', 'years'];
+    var keys = ['rev', 'prof', 'payroll', 'staff', 'growth', 'years'];
     keys.forEach(function (k) {
       el = document.getElementById(k);
       if (el) el.addEventListener('input', recalc);
@@ -67,13 +67,20 @@
       var rev = num('rev');          // выручка, млн ₽
       var prof = num('prof');        // прибыль до налога, млн ₽
       var payroll = num('payroll');  // ФОТ, млн ₽
+      var staff = num('staff');      // численность, чел.
       var growth = num('growth');    // рост показателей, %
       var years = Math.min(15, Math.max(1, Math.round(num('years') || 10)));
 
+      var threshold = 40639.5;       // 1,5 МРОТ 2026, ₽ в месяц
+      var salary = staff > 0 ? (payroll * 1e6) / (staff * 12) : 0;
+      var payrollUnder = staff > 0 ? (staff * 12 * threshold) / 1e6 : 0; // млн ₽ в пределах порога
+
       var profBefore = prof * 0.25;
       var profAfter = 0;
-      var payBefore = payroll * 0.30;
-      var payAfter = payroll * 0.15;
+      var payBefore = payroll * 0.302;
+      var payAfter = staff > 0
+        ? 0.30 * Math.min(payroll, payrollUnder) + 0.15 * Math.max(0, payroll - payrollUnder)
+        : payBefore;
       var yearGain = (profBefore - profAfter) + (payBefore - payAfter);
 
       var total = 0, g = 1 + growth / 100;
@@ -86,11 +93,12 @@
       var setTxt = function (id, v) { var x = document.getElementById(id); if (x) x.textContent = v; };
       setTxt('outYear', fmt(yearGain, 1));
       setTxt('outTotal', fmt(total, 1));
-      setTxt('outPerMln', rev > 0 ? fmt((yearGain * 1000) / rev, 1) : '—');
+      setTxt('outPerMln', rev > 0 ? fmt((yearGain * 1000) / rev, 1) : '-');
       setTxt('outProfNow', fmt(profBefore, 1));
       setTxt('outPayNow', fmt(payBefore, 1));
       setTxt('outProfAfter', fmt(profAfter, 1));
       setTxt('outPayAfter', fmt(payAfter, 1));
+      setTxt('outSalary', staff > 0 ? fmt(salary, 0) : '-');
       setTxt('outDrop', fmt(drop, 0) + '%');
       setTxt('outYears', String(years));
 
@@ -98,10 +106,16 @@
       if (flags) {
         var msgs = [];
         if (rev > 1000) {
-          msgs.push('<div class="flag warn">Выручка больше 1 млрд ₽: прямые льготы резидента к такой компании не применяются (лимит по выручке — 1 млрд ₽, по чистой прибыли — 300 млн ₽). Для крупных компаний работает схема с отдельным научно-исследовательским центром — резидентом Сколково; расчёт для неё делается отдельно.</div>');
+          msgs.push('<div class="flag warn">Выручка больше 1 млрд ₽: прямые льготы резидента к такой компании не применяются (лимит по выручке - 1 млрд ₽, по чистой прибыли - 300 млн ₽). Для крупных компаний работает схема с отдельным научно-исследовательским центром - резидентом Сколково; расчёт для неё делается отдельно.</div>');
         }
         if (prof > 300) {
-          msgs.push('<div class="flag warn">Чистая прибыль выше 300 млн ₽ — лимит по прибыли превышен. Нужна структура с отдельным юрлицом, где концентрируется профильная деятельность.</div>');
+          msgs.push('<div class="flag warn">Чистая прибыль выше 300 млн ₽ - лимит по прибыли превышен. Нужна структура с отдельным юрлицом, где концентрируется профильная деятельность.</div>');
+        }
+        if (staff < 1) {
+          msgs.push('<div class="flag warn">Укажите численность сотрудников: без неё не считается средняя зарплата, а без неё не применить порог 1,5 МРОТ - экономия по взносам в расчёте не показывается.</div>');
+        }
+        if (staff > 0 && salary > 0 && salary <= threshold) {
+          msgs.push('<div class="flag warn">Средняя зарплата по компании не выше 1,5 МРОТ: льготный тариф коснётся большинства выплат, эффект по взносам получается небольшим. Основную экономию даст 0 % по налогу на прибыль.</div>');
         }
         if (prof <= 0) {
           msgs.push('<div class="flag warn">Прибыли нет: экономия считается только по страховым взносам (30% → 15%). Налог на прибыль 0% даст эффект, когда компания выйдет в плюс.</div>');
@@ -115,7 +129,7 @@
     recalc();
   }
 
-  /* ——— формы заявок ——— */
+  /* --- формы заявок --- */
   document.querySelectorAll('form[data-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -141,7 +155,7 @@
         localStorage.setItem('andromeda_leads', JSON.stringify(store.slice(-20)));
       } catch (err) {}
 
-      showMsg(msg, 'ok', 'Заявка сформирована. Сейчас откроется Telegram — отправьте её одним нажатием, и мы ответим в течение рабочего дня. Если Telegram не открылся, позвоните: 8 916 770-25-55.');
+      showMsg(msg, 'ok', 'Заявка сформирована. Сейчас откроется Telegram - отправьте её одним нажатием, и мы ответим в течение рабочего дня. Если Telegram не открылся, позвоните: 8 916 770-25-55.');
 
       var tg = 'https://t.me/andromedaconsult';
       var url = tg + '?text=' + encodeURIComponent(text);
@@ -164,7 +178,7 @@
     el.textContent = text;
   }
 
-  /* ——— кнопка «получить материал» подставляет материал в форму ——— */
+  /* --- кнопка «получить материал» подставляет материал в форму --- */
   document.querySelectorAll('[data-material]').forEach(function (link) {
     link.addEventListener('click', function () {
       var sel = document.getElementById('m-material');
@@ -176,7 +190,7 @@
     });
   });
 
-  /* ——— «спроси про программу» на главной ——— */
+  /* --- «спроси про программу» на главной --- */
   var askForm = document.getElementById('askForm');
   if (askForm) {
     askForm.addEventListener('submit', function (e) {
@@ -194,7 +208,7 @@
     });
   }
 
-  /* ——— новости из Telegram-канала ——— */
+  /* --- новости из Telegram-канала --- */
   var newsList = document.getElementById('newsList');
   var newsPrev = document.getElementById('newsPreview');
   if (newsList || newsPrev) {
@@ -230,7 +244,7 @@
     }).join('');
   }
 
-  /* ——— появление блоков: ровный подъём с шагом в 45 мс ——— */
+  /* --- появление блоков: ровный подъём с шагом в 45 мс --- */
   var soft = document.querySelectorAll('.card, .case, .step, .consult-band');
   if (soft.length) {
     var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -251,7 +265,7 @@
     }
   }
 
-  /* ——— волосяной индикатор прочтения страницы ——— */
+  /* --- волосяной индикатор прочтения страницы --- */
   if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var bar = document.createElement('div');
     bar.className = 'scroll-progress';
@@ -271,7 +285,7 @@
     paint();
   }
 
-  /* ——— год в подвале ——— */
+  /* --- год в подвале --- */
   document.querySelectorAll('[data-year]').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
   });
