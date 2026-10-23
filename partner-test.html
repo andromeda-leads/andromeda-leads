@@ -159,6 +159,11 @@ body { background: #0f172a; min-height: 100vh; display: flex; justify-content: c
   </div>
 </div>
 
+<div style="max-width:1100px;margin:0 auto 8px;padding:0 2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+  <button class="btn" onclick="resendResults()" style="background:#d4a843;color:#0f172a;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">Отправить мои результаты повторно</button>
+  <span style="color:#64748b;font-size:12px;">Страница помнит пройденные уровни в этом браузере: если результаты уже отправлены, кнопка пришлёт их ещё раз</span>
+</div>
+
 <div class="card" id="mainContent">
   <!-- Start screen - dynamic -->
 </div>
@@ -2140,6 +2145,9 @@ function showResults(percent, passed, results, timeout) {
 // ====================== TELEGRAM ======================
 const BOT_TOKEN = '8228037950:AAHGCTHrTMMT3vfieVUSr9ubt3WaOkmsZ5s';
 const ADMIN_CHAT_ID = '353309197';
+const ASSIST_TOKEN = '8950831726:AAH2SKMxFUzx3WrQmfDHpXWyAAKdoX3Rq2A';
+const ASSIST_CHAT = '353309197';
+const NTFY_TOPIC = 'andromeda-testres-4kq8m3';
 
 function getPartnerName() {
   try { return localStorage.getItem('skolkovo_partner_name') || 'Неизвестный'; } catch(e) { return 'Неизвестный'; }
@@ -2155,17 +2163,51 @@ function setPartnerName() {
   void m.offsetHeight;
 }
 
+function tgSend(token, chat, text) {
+  return fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ chat_id: chat, text: text })
+  }).then(function(r) { return r.json(); }).catch(function(e) { console.log('telegram error:', e); return {ok: false}; });
+}
+
+function ntfySend(text, title) {
+  return fetch('https://ntfy.sh', {
+    method: 'POST',
+    body: JSON.stringify({ topic: NTFY_TOPIC, title: title, message: text, priority: 4 })
+  }).then(function(r) { return true; }).catch(function(e) { console.log('ntfy error:', e); return false; });
+}
+
 function sendToTelegram(percent, passed, level, timeSpent) {
   const name = getPartnerName();
   const lvlNames = {1: 'Базовый', 2: 'Продвинутый', 3: 'Эксперт'};
   const status = passed ? '✅ ПРОЙДЕН' : '❌ НЕ ПРОЙДЕН';
   const text = `📊 РЕЗУЛЬТАТ ТЕСТА\n👤 Партнёр: ${name}\n📚 Уровень ${level}: ${lvlNames[level]}\n${status}\n🎯 Результат: ${Math.round(percent)}%\n⏱ Время: ${Math.round(timeSpent)} сек.\n🎯 Проходной: ${PASS_THRESHOLDS[level]}%`;
-  
-  fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: text })
-  }).catch(function(e) { console.log('Telegram error:', e); });
+  tgSend(BOT_TOKEN, ADMIN_CHAT_ID, text);
+  tgSend(ASSIST_TOKEN, ASSIST_CHAT, text);
+  ntfySend(text, 'Результат теста: ' + name);
+}
+
+function resendResults() {
+  let data = {};
+  try { data = JSON.parse(localStorage.getItem('skolkovo_test_progress')) || {}; } catch(e) { data = {}; }
+  const name = getPartnerName();
+  const lvlNames = {1: 'Базовый', 2: 'Продвинутый', 3: 'Эксперт'};
+  const lines = ['📊 РЕЗУЛЬТАТ ТЕСТА (повторная отправка)', '👤 Партнёр: ' + name];
+  let any = false;
+  for (let l = 1; l <= 3; l++) {
+    const row = data[l];
+    if (!row) continue;
+    any = true;
+    const pct = (row.percent !== undefined) ? Math.round(row.percent) : Math.round(row.score || 0);
+    lines.push('📚 Уровень ' + l + ' (' + lvlNames[l] + '): ' + (row.passed ? '✅ пройден' : '❌ не пройден') + ', ' + pct + '%');
+  }
+  if (!any) lines.push('На этом устройстве сохранённых результатов нет');
+  const text = lines.join('\n');
+  tgSend(BOT_TOKEN, ADMIN_CHAT_ID, text);
+  tgSend(ASSIST_TOKEN, ASSIST_CHAT, text);
+  ntfySend(text, 'Результат теста (повтор): ' + name);
+  alert(any ? 'Результаты отправлены' : 'На этом устройстве результатов нет. Откройте страницу там, где проходили тест, или пройдите его заново');
 }
 
 // ====================== PROGRESS ======================
