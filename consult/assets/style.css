@@ -442,3 +442,23 @@ td b{color:#111826}
 .site-foot{position:relative}
 .site-foot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(212,168,67,.55),transparent)}
+
+/* --- инструменты: подбор программы, проверка по ИНН --- */
+.pb-card{border-top:2px solid var(--gold);padding:14px 0 6px;margin-bottom:6px}
+.pb-card:first-child{padding-top:6px}
+.pb-card h4{margin:2px 0 6px;font-size:16px}
+.pb-card h4 a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(212,168,67,.5)}
+.pb-card p{margin:0 0 6px;font-size:13.5px;line-height:1.45;color:#C9D2E3}
+.pb-amount{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#E8C77B}
+.pb-meta{font-size:12.5px;color:#8C97AD!important}
+.inn-row{display:grid;grid-template-columns:20px 1fr auto;gap:4px 8px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13.5px}
+.inn-mark{font-weight:700}
+.inn-row.ok .inn-mark{color:#6FD08C}
+.inn-row.warn .inn-mark{color:#E8C77B}
+.inn-label{color:#C9D2E3}
+.inn-value{color:#fff;font-weight:600;text-align:right}
+.inn-note{grid-column:2 / -1;font-size:12px;color:#8C97AD;line-height:1.4}
+@media(max-width:640px){
+  .inn-row{grid-template-columns:18px 1fr}
+  .inn-value{grid-column:2;text-align:left;font-weight:600;color:#E8C77B}
+}
