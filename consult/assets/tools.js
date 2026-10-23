@@ -119,6 +119,42 @@
 
     function num(e) { var n = parseFloat(String((e && e.value) || '0').replace(',', '.')); return isFinite(n) ? n : 0; }
 
+    // Карточка компании из открытого реестра ФНС
+    var INN_API = 'https://agrosignal.mypetlab.org/contracts/andromeda.inn-api/1.0/lookup';
+    var INN_KEY = '24651c1fd5343aa6343fe6f484215810c3f0f33f9fda22df47457cb6b7369310';
+    var innCache = {}, innPending = {};
+
+    function innHead(val) {
+      if (!innCache[val] && !innPending[val]) {
+        innPending[val] = 1;
+        var url = INN_API + '?inn=' + encodeURIComponent(val) + '&key=' + INN_KEY;
+        fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+          innCache[val] = d || {};
+          delete innPending[val];
+          render();
+        }).catch(function () {
+          innCache[val] = { found: false, reason: 'Реестр ФНС не ответил - критерии ниже считаем по вашим данным' };
+          delete innPending[val];
+          render();
+        });
+      }
+      var c = innCache[val];
+      if (!c) return '<p class="muted">Сверяем ИНН по открытому реестру ФНС…</p>';
+      if (!c.found) return '<div class="flag warn">' + esc(c.reason || 'В реестре ФНС нет записи с таким ИНН') + '</div>';
+      var lines = [];
+      if (c.ogrn) lines.push(['ОГРН', c.ogrn]);
+      if (c.region) lines.push(['Регион', c.region]);
+      if (c.director) lines.push(['Руководитель', c.director]);
+      if (c.reg_date) lines.push(['Дата регистрации', c.reg_date]);
+      if (c.status) lines.push(['Статус в реестре', c.status]);
+      return '<div class="inn-card"><div class="inn-card-name">' + esc(c.short_name || c.full_name || '') + '</div>' +
+        (c.full_name && c.full_name !== c.short_name ? '<div class="inn-card-full">' + esc(c.full_name) + '</div>' : '') +
+        lines.map(function (p) {
+          return '<div class="inn-card-row"><span>' + esc(p[0]) + '</span><b>' + esc(p[1]) + '</b></div>';
+        }).join('') +
+        '<div class="inn-card-src">Источник: ' + esc(c.source || 'ЕГРЮЛ ФНС') + '. Выручку, численность и ОКВЭД вводите сами.</div></div>';
+    }
+
     function row(label, value, state, note) {
       var mark = state === 'ok' ? '✓' : (state === 'bad' ? '✗' : '!');
       var cls = state === 'ok' ? 'ok' : (state === 'bad' ? 'warn' : 'warn');
@@ -141,6 +177,7 @@
           'у юрлица 10 цифр, у ИП - 12.</div>';
         return;
       }
+      var head = innHead(val);
       var legal = val.length === 10;
       var region = (window.REGIONS || {})[val.slice(0, 2)] || ('код ' + val.slice(0, 2));
       rows.push(row('Форма и ИНН', legal ? 'юрлицо' : 'ИП или физлицо', legal ? 'ok' : 'bad',
@@ -193,7 +230,7 @@
         tail = '<div class="flag warn">Есть стоп-факторы. Часть убирается (смена ОКВЭД, выделение профильной деятельности в отдельное юрлицо, ' +
           'смена режима), часть нет. Это и есть тема разбора.</div>';
       }
-      out.innerHTML = rows.join('') + tail;
+      out.innerHTML = head + rows.join('') + tail;
     }
 
     [inn, okv, rv, st, tax, fr].forEach(function (e) {
@@ -300,7 +337,39 @@
     });
   }
 
-  function init() { podbor(); innCheck(); booking(); }
+  /* ---------- сроки открытых программ от робота ---------- */
+  function programsDates() {
+    var cells = document.querySelectorAll('[data-pk-to]');
+    if (!cells.length) return;
+    var API = 'https://agrosignal.mypetlab.org/contracts/andromeda.programs-api/1.0/programs';
+    var KEY = 'eba4dee056396796f9d883b4f33adae05f385c6585c6608675ece0636092018a';
+    var LABEL = { open: ['Приём идёт', 'ok'], always: ['Постоянно', 'gold'],
+      watch: ['Следим за датой', ''], soon: ['Окно закрыто', ''] };
+    fetch(API + '?key=' + KEY).then(function (r) { return r.json(); }).then(function (d) {
+      var items = (d && d.items) || [];
+      var byslug = {};
+      items.forEach(function (it) { byslug[it.slug] = it; });
+      Array.prototype.forEach.call(cells, function (cell) {
+        var slug = cell.getAttribute('data-pk-to'), it = byslug[slug];
+        if (!it) return;
+        if (it.to) cell.textContent = it.to;
+        var fromCell = document.querySelector('[data-pk-from="' + slug + '"]');
+        if (fromCell && it.from) fromCell.textContent = it.from;
+        var st = document.querySelector('[data-pk-status="' + slug + '"]');
+        if (st && it.status && LABEL[it.status]) {
+          var lab = LABEL[it.status];
+          st.innerHTML = '<span class="chip' + (lab[1] ? ' ' + lab[1] : '') + '">' + esc(lab[0]) + '</span>';
+        }
+      });
+      var upd = el('progUpdated');
+      if (upd && d.updated) {
+        var p = String(d.updated).split('-');
+        if (p.length === 3) upd.textContent = p[2] + '.' + p[1] + '.' + p[0];
+      }
+    }).catch(function () { /* оставляем даты, собранные при сборке сайта */ });
+  }
+
+  function init() { podbor(); innCheck(); booking(); programsDates(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
