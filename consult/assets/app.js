@@ -129,49 +129,54 @@
     recalc();
   }
 
-  /* --- формы заявок --- */
+  /* --- формы заявок: отправка в наш сервис приёма заявок --- */
+  var LEAD_API = 'https://agrosignal.mypetlab.org/contracts/andromeda.site-lead-api/1.0/lead';
+  var LEAD_KEY = '0bc512399e2f6838846f71c8e679dd9db9d7b847510da086463c8aeabb06b2fd';
+  var LEAD_FIELDS = ['name', 'phone', 'email', 'company', 'program', 'material', 'topic', 'slot', 'question', 'comment'];
+
+  function sendLead(payload) {
+    return fetch(LEAD_API + '?key=' + LEAD_KEY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); });
+  }
+
   document.querySelectorAll('form[data-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var data = {};
-      new FormData(form).forEach(function (v, k) { data[k] = String(v).trim(); });
+      new FormData(form).forEach(function (v, k) {
+        if (LEAD_FIELDS.indexOf(k) >= 0) data[k] = String(v).trim();
+      });
       var msg = form.querySelector('.form-msg');
+      var btn = form.querySelector('button[type=submit]');
       var name = data.name || '';
       var phone = data.phone || '';
       if (name.length < 2) { return showMsg(msg, 'err', 'Укажите имя, пожалуйста.'); }
-      if (phone.replace(/\D/g, '').length < 10) { return showMsg(msg, 'err', 'Проверьте номер телефона.'); }
+      if (phone.replace(/\D/g, '').length < 10 && !(data.email && data.email.indexOf('@') > 0)) {
+        return showMsg(msg, 'err', 'Нужен телефон или e-mail: иначе не сможем ответить.');
+      }
 
-      var kind = form.getAttribute('data-lead');
-      var lines = ['Заявка с сайта: ' + kind];
-      Object.keys(data).forEach(function (k) {
-        if (data[k]) lines.push(labelOf(k) + ': ' + data[k]);
+      data.kind = form.getAttribute('data-lead');
+      data.page = location.pathname.split('/').pop() || 'index.html';
+      if (btn) btn.disabled = true;
+      showMsg(msg, 'ok', 'Отправляем заявку…');
+
+      sendLead(data).then(function (d) {
+        if (d && d.ok) {
+          showMsg(msg, 'ok', 'Заявка ' + (d.id || '') + ' принята. Ответим в течение рабочего дня на указанный контакт. Если вопрос срочный, позвоните: 8 916 770-25-55.');
+          form.reset();
+        } else {
+          showMsg(msg, 'err', (d && d.error) || 'Заявку не удалось отправить. Позвоните: 8 916 770-25-55.');
+        }
+      }).catch(function () {
+        showMsg(msg, 'err', 'Связи с сервером нет. Позвоните: 8 916 770-25-55 или напишите на info@andromedaconsult.ru.');
+      }).then(function () {
+        if (btn) btn.disabled = false;
       });
-      lines.push('Дата: ' + new Date().toLocaleString('ru-RU'));
-      var text = lines.join('\n');
-
-      try {
-        var store = JSON.parse(localStorage.getItem('andromeda_leads') || '[]');
-        store.push({ kind: kind, at: new Date().toISOString(), data: data });
-        localStorage.setItem('andromeda_leads', JSON.stringify(store.slice(-20)));
-      } catch (err) {}
-
-      showMsg(msg, 'ok', 'Заявка сформирована. Сейчас откроется Telegram - отправьте её одним нажатием, и мы ответим в течение рабочего дня. Если Telegram не открылся, позвоните: 8 916 770-25-55.');
-
-      var tg = 'https://t.me/andromedaconsult';
-      var url = tg + '?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
-      form.reset();
     });
   });
-
-  function labelOf(k) {
-    var m = {
-      name: 'Имя', phone: 'Телефон', email: 'E-mail', company: 'Компания',
-      program: 'Программа', slot: 'Удобное время', topic: 'Тема', question: 'Вопрос',
-      material: 'Материал', revenue: 'Выручка', comment: 'Комментарий'
-    };
-    return m[k] || k;
-  }
   function showMsg(el, cls, text) {
     if (!el) return;
     el.className = 'form-msg ' + cls;
@@ -198,15 +203,21 @@
       var q = (document.getElementById('askInput') || {}).value || '';
       q = q.trim();
       if (q.length < 4) return;
-      var text = 'Вопрос с сайта: ' + q;
-      try {
-        var store = JSON.parse(localStorage.getItem('andromeda_questions') || '[]');
-        store.push({ at: new Date().toISOString(), q: q });
-        localStorage.setItem('andromeda_questions', JSON.stringify(store.slice(-20)));
-      } catch (err) {}
-      window.open('https://t.me/andromedaconsult?text=' + encodeURIComponent(text), '_blank');
+      window.location.href = 'consultation.html?q=' + encodeURIComponent(q) + '#form';
     });
   }
+
+  /* --- вопрос с главной переносится в поле заявки --- */
+  (function () {
+    var m = (location.search || '').match(/[?&]q=([^&]*)/);
+    if (!m) return;
+    var box = document.getElementById('c-comment');
+    if (!box) return;
+    try {
+      var q = decodeURIComponent(m[1].replace(/\+/g, ' '));
+      if (q && !box.value) box.value = 'Вопрос: ' + q;
+    } catch (err) {}
+  })();
 
   /* --- новости из Telegram-канала --- */
   var newsList = document.getElementById('newsList');

@@ -240,7 +240,8 @@
   }
 
   /* ---------- запись на созвон ---------- */
-  var NTFY_TOPIC = 'andromeda-anketa-k7p2x9q4';
+  var LEAD_API = 'https://agrosignal.mypetlab.org/contracts/andromeda.site-lead-api/1.0/lead';
+  var LEAD_KEY = '0bc512399e2f6838846f71c8e679dd9db9d7b847510da086463c8aeabb06b2fd';
   var SLOT_TIMES = ['11:00', '11:30', '12:00', '12:30', '13:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
   var MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   var DAYS = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -323,16 +324,25 @@
         'Тема: ' + (topic.value || '-'), 'Страница: booking.html', ''].join('\n');
       makeIcs();
       status.innerHTML = '<div class="flag">Отправляем заявку…</div>';
-      fetch('https://ntfy.sh', {
+      fetch(LEAD_API + '?key=' + LEAD_KEY, {
         method: 'POST',
-        body: JSON.stringify({ topic: NTFY_TOPIC, title: 'Запись на созвон: ' + fmtDate(c.date) + ', ' + c.time, message: text, priority: 4, tags: ['calendar'] })
-      }).then(function (r) {
-        if (!r.ok) throw new Error('ntfy ' + r.status);
-        status.innerHTML = '<div class="flag ok">Заявка ушла. Файл календаря готов - скачайте его ниже, ' +
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kind: 'Запись на созвон',
+          name: nm,
+          phone: ph,
+          company: (comp.value || '').trim(),
+          topic: (topic.value || '').trim(),
+          slot: fmtDate(c.date) + ', ' + c.time + ' МСК',
+          page: 'booking.html'
+        })
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.ok) throw new Error((d && d.error) || 'сервис занят');
+        status.innerHTML = '<div class="flag ok">Заявка ' + (d.id || '') + ' принята. Файл календаря готов - скачайте его ниже, ' +
           'подтверждение придёт в рабочее время.</div>';
       }).catch(function () {
         status.innerHTML = '<div class="flag warn">Заявку не удалось отправить автоматически. ' +
-          'Скачайте файл календаря и позвоните или напишите в Telegram - время закрепим за вами.</div>';
+          'Скачайте файл календаря и позвоните 8 916 770-25-55 - время закрепим за вами.</div>';
       });
     });
   }
