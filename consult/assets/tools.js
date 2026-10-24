@@ -246,6 +246,13 @@
   var SLOT_TIMES = ['11:00', '11:30', '12:00', '12:30', '13:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
   var MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   var DAYS = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+  var HOLIDAYS = { '2026-11-04': 1, '2026-12-31': 1, '2027-01-01': 1, '2027-01-02': 1, '2027-01-03': 1,
+    '2027-01-04': 1, '2027-01-05': 1, '2027-01-06': 1, '2027-01-07': 1, '2027-01-08': 1,
+    '2027-02-23': 1, '2027-03-08': 1, '2027-05-01': 1, '2027-05-09': 1, '2027-06-12': 1 };
+
+  function isHoliday(x) {
+    return !!HOLIDAYS[x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate())];
+  }
 
   function fmtDate(d) { return d.getDate() + ' ' + MONTHS[d.getMonth()]; }
 
@@ -259,14 +266,14 @@
     if (!dateSel) return;
     var timeSel = el('bkTime'), name = el('bkName'), phone = el('bkPhone'),
         comp = el('bkCompany'), topic = el('bkTopic'), status = el('bkStatus'),
-        btn = el('bkSubmit'), icsLink = el('bkIcs');
+        btn = el('bkSubmit'), icsLink = el('bkIcs'), leftEl = el('bkLeft');
 
     var days = [], d = new Date();
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() + 1);
     while (days.length < 15) {
       var wd = d.getDay();
-      if (wd >= 1 && wd <= 5) days.push(new Date(d.getTime()));
+      if (wd >= 1 && wd <= 5 && !isHoliday(d)) days.push(new Date(d.getTime()));
       d.setDate(d.getDate() + 1);
     }
     dateSel.innerHTML = days.map(function (x, i) {
@@ -278,8 +285,36 @@
 
     /* занятые слоты: сервер отдаёт список уже забронированных времён */
     var busy = [];
+    var busyLoaded = false;
     function slotKey(x, t) {
       return pad(x.getDate()) + '.' + pad(x.getMonth() + 1) + '.' + x.getFullYear() + ', ' + t + ' МСК';
+    }
+    function freeCount(x) {
+      return SLOT_TIMES.filter(function (t) { return busy.indexOf(slotKey(x, t)) < 0; }).length;
+    }
+    function places(n) {
+      var a = n % 10, b = n % 100;
+      if (a === 1 && b !== 11) return n + ' место';
+      if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) return n + ' места';
+      return n + ' мест';
+    }
+    function renderDates() {
+      var cur = +dateSel.value;
+      dateSel.innerHTML = days.map(function (x, i) {
+        var tail = '', left = freeCount(x);
+        if (busyLoaded) {
+          tail = left === 0 ? ' · мест нет' : (left === 1 ? ' · последнее место' : ' · ' + places(left));
+        }
+        return '<option value="' + i + '"' + (busyLoaded && left === 0 ? ' disabled' : '') + '>' +
+          DAYS[x.getDay()] + ', ' + fmtDate(x) + tail + '</option>';
+      }).join('');
+      var pick = -1;
+      Array.prototype.forEach.call(dateSel.options, function (o, i) {
+        if (pick < 0 && !o.disabled) pick = i;
+      });
+      if (pick < 0) return;
+      var stillOpen = dateSel.options[cur] && !dateSel.options[cur].disabled;
+      dateSel.value = String(stillOpen ? cur : pick);
     }
     function renderTimes() {
       var x = days[+dateSel.value] || days[0];
@@ -294,11 +329,23 @@
       });
       if (free !== null) timeSel.value = free;
       if (icsLink) icsLink.style.display = 'none';
+      if (busyLoaded && free === null) {
+        timeSel.innerHTML = '<option value="">свободных мест не осталось</option>';
+        if (btn) btn.disabled = true;
+        if (status) status.innerHTML = '<div class="flag warn">На этот день мест нет. Выберите другую дату или позвоните 8 916 770-25-55.</div>';
+      } else if (btn) {
+        btn.disabled = false;
+      }
+      if (leftEl && busyLoaded) {
+        var left = freeCount(x);
+        leftEl.textContent = left === 0 ? 'Свободных мест нет' :
+          (left === 1 ? 'Осталось последнее место на этот день' : 'Свободно ' + places(left));
+      }
     }
     function loadBusy() {
       return fetch(SLOTS_API + '?key=' + LEAD_KEY).then(function (r) { return r.json(); })
-        .then(function (d) { busy = (d && d.busy) || []; renderTimes(); })
-        .catch(function () { renderTimes(); });
+        .then(function (d) { busy = (d && d.busy) || []; busyLoaded = true; renderDates(); renderTimes(); })
+        .catch(function () { busyLoaded = true; renderDates(); renderTimes(); });
     }
 
     function buildIcs(x, time) {
@@ -368,6 +415,7 @@
         busy.push(slotKey(c.date, c.time));
         status.innerHTML = '<div class="flag ok">Заявка ' + (d.id || '') + ' принята на ' + fmtDate(c.date) +
           ', ' + c.time + ' МСК. Файл календаря готов - скачайте его ниже, подтверждение придёт в рабочее время.</div>';
+        renderDates();
         renderTimes();
       }).catch(function (err) {
         status.innerHTML = '<div class="flag warn">' + ((err && err.message && err.message !== 'сервис занят') ? err.message :
