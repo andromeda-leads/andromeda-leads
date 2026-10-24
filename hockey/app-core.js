@@ -84,6 +84,7 @@ function planDay(date) {
   return null;
 }
 function mesoOfWeek(w) {
+  if (w < PLAN.meso[0].from) return PLAN.meso[0];
   for (var i = 0; i < PLAN.meso.length; i++) if (w >= PLAN.meso[i].from && w <= PLAN.meso[i].to) return PLAN.meso[i];
   return PLAN.meso[PLAN.meso.length - 1];
 }
