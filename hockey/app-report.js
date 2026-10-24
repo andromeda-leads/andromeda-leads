@@ -24,7 +24,7 @@ function renderTests() {
     var g = PLAN.tests[i].group;
     (groups[g] = groups[g] || []).push(PLAN.tests[i]);
   }
-  h += '<div class="card"><h2>📏 Тесты и контроль прогресса</h2><div class="muted">Замеры делаем в один день недели, в свежем состоянии — не после льда. Полный блок из 15 показателей: недели 0, 6, 14, 22, 34. Промежуточный: недели 10, 18, 26, 30. Еженедельно — прыжок вверх и один технический показатель.</div></div>';
+  h += '<div class="card"><h2>📏 Тесты и контроль прогресса</h2><div class="muted">Замеры делаем в один день недели, в свежем состоянии - не после льда. Полный блок из 15 показателей: недели 0, 6, 14, 22, 34. Промежуточный: недели 10, 18, 26, 30. Еженедельно - прыжок вверх и один технический показатель.</div></div>';
   var filled = 0, tt;
   for (tt in STATE.tests) if ((STATE.tests[tt] || []).length) filled++;
   h += '<div class="card"><div class="kv"><span>Показателей с данными</span><b>' + filled + ' из ' + PLAN.tests.length + '</b>' +
@@ -39,8 +39,8 @@ function renderTests() {
       var delta = last && prev ? round(last.value - prev.value, def.unit === "с" ? 2 : 1) : null;
       var good = delta != null && ((def.dir === "up" && delta > 0) || (def.dir === "down" && delta < 0));
       var pctToTarget = last ? clamp(Math.round((def.dir === "up" ? last.value / target : target / last.value) * 100), 0, 130) : 0;
-      h += '<div class="tcard" data-tcard="' + def.id + '"><div class="t-head"><div><b>' + esc(def.name) + '</b><div class="tiny">цель к неделе 34: ' + target + ' ' + esc(def.unit) + (def.dir === "down" ? " (меньше — лучше)" : "") + '</div></div>' +
-        '<div style="text-align:right"><div class="t-val">' + (last ? last.value + " " + esc(def.unit) : "—") + '</div>' +
+      h += '<div class="tcard" data-tcard="' + def.id + '"><div class="t-head"><div><b>' + esc(def.name) + '</b><div class="tiny">цель к неделе 34: ' + target + ' ' + esc(def.unit) + (def.dir === "down" ? " (меньше - лучше)" : "") + '</div></div>' +
+        '<div style="text-align:right"><div class="t-val">' + (last ? last.value + " " + esc(def.unit) : "-") + '</div>' +
         (delta != null ? '<div class="tiny" style="color:' + (good ? "#26794a" : "#b32b45") + '">' + (delta > 0 ? "+" : "") + delta + '</div>' : '<div class="tiny">' + (last ? esc(fmtShort(last.date)) : "нет данных") + '</div>') + '</div></div>' +
         (vals.length ? sparkline(vals.slice(-10), def.dir) : "") +
         (best != null ? '<div class="tiny" style="margin-top:4px">лучший результат: ' + best + ' ' + esc(def.unit) + ' · замеров: ' + vals.length + '</div>' : "") +
@@ -84,7 +84,7 @@ function renderReport() {
   var el = $("#s-report");
   if (!UI.reportScope) UI.reportScope = monthKey(today()) && monthList().some(function (m) { return m.key === monthKey(today()); }) ? monthKey(today()) : monthList()[0].key;
   var months = monthList();
-  var h = '<div class="card"><h2>📄 Итоги</h2><div class="muted">Отчёт формируется автоматически из отметок и дневника. Его можно отправить родителям или тренеру — кнопкой «Поделиться».</div></div>';
+  var h = '<div class="card"><h2>📄 Итоги</h2><div class="muted">Отчёт формируется автоматически из отметок и дневника. Его можно отправить родителям или тренеру - кнопкой «Поделиться».</div></div>';
   h += '<div class="tabs">' + months.map(function (m) {
     return '<button data-scope="' + m.key + '"' + (m.key === UI.reportScope ? ' class="active"' : "") + '>' + esc(m.label) + '</button>';
   }).join("") + '<button data-scope="__all"' + (UI.reportScope === "__all" ? ' class="active"' : "") + '>Итог за 8 месяцев</button></div>';
@@ -102,7 +102,7 @@ function renderReport() {
     '<span>Опыт за период</span><b>' + rep.xp + ' XP</b></div>';
   var kinds = { ice: "лёд", power_a: "силовая", power_b: "мощность", home: "домашние", test: "тесты" };
   var kb = [];
-  for (var k in rep.doneByKind) kb.push((kinds[k] || k) + " — " + rep.doneByKind[k]);
+  for (var k in rep.doneByKind) kb.push((kinds[k] || k) + " - " + rep.doneByKind[k]);
   if (kb.length) h += '<div class="tiny" style="margin-top:8px">По видам: ' + esc(kb.join(", ")) + '</div>';
 
   if (rep.well && (rep.well.sleep || rep.well.hr)) {
@@ -126,7 +126,7 @@ function renderReport() {
   }
   if (rep.missedList && rep.missedList.length) {
     h += '<div class="sep"></div><h3>Что не получилось</h3><ul class="muted">';
-    rep.missedList.slice(0, 14).forEach(function (m) { h += '<li>' + esc(fmtShort(m.date)) + ' — ' + esc(m.why) + '</li>'; });
+    rep.missedList.slice(0, 14).forEach(function (m) { h += '<li>' + esc(fmtShort(m.date)) + ' - ' + esc(m.why) + '</li>'; });
     h += '</ul>';
   }
   h += '<div class="sep"></div><h3>Выводы</h3><ul class="muted">' + rep.conclusions.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul></div>';
@@ -135,7 +135,7 @@ function renderReport() {
     '<button class="primary" id="btn-share">Поделиться отчётом</button>' +
     '<button class="ghost" id="btn-copy">Скопировать текст</button>' +
     '<button class="ghost" id="btn-pdf">Сохранить в PDF</button></div>' +
-    '<div class="tiny" style="margin-top:8px">«Сохранить в PDF» — на iPhone: кнопка «Поделиться» → «Печать» → развести два пальца на превью → сохранить в Файлы.</div></div>';
+    '<div class="tiny" style="margin-top:8px">«Сохранить в PDF» - на iPhone: кнопка «Поделиться» → «Печать» → развести два пальца на превью → сохранить в Файлы.</div></div>';
   el.innerHTML = h;
 }
 
@@ -143,15 +143,15 @@ function renderReport() {
 function renderInfo() {
   var el = $("#s-info");
   var s = STATE.settings;
-  var h = '<div class="card"><h2>⛸️ Программа 1. Мощность и скорость</h2><div class="muted">34 недели, командный лёд 2 раза в неделю (четверг и пятница), мощностных сессий не больше двух в неделю, инвентарь — резинки, гантели, при прогрессировании пояс или жилет 3–4,5 кг. Между двумя мощностными сессиями минимум 48 часов.</div>' +
+  var h = '<div class="card"><h2>⛸️ Программа 1. Мощность и скорость</h2><div class="muted">34 недели, командный лёд 2 раза в неделю (четверг и пятница), мощностных сессий не больше двух в неделю, инвентарь - резинки, гантели, при прогрессировании пояс или жилет 3-4,5 кг. Между двумя мощностными сессиями минимум 48 часов.</div>' +
     '<div class="sep"></div><div class="kv"><span>Старт программы</span><b>' + esc(fmtDate(PLAN.start)) + '</b>' +
     '<span>Финиш</span><b>' + esc(fmtDate(PLAN.days[PLAN.days.length - 1].date)) + '</b>' +
     '<span>Ледовых тренировок</span><b>' + PLAN.days.filter(function (d) { return d.kind === "ice"; }).length + '</b>' +
     '<span>Силовых и мощностных</span><b>' + PLAN.days.filter(function (d) { return d.kind === "power_a" || d.kind === "power_b"; }).length + '</b>' +
     '<span>Тестовых дней</span><b>' + PLAN.days.filter(function (d) { return d.kind === "test"; }).length + '</b></div></div>';
 
-  h += '<div class="card"><h2>🏒 Программа 2. Клюшка и шайба</h2><div class="muted">Ежедневная микро-доза 10 минут плюс основные сессии: понедельник 20 минут после силовой и суббота 25–35 минут. В дни льда (четверг и пятница) — только 5–10 минут лёгкого владения. Работаем до лёгкой усталости кистей, а не до отказа: техника разрушается от усталости.</div>' +
-    '<div class="sep"></div><div class="muted">Условия: 1 м² искусственного льда, клюшка, обычные и специальные шайбы, отбойник или бортик, мишени. Суммарно около 100–130 минут в неделю.</div></div>';
+  h += '<div class="card"><h2>🏒 Программа 2. Клюшка и шайба</h2><div class="muted">Ежедневная микро-доза 10 минут плюс основные сессии: понедельник 20 минут после силовой и суббота 25-35 минут. В дни льда (четверг и пятница) - только 5-10 минут лёгкого владения. Работаем до лёгкой усталости кистей, а не до отказа: техника разрушается от усталости.</div>' +
+    '<div class="sep"></div><div class="muted">Условия: 1 м² искусственного льда, клюшка, обычные и специальные шайбы, отбойник или бортик, мишени. Суммарно около 100-130 минут в неделю.</div></div>';
 
   h += '<div class="card"><h2>📈 Мезоциклы</h2>';
   for (var i = 0; i < PLAN.meso.length; i++) {
@@ -159,14 +159,14 @@ function renderInfo() {
     var cur = false;
     var td = planDay(today());
     if (td && td.w >= m.from && td.w <= m.to) cur = true;
-    h += '<details' + (cur ? " open" : "") + '><summary>' + m.n + '. ' + esc(m.name) + ' · недели ' + m.from + '–' + m.to + (cur ? " · сейчас" : "") + '</summary><p>' + esc(m.accent) + '</p></details>';
+    h += '<details' + (cur ? " open" : "") + '><summary>' + m.n + '. ' + esc(m.name) + ' · недели ' + m.from + '-' + m.to + (cur ? " · сейчас" : "") + '</summary><p>' + esc(m.accent) + '</p></details>';
   }
-  h += '<div class="tiny">Каждая четвёртая неделя — разгрузочная: объём минус 40–50%, интенсивность сохраняется. Разгрузка не теряет результат, а создаёт его.</div></div>';
+  h += '<div class="tiny">Каждая четвёртая неделя - разгрузочная: объём минус 40-50%, интенсивность сохраняется. Разгрузка не теряет результат, а создаёт его.</div></div>';
 
   h += '<div class="card"><h2>🎯 Контрольные точки</h2><div class="kv">';
   for (var c = 0; c < PLAN.checkpoints.length; c++) {
     var cp = PLAN.checkpoints[c];
-    h += '<span>' + esc(cp.when) + ' — ' + esc(cp.what) + '</span><b>' + esc(cp.expect) + '</b>';
+    h += '<span>' + esc(cp.when) + ' - ' + esc(cp.what) + '</span><b>' + esc(cp.expect) + '</b>';
   }
   h += '</div></div>';
 
@@ -175,7 +175,7 @@ function renderInfo() {
     var it = PLAN.gear[g];
     h += '<span>' + esc(it[1]) + '<div class="tiny">' + esc(it[0]) + ' · ' + esc(it[2]) + '</div></span><b>' + esc(it[3]) + '</b>';
   }
-  h += '</div><div class="tiny" style="margin-top:8px">Минимальный набор — первые три строки. Всё остальное расширяет возможности, но не заменяет их.</div></div>';
+  h += '</div><div class="tiny" style="margin-top:8px">Минимальный набор - первые три строки. Всё остальное расширяет возможности, но не заменяет их.</div></div>';
 
   h += '<div class="card"><h2>🌷 Протокол возвращения после болезни</h2><ul class="muted">' + PLAN.sick_protocol.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul></div>';
 
@@ -187,13 +187,13 @@ function renderInfo() {
     '<button class="primary small" id="btn-save-topic">Сохранить</button></div>' +
     '<details style="margin-top:10px"><summary>Как подключить (один раз, 2 минуты)</summary><ol class="muted">' +
     '<li>Установите из App Store приложение <b>ntfy</b>.</li>' +
-    '<li>Нажмите «+», введите тему из поля выше — ровно так, как написано.</li>' +
+    '<li>Нажмите «+», введите тему из поля выше - ровно так, как написано.</li>' +
     '<li>Разрешите уведомления. Всё, дальше напоминания приходят сами.</li></ol></details>' +
-    '<div class="sep"></div><h3>Календарь</h3><div class="muted">Все 228 тренировок, тестов и итогов месяца — одним файлом с напоминанием за час до тренировки.</div>' +
+    '<div class="sep"></div><h3>Календарь</h3><div class="muted">Все 228 тренировок, тестов и итогов месяца - одним файлом с напоминанием за час до тренировки.</div>' +
     '<div class="row" style="margin-top:8px"><a class="chip" href="./hockey-plan.ics" download>Скачать календарь (.ics)</a></div>' +
     '<details style="margin-top:10px"><summary>Как подписаться на календарь в iPhone</summary><ol class="muted">' +
     '<li>Скачайте файл по кнопке выше.</li>' +
-    '<li>Откройте его — iPhone предложит добавить события в календарь.</li>' +
+    '<li>Откройте его - iPhone предложит добавить события в календарь.</li>' +
     '<li>Напоминание о каждой тренировке придёт автоматически.</li></ol></details></div>';
 
   h += '<div class="card noprint"><h2>☁️ Синхронизация</h2>' +
