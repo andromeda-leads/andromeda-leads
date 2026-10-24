@@ -103,7 +103,7 @@ function unskipDay() {
 function noteDialog() {
   var t = today(), rec = STATE.checks[t] || {};
   openModal("Заметка о тренировке", '<label class="fld"><span>Что получилось, что нет, что болело</span><textarea id="m-note" rows="4">' + esc(rec.note || "") + '</textarea></label>' +
-    '<label class="fld"><span>Тяжесть тренировки (RPE 1–10)</span><input id="m-rpe" type="number" inputmode="numeric" value="' + ((STATE.diary[t] || {}).rpe || "") + '"></label>',
+    '<label class="fld"><span>Тяжесть тренировки (RPE 1-10)</span><input id="m-rpe" type="number" inputmode="numeric" value="' + ((STATE.diary[t] || {}).rpe || "") + '"></label>',
     function () {
       var rec2 = STATE.checks[t] || (STATE.checks[t] = { items: {} });
       rec2.note = $("#m-note").value;
@@ -155,7 +155,7 @@ function saveTest(id) {
   STATE.tests[id].push({ date: dt, value: v });
   STATE.tests[id].sort(function (a, b) { return a.date < b.date ? -1 : 1; });
   saveState(); renderTests(); checkAchievements(); renderHeader();
-  toast("Записано: " + def.name + " — " + v + " " + def.unit);
+  toast("Записано: " + def.name + " - " + v + " " + def.unit);
 }
 
 /* ---------- отчёт ---------- */
