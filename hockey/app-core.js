@@ -1,4 +1,4 @@
-/* Хоккей: 8 месяцев — ядро приложения (состояние, расчёты, синхронизация) */
+/* Хоккей: 8 месяцев - ядро приложения (состояние, расчёты, синхронизация) */
 "use strict";
 
 var DEFAULT_TOPIC = "hockey-8m-7q2xk4";
@@ -40,7 +40,7 @@ function defState() {
   return {
     v: 1,
     updated: new Date().toISOString(),
-    profile: { name: "", cycleTracking: false },
+    profile: { name: "Арина", cycleTracking: false },
     settings: {
       ntfyTopic: (window.CFG && window.CFG.topic) || DEFAULT_TOPIC,
       remindHour: "8:00",
@@ -285,13 +285,13 @@ function monthReport(key) {
 function conclusions(pct, well, missedN, sick, byKind) {
   var out = [];
   if (pct >= 85) out.push("Месяц закрыт почти идеально: " + pct + "% тренировок выполнено. Можно смело двигаться к следующему мезоциклу.");
-  else if (pct >= 65) out.push("Основной объём выполнен (" + pct + "%). Оставшиеся пропуски — не критично, план продолжается по календарю.");
-  else out.push("Выполнено только " + pct + "% плана. Стоит понять причину: расписание, усталость или мотивация — и упростить неделю.");
+  else if (pct >= 65) out.push("Основной объём выполнен (" + pct + "%). Оставшиеся пропуски - не критично, план продолжается по календарю.");
+  else out.push("Выполнено только " + pct + "% плана. Стоит понять причину: расписание, усталость или мотивация - и упростить неделю.");
   if (well.fatigue && well.fatigue >= 3.6) out.push("Средняя усталость высокая (" + round(well.fatigue, 1) + " из 5). Добавляем лишний день отдыха и следим за утренним пульсом.");
-  if (well.sleep && well.sleep < 7.2) out.push("Сон в среднем " + round(well.sleep, 1) + " ч — это главный ограничитель роста мощности. Цель: 8-9 часов.");
-  if (well.hr && well.hr > 0) out.push("Средний утренний пульс " + Math.round(well.hr) + " уд/мин. Резкий рост на 7+ удара — сигнал недосыпа или болезни.");
-  if (missedN >= 4) out.push("Пропусков много — проверьте, не слишком ли плотно стоят силовые сессии. Допустимо переносить, но не «догонять» объём.");
-  if (sick) out.push("Были дни болезни — они не считаются пропусками, но возвращение к нагрузке делаем по протоколу: 50% → 75% → полный объём.");
+  if (well.sleep && well.sleep < 7.2) out.push("Сон в среднем " + round(well.sleep, 1) + " ч - это главный ограничитель роста мощности. Цель: 8-9 часов.");
+  if (well.hr && well.hr > 0) out.push("Средний утренний пульс " + Math.round(well.hr) + " уд/мин. Резкий рост на 7+ удара - сигнал недосыпа или болезни.");
+  if (missedN >= 4) out.push("Пропусков много - проверьте, не слишком ли плотно стоят силовые сессии. Допустимо переносить, но не «догонять» объём.");
+  if (sick) out.push("Были дни болезни - они не считаются пропусками, но возвращение к нагрузке делаем по протоколу: 50% → 75% → полный объём.");
   if ((byKind.ice || 0) >= 8) out.push("Ледовая работа стабильная, это главный фактор переноса мощности на игру.");
   return out;
 }
@@ -306,10 +306,10 @@ function reportText(rep, scopeLabel) {
   var kinds = { ice: "лёд", power_a: "силовая", power_b: "мощность", home: "домашние", test: "тесты", recovery: "восстановление" };
   var kb = [];
   for (var k in rep.doneByKind) kb.push((kinds[k] || k) + ": " + rep.doneByKind[k]);
-  if (kb.length) L.push("По видам — " + kb.join(", "));
+  if (kb.length) L.push("По видам - " + kb.join(", "));
   if (rep.well.sleep) L.push("Сон: " + round(rep.well.sleep, 1) + " ч в среднем");
   if (rep.well.hr) L.push("Утренний пульс: " + Math.round(rep.well.hr) + " уд/мин");
-  if (rep.well.fatigue) L.push("Усталость: " + round(rep.well.fatigue, 1) + " из 5, самочувствие: " + (rep.well.mood ? round(rep.well.mood, 1) : "—") + " из 5");
+  if (rep.well.fatigue) L.push("Усталость: " + round(rep.well.fatigue, 1) + " из 5, самочувствие: " + (rep.well.mood ? round(rep.well.mood, 1) : "-") + " из 5");
   if (rep.weightLast) L.push("Вес: " + rep.weightLast + " кг" + (rep.weightFirst && rep.weightFirst !== rep.weightLast ? " (было " + rep.weightFirst + ")" : ""));
   var t, arr, def;
   var tlines = [];
@@ -322,7 +322,7 @@ function reportText(rep, scopeLabel) {
   if (rep.missedList.length) {
     L.push("");
     L.push("Что не получилось:");
-    rep.missedList.slice(0, 12).forEach(function (m) { L.push("• " + fmtShort(m.date) + " — " + m.why); });
+    rep.missedList.slice(0, 12).forEach(function (m) { L.push("• " + fmtShort(m.date) + " - " + m.why); });
   }
   if (rep.conclusions.length) { L.push(""); L.push("Выводы:"); rep.conclusions.forEach(function (x) { L.push("• " + x); }); }
   var lv = levelProgress(syncXp());
