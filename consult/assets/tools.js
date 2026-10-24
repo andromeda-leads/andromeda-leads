@@ -241,6 +241,7 @@
 
   /* ---------- запись на созвон ---------- */
   var LEAD_API = 'https://agrosignal.mypetlab.org/contracts/andromeda.site-lead-api/1.0/lead';
+  var SLOTS_API = 'https://agrosignal.mypetlab.org/contracts/andromeda.site-lead-api/1.0/slots';
   var LEAD_KEY = '0bc512399e2f6838846f71c8e679dd9db9d7b847510da086463c8aeabb06b2fd';
   var SLOT_TIMES = ['11:00', '11:30', '12:00', '12:30', '13:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
   var MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
@@ -274,6 +275,31 @@
     timeSel.innerHTML = SLOT_TIMES.map(function (t) {
       return '<option value="' + t + '">' + t + ' МСК</option>';
     }).join('');
+
+    /* занятые слоты: сервер отдаёт список уже забронированных времён */
+    var busy = [];
+    function slotKey(x, t) {
+      return pad(x.getDate()) + '.' + pad(x.getMonth() + 1) + '.' + x.getFullYear() + ', ' + t + ' МСК';
+    }
+    function renderTimes() {
+      var x = days[+dateSel.value] || days[0];
+      timeSel.innerHTML = SLOT_TIMES.map(function (t) {
+        var k = slotKey(x, t);
+        if (busy.indexOf(k) >= 0) return '<option value="' + t + '" disabled>' + t + ' МСК - занято</option>';
+        return '<option value="' + t + '">' + t + ' МСК</option>';
+      }).join('');
+      var free = null;
+      Array.prototype.forEach.call(timeSel.options, function (o) {
+        if (!o.disabled && free === null) free = o.value;
+      });
+      if (free !== null) timeSel.value = free;
+      if (icsLink) icsLink.style.display = 'none';
+    }
+    function loadBusy() {
+      return fetch(SLOTS_API + '?key=' + LEAD_KEY).then(function (r) { return r.json(); })
+        .then(function (d) { busy = (d && d.busy) || []; renderTimes(); })
+        .catch(function () { renderTimes(); });
+    }
 
     function buildIcs(x, time) {
       var hm = time.split(':');
@@ -309,8 +335,9 @@
       return url;
     }
 
-    dateSel.addEventListener('change', function () { icsLink.style.display = 'none'; });
-    timeSel.addEventListener('change', function () { icsLink.style.display = 'none'; });
+    dateSel.addEventListener('change', function () { renderTimes(); });
+    timeSel.addEventListener('change', function () { if (icsLink) icsLink.style.display = 'none'; });
+    loadBusy();
 
     btn.addEventListener('click', function () {
       var nm = (name.value || '').trim(), ph = (phone.value || '').trim();
@@ -333,16 +360,19 @@
           phone: ph,
           company: (comp.value || '').trim(),
           topic: (topic.value || '').trim(),
-          slot: fmtDate(c.date) + ', ' + c.time + ' МСК',
+          slot: slotKey(c.date, c.time),
           page: 'booking.html'
         })
       }).then(function (r) { return r.json(); }).then(function (d) {
         if (!d || !d.ok) throw new Error((d && d.error) || 'сервис занят');
-        status.innerHTML = '<div class="flag ok">Заявка ' + (d.id || '') + ' принята. Файл календаря готов - скачайте его ниже, ' +
-          'подтверждение придёт в рабочее время.</div>';
-      }).catch(function () {
-        status.innerHTML = '<div class="flag warn">Заявку не удалось отправить автоматически. ' +
-          'Скачайте файл календаря и позвоните 8 916 770-25-55 - время закрепим за вами.</div>';
+        busy.push(slotKey(c.date, c.time));
+        status.innerHTML = '<div class="flag ok">Заявка ' + (d.id || '') + ' принята на ' + fmtDate(c.date) +
+          ', ' + c.time + ' МСК. Файл календаря готов - скачайте его ниже, подтверждение придёт в рабочее время.</div>';
+        renderTimes();
+      }).catch(function (err) {
+        status.innerHTML = '<div class="flag warn">' + ((err && err.message && err.message !== 'сервис занят') ? err.message :
+          'Заявку не удалось отправить автоматически. Скачайте файл календаря и позвоните 8 916 770-25-55 - время закрепим за вами.') + '</div>';
+        loadBusy();
       });
     });
   }
