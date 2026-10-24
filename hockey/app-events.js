@@ -186,7 +186,7 @@ function renderHeader() {
   var sub = $("#brand-sub");
   if (sub) {
     var d = planDay(today());
-    sub.textContent = d ? ("неделя " + d.w + " · " + mesoOfWeek(d.w).name + " · " + STATE.xp + " XP") : (STATE.profile.name ? STATE.profile.name + " · " + STATE.xp + " XP" : "программа, дневник и прогресс");
+    sub.textContent = d ? (d.w === 0 ? "старт · " + STATE.xp + " XP" : "неделя " + d.w + " · " + mesoOfWeek(d.w).name + " · " + STATE.xp + " XP") : (STATE.profile.name ? STATE.profile.name + " · " + STATE.xp + " XP" : "программа, дневник и прогресс");
   }
 }
 function renderAll() {
