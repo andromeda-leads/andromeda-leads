@@ -28,18 +28,20 @@ function renderToday() {
   var day = planDay(t);
   var h = "";
 
+  h += '<div class="muted" style="padding:0 4px 10px;font-weight:700;font-size:14px">Привет, Арина 🌸</div>';
+
   if (!day) {
     var first = PLAN.days[0].date, last = PLAN.days[PLAN.days.length - 1].date;
     if (t < first) {
       var daysLeft = Math.round((parseIso(first) - parseIso(t)) / 86400000);
       h += '<div class="card hero"><h2>До старта ' + daysLeft + ' ' + plural(daysLeft, "день", "дня", "дней") + '</h2>' +
-        '<div class="muted">План начинается ' + fmtDate(first) + ' и идёт 34 недели — до ' + fmtDate(last) + '.</div></div>';
+        '<div class="muted">План начинается ' + fmtDate(first) + ' и идёт 34 недели - до ' + fmtDate(last) + '.</div></div>';
       h += '<div class="card"><h2>🌱 Что сделать до старта</h2><ul class="muted">' +
-        '<li>Пройти нулевое тестирование ' + fmtDate(PLAN.baseline_date) + ' — это точка отсчёта, без неё не будет видно прогресса.</li>' +
-        '<li>Собрать минимальный инвентарь: резинки разной жёсткости, гантели 5–10 кг, пояс или жилет 3–4,5 кг.</li>' +
-        '<li>Записать себя на видео в старте и спринте на льду — сбоку и сзади.</li>' +
-        '<li>Проверить клюшку: длина до подбородка, жёсткость 65–75, удобный загиб.</li></ul></div>';
-      h += '<div class="card"><h2>📏 Нулевые тесты</h2><div class="muted">Открой вкладку «Тесты» и внеси первые значения — все 15 показателей, включая два ледовых.</div>' +
+        '<li>Пройти нулевое тестирование ' + fmtDate(PLAN.baseline_date) + ' - это точка отсчёта, без неё не будет видно прогресса.</li>' +
+        '<li>Собрать минимальный инвентарь: резинки разной жёсткости, гантели 5-10 кг, пояс или жилет 3-4,5 кг.</li>' +
+        '<li>Записать себя на видео в старте и спринте на льду - сбоку и сзади.</li>' +
+        '<li>Проверить клюшку: длина до подбородка, жёсткость 65-75, удобный загиб.</li></ul></div>';
+      h += '<div class="card"><h2>📏 Нулевые тесты</h2><div class="muted">Открой вкладку «Тесты» и внеси первые значения - все 15 показателей, включая два ледовых.</div>' +
         '<div class="sep"></div><button class="primary wide" data-go="tests">Открыть тесты</button></div>';
       el.innerHTML = h;
       return;
@@ -58,17 +60,17 @@ function renderToday() {
     '<h2>' + esc(fmtDate(t)) + ' · ' + esc(dowRu(t)) + '</h2>' +
     '<div class="muted">Неделя ' + day.w + ' из ' + PLAN.weeks + ' · ' + esc(ms.name) + ' · ' + esc(day.title) + '</div></div>' +
     '<div class="spacer"></div><span class="chip ' + day.kind + '">' + kindIcon(day.kind) + ' ' + esc(kindRu(day.kind)) + '</span>' +
-    '</div>' + (day.deload ? '<div class="muted" style="margin-top:6px">Разгрузочная неделя: объём минус 40–50%, интенсивность сохраняем.</div>' : '') + '</div>';
+    '</div>' + (day.deload ? '<div class="muted" style="margin-top:6px">Разгрузочная неделя: объём минус 40-50%, интенсивность сохраняем.</div>' : '') + '</div>';
 
   h += '<div class="card"><div class="row">' + ringSvg(prog.pct, "выполнено") +
     '<div style="flex:1;min-width:150px">' +
     '<div class="kv"><span>Заданий</span><b>' + prog.done + ' из ' + prog.total + '</b>' +
-    '<span>План на день</span><b>' + (day.min ? day.min + " мин" : "—") + '</b>' +
+    '<span>План на день</span><b>' + (day.min ? day.min + " мин" : "-") + '</b>' +
     '<span>Статус</span><b>' + statusRu(st) + '</b>' +
     '<span>Опыт за день</span><b>' + xpForDay(day) + ' XP</b></div></div></div></div>';
 
   if (st === "sick") {
-    h += '<div class="card"><h2>🌷 Болею</h2><div class="muted">День отмечен как болезнь — тренировка не считается пропуском. Возвращение к нагрузке делаем по протоколу.</div>' +
+    h += '<div class="card"><h2>🌷 Болею</h2><div class="muted">День отмечен как болезнь - тренировка не считается пропуском. Возвращение к нагрузке делаем по протоколу.</div>' +
       '<div class="sep"></div><ul class="muted">' + PLAN.sick_protocol.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul></div>';
   }
 
@@ -83,11 +85,11 @@ function renderToday() {
   }
   h += '</div>';
 
-  if (day.kind === "test") h += '<div class="card"><h2>📏 Тестирование</h2><div class="muted">' + (day.w === 0 ? "Нулевые тесты: все 15 показателей." : (PLAN.test_weeks.indexOf(day.w) >= 0 ? "Полный блок из 15 показателей." : "Прыжок вверх (CMJ) — 3 попытки и один показатель техники.")) + '</div><div class="sep"></div><button class="primary wide" data-go="tests">Внести результаты</button></div>';
+  if (day.kind === "test") h += '<div class="card"><h2>📏 Тестирование</h2><div class="muted">' + (day.w === 0 ? "Нулевые тесты: все 15 показателей." : (PLAN.test_weeks.indexOf(day.w) >= 0 ? "Полный блок из 15 показателей." : "Прыжок вверх (CMJ) - 3 попытки и один показатель техники.")) + '</div><div class="sep"></div><button class="primary wide" data-go="tests">Внести результаты</button></div>';
 
   h += '<div class="card"><h2>💗 Самочувствие</h2>';
   if (rd) h += '<div class="gauge">' + ringSvg(rd.score, "готовность", rd.score) + '<div><span class="pill ' + rd.zone + '">' + (rd.zone === "ok" ? "зелёная зона" : rd.zone === "mid" ? "жёлтая зона" : "красная зона") + '</span><div class="muted" style="margin-top:6px">' + esc(rd.advice) + '</div></div></div><div class="sep"></div>';
-  else h += '<div class="muted">Заполни дневник — приложение посчитает индекс готовности и подскажет, можно ли грузить на полную.</div><div class="sep"></div>';
+  else h += '<div class="muted">Заполни дневник - приложение посчитает индекс готовности и подскажет, можно ли грузить на полную.</div><div class="sep"></div>';
   h += diaryFormHtml(dd, "today");
   h += '</div>';
 
@@ -110,7 +112,7 @@ function statusRu(s) {
 function diaryFormHtml(dd, where) {
   dd = dd || {};
   function sel(id, v, labels) {
-    var h = '<select id="' + id + '"><option value="">—</option>';
+    var h = '<select id="' + id + '"><option value="">-</option>';
     for (var i = 0; i < labels.length; i++) {
       var val = i + 1;
       h += '<option value="' + val + '"' + (String(v) === String(val) ? " selected" : "") + '>' + esc(labels[i]) + '</option>';
@@ -127,7 +129,7 @@ function diaryFormHtml(dd, where) {
     '<label class="fld"><span>Крепатура</span>' + sel("d-sore", dd.sore, f5) + '</label>' +
     '<label class="fld"><span>Настроение</span>' + sel("d-mood", dd.mood, s5) + '</label>' +
     '<label class="fld"><span>Вес, кг</span><input id="d-weight" type="number" step="0.1" inputmode="decimal" value="' + (dd.weight || "") + '"></label>' +
-    '<label class="fld"><span>Тяжесть тренировки (RPE 1–10)</span><input id="d-rpe" type="number" inputmode="numeric" value="' + (dd.rpe || "") + '"></label>' +
+    '<label class="fld"><span>Тяжесть тренировки (RPE 1-10)</span><input id="d-rpe" type="number" inputmode="numeric" value="' + (dd.rpe || "") + '"></label>' +
     (STATE.profile.cycleTracking ? '<label class="fld"><span>День цикла</span><input id="d-cycle" type="number" inputmode="numeric" value="' + (dd.cycle || "") + '"></label>' : "") +
     '</div><label class="fld"><span>Заметка</span><textarea id="d-note" rows="2">' + esc(dd.note || "") + '</textarea></label>' +
     '<button class="primary wide" id="btn-diary-' + where + '">Сохранить самочувствие</button> ' +
@@ -140,7 +142,7 @@ function renderPlan() {
   var el = $("#s-plan");
   var months = monthList();
   if (!UI.planMonth) UI.planMonth = monthKey(today()) && months.some(function (m) { return m.key === monthKey(today()); }) ? monthKey(today()) : months[0].key;
-  var h = '<div class="card"><h2>📅 План на 34 недели</h2><div class="muted">' + fmtDate(PLAN.start) + ' — ' + fmtDate(PLAN.days[PLAN.days.length - 1].date) + '. Разгрузочные недели: каждая четвёртая. Нажми на день, чтобы открыть его задания.</div></div>';
+  var h = '<div class="card"><h2>📅 План на 34 недели</h2><div class="muted">' + fmtDate(PLAN.start) + ' - ' + fmtDate(PLAN.days[PLAN.days.length - 1].date) + '. Разгрузочные недели: каждая четвёртая. Нажми на день, чтобы открыть его задания.</div></div>';
   h += '<div class="tabs">' + months.map(function (m) {
     return '<button data-month="' + m.key + '"' + (m.key === UI.planMonth ? ' class="active"' : "") + '>' + esc(m.label) + '</button>';
   }).join("") + '</div>';
@@ -184,11 +186,11 @@ function renderPlan() {
   h += '<div class="card"><h2>🎯 Мезоциклы и контрольные точки</h2>';
   for (var m2 = 0; m2 < PLAN.meso.length; m2++) {
     var mm = PLAN.meso[m2];
-    h += '<details><summary>' + mm.n + '. ' + esc(mm.name) + ' · недели ' + mm.from + '–' + mm.to + '</summary><p>' + esc(mm.accent) + '</p></details>';
+    h += '<details><summary>' + mm.n + '. ' + esc(mm.name) + ' · недели ' + mm.from + '-' + mm.to + '</summary><p>' + esc(mm.accent) + '</p></details>';
   }
   for (var c = 0; c < PLAN.checkpoints.length; c++) {
     var cp = PLAN.checkpoints[c];
-    h += '<div class="kv"><span>' + esc(cp.when) + ' — ' + esc(cp.what) + '</span><b>' + esc(cp.expect) + '</b></div>';
+    h += '<div class="kv"><span>' + esc(cp.when) + ' - ' + esc(cp.what) + '</span><b>' + esc(cp.expect) + '</b></div>';
   }
   h += '</div>';
   el.innerHTML = h;
@@ -198,7 +200,7 @@ function renderPlan() {
 function renderDiary() {
   var el = $("#s-diary");
   var t = today();
-  var h = '<div class="card"><h2>💗 Дневник самочувствия</h2><div class="muted">Пульс утром, сон, усталость и крепатура — главные признаки перетренированности. Заполняется за минуту.</div></div>';
+  var h = '<div class="card"><h2>💗 Дневник самочувствия</h2><div class="muted">Пульс утром, сон, усталость и крепатура - главные признаки перетренированности. Заполняется за минуту.</div></div>';
   h += '<div class="card"><h2>Сегодня, ' + esc(fmtDate(t)) + '</h2>' + diaryFormHtml(diaryOf(t), "diary") + '</div>';
 
   var rd = readiness(t);
@@ -210,11 +212,11 @@ function renderDiary() {
 
   h += '<div class="card"><h2>Последние записи</h2>';
   var keys = Object.keys(STATE.diary).sort().reverse().slice(0, 14);
-  if (!keys.length) h += '<div class="muted">Пока пусто. Первая запись — хороший старт.</div>';
+  if (!keys.length) h += '<div class="muted">Пока пусто. Первая запись - хороший старт.</div>';
   for (var i = 0; i < keys.length; i++) {
     var k = keys[i], e = STATE.diary[k];
     h += '<div class="tcard"><div class="t-head"><b>' + esc(fmtShort(k)) + '</b><span class="tiny">' + esc(dowRu(k)) + '</span></div>' +
-      '<div class="tiny" style="margin-top:4px">Сон ' + (e.sleep || "—") + ' ч · качество ' + (e.sleepQ || "—") + '/5 · усталость ' + (e.fatigue || "—") + '/5 · крепатура ' + (e.sore || "—") + '/5 · настроение ' + (e.mood || "—") + '/5' +
+      '<div class="tiny" style="margin-top:4px">Сон ' + (e.sleep || "-") + ' ч · качество ' + (e.sleepQ || "-") + '/5 · усталость ' + (e.fatigue || "-") + '/5 · крепатура ' + (e.sore || "-") + '/5 · настроение ' + (e.mood || "-") + '/5' +
       (e.hr ? ' · пульс ' + e.hr : '') + (e.rpe ? ' · RPE ' + e.rpe : '') + (e.weight ? ' · вес ' + e.weight + ' кг' : '') + '</div>' +
       (e.note ? '<div class="tiny" style="margin-top:4px">' + esc(e.note) + '</div>' : '') + '</div>';
   }
@@ -224,7 +226,7 @@ function renderDiary() {
   if (!STATE.sick.length) h += '<div class="muted">Отметок о болезни нет.</div>';
   for (var s = STATE.sick.length - 1; s >= 0; s--) {
     var sk = STATE.sick[s];
-    h += '<div class="tcard"><div class="t-head"><b>' + esc(fmtDate(sk.from)) + ' — ' + esc(fmtDate(sk.to)) + '</b>' +
+    h += '<div class="tcard"><div class="t-head"><b>' + esc(fmtDate(sk.from)) + ' - ' + esc(fmtDate(sk.to)) + '</b>' +
       '<button class="small ghost" data-delsick="' + s + '">удалить</button></div>' +
       '<div class="tiny">' + esc(sk.note || "без комментария") + '</div></div>';
   }
