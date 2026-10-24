@@ -60,7 +60,7 @@ function renderToday() {
     '<h2>' + esc(fmtDate(t)) + ' · ' + esc(dowRu(t)) + '</h2>' +
     (day.w === 0 ? '<div class="muted">Старт программы · замеры и первые тесты</div></div>' :
      '<div class="muted">Неделя ' + day.w + ' из ' + PLAN.weeks + ' · ' + esc(ms.name) + ' · ' + esc(day.title) + '</div></div>') +
-    '<div class="spacer"></div><span class="chip ' + day.kind + '">' + kindIcon(day.kind) + ' ' + esc(kindRu(day.kind)) + '</span>' +
+    '<div class="spacer"></div><span class="chip ' + day.kind + '">' + (day.w === 0 ? "🌸 Старт" : kindIcon(day.kind) + ' ' + esc(kindRu(day.kind))) + '</span>' +
     '</div>' + (day.deload ? '<div class="muted" style="margin-top:6px">Разгрузочная неделя: объём минус 40-50%, интенсивность сохраняем.</div>' : '') + '</div>';
 
   h += '<div class="card"><div class="row">' + ringSvg(prog.pct, "выполнено") +
@@ -175,7 +175,7 @@ function renderPlan() {
   var w = planDay(UI.planDay || today());
   if (w) {
     h += '<div class="card"><h2>' + esc(fmtDate(w.date)) + ' · ' + esc(kindRu(w.kind)) + '</h2>' +
-      (w.w === 0 ? '<div class="muted">Старт · ' + esc(w.title) + (w.min ? " · " + w.min + " мин" : "") + '</div><div class="sep"></div>'
+      (w.w === 0 ? '<div class="muted">' + esc(w.title) + (w.min ? " · " + w.min + " мин" : "") + '</div><div class="sep"></div>'
                  : '<div class="muted">Неделя ' + w.w + ' · ' + esc(mesoOfWeek(w.w).name) + ' · ' + esc(w.title) + (w.min ? " · " + w.min + " мин" : "") + '</div><div class="sep"></div>');
     for (var b2 = 0; b2 < w.blocks.length; b2++) {
       h += '<h3>' + esc(w.blocks[b2].t) + '</h3><ul class="muted">';
