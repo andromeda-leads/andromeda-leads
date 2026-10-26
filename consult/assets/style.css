@@ -254,6 +254,18 @@ td b{color:#111826}
 .form-msg.ok{display:block;background:#E8F3ED;border:1px solid #B7D9C7;color:#1F5C42}
 .form-msg.err{display:block;background:#FBEDE4;border:1px solid #EFC8A9;color:#8A3E0C}
 
+/* --- выбор программы и кнопки в таблице --- */
+.btn-xs{padding:7px 12px;font-size:12.5px;border-radius:8px;line-height:1.25;white-space:nowrap}
+.btn-soft{background:rgba(212,168,67,.12);color:#8A6716;border:1px solid rgba(212,168,67,.42)}
+.btn-soft:hover{background:rgba(212,168,67,.2)}
+.tbl-act{display:flex;flex-direction:column;gap:7px;min-width:118px}
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.pick{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:13.5px;color:#374151;cursor:pointer;transition:border-color .16s,background .16s}
+.pick input{width:15px;height:15px;margin:0;accent-color:#D4A843;flex:0 0 auto}
+.pick:hover{border-color:rgba(212,168,67,.5)}
+.pick:has(input:checked){border-color:rgba(212,168,67,.75);background:var(--gold-dim);color:#8A6716;font-weight:600}
+#zayavka{scroll-margin-top:96px}
+
 /* --- подвал --- */
 .site-foot{background:#0B1320;color:#9BA6BC;padding:56px 0 26px;border-top:1px solid rgba(212,168,67,.2)}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px;margin-bottom:38px}
@@ -357,6 +369,7 @@ td b{color:#111826}
   .hero-stats{grid-template-columns:repeat(3,1fr);gap:10px}
   .hero-stats b{font-size:22px}
   .form-grid{grid-template-columns:1fr}
+  .tbl-act{flex-direction:row;flex-wrap:wrap;min-width:0}
   .foot-grid{grid-template-columns:1fr;gap:26px}
   .head-in{height:66px}
   .nav{inset:66px 0 auto 0}
