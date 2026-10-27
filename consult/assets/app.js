@@ -69,7 +69,7 @@
       var payroll = num('payroll');  // ФОТ, млн ₽
       var staff = num('staff');      // численность, чел.
       var growth = num('growth');    // рост показателей, %
-      var years = Math.min(15, Math.max(1, Math.round(num('years') || 10)));
+      var years = Math.min(10, Math.max(1, Math.round(num('years') || 10)));
 
       var threshold = 40639.5;       // 1,5 МРОТ 2026, ₽ в месяц
       var salary = staff > 0 ? (payroll * 1e6) / (staff * 12) : 0;

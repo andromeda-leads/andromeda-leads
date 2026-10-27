@@ -432,7 +432,7 @@
     var API = 'https://agrosignal.mypetlab.org/contracts/andromeda.programs-api/1.0/programs';
     var KEY = 'eba4dee056396796f9d883b4f33adae05f385c6585c6608675ece0636092018a';
     var LABEL = { open: ['Приём идёт', 'ok'], always: ['Постоянно', 'gold'],
-      watch: ['Следим за датой', ''], soon: ['Окно закрыто', ''] };
+      watch: ['Отслеживаем', ''], soon: ['Окно закрыто', ''] };
     fetch(API + '?key=' + KEY).then(function (r) { return r.json(); }).then(function (d) {
       var items = (d && d.items) || [];
       var byslug = {};

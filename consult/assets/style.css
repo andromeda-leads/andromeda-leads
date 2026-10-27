@@ -130,6 +130,9 @@ h4{font-size:16.5px;margin:0 0 8px;font-weight:700}
 .card.dark p{color:#A9B4C8}
 .card.dark h3{color:#fff}
 .card.dark .ico{background:rgba(212,168,67,.14)}
+.card.dark .ticks li{color:#E8ECF4}
+.card.dark .ticks li:before{border-color:rgba(212,168,67,.8);background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
+.card.dark .ticks li:after{border-left-color:#E8C77B;border-bottom-color:#E8C77B}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .chip{font-size:12.5px;padding:5px 11px;border-radius:999px;background:rgba(14,22,37,.06);color:#374151;border:1px solid var(--line)}
 .chip.gold{background:var(--gold-dim);border-color:rgba(212,168,67,.4);color:#8A6716;font-weight:600}
