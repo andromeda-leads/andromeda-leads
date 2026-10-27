@@ -246,12 +246,23 @@
     var p = function (n) { return n < 10 ? '0' + n : '' + n; };
     return p(dt.getDate()) + '.' + p(dt.getMonth() + 1) + '.' + dt.getFullYear() + ' · ' + p(dt.getHours()) + ':' + p(dt.getMinutes());
   }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
   function renderNews(el, items) {
     if (!el || !items.length) return;
-    el.innerHTML = items.map(function (p) {
-      var img = p.image ? '<div style="margin:12px 0 0"><img src="' + p.image + '" alt="" style="border-radius:10px;max-width:100%"></div>' : '';
-      return '<div class="news-item"><div class="date">' + fmtDate(p.date) +
-        '</div><div class="txt">' + clean(p.html || p.text) + '</div>' + img + '</div>';
+    var rows = items.filter(function (p) { return (p.title || p.text || p.html); });
+    if (!rows.length) return;  /* нет данных - оставляем серверную версию как есть */
+    el.innerHTML = rows.map(function (p) {
+      var img = p.image ? '<div style="margin:12px 0 0"><img src="' + esc(p.image) + '" alt="" style="border-radius:10px;max-width:100%"></div>' : '';
+      var head = p.title ? '<h3>' + esc(p.title) + '</h3>' : '';
+      var body = p.html ? clean(p.html) : esc(p.text || '');
+      var link = p.url ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">Читать в Telegram →</a>' : '';
+      var meta = fmtDate(p.date) + (p.tag ? ' · ' + esc(p.tag) : '');
+      return '<div class="news-item"><div class="date">' + meta + '</div>' + head +
+        '<div class="txt">' + body + '</div>' + img + link + '</div>';
     }).join('');
   }
 
