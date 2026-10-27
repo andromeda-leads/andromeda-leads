@@ -237,6 +237,9 @@ td b{color:#111826}
 .news-item .date{font-size:12.5px;color:#9A7420;font-weight:700;letter-spacing:.05em;margin-bottom:6px}
 .news-item .txt{font-size:15.5px;color:#374151;white-space:pre-wrap}
 .news-item .txt a{color:#8A6716;text-decoration:underline}
+.news-item h3{font-size:18.5px;line-height:1.35;margin:2px 0 8px}
+.news-item .more{display:inline-block;margin-top:10px;font-size:14.5px;color:#8A6716;font-weight:600;border-bottom:1px solid rgba(212,168,67,.45)}
+.news-item .txt{max-width:74ch}
 
 /* --- инвесторы --- */
 .fund{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
