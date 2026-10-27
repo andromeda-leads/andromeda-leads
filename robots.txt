@@ -1,0 +1,6 @@
+# Служебный файл хостинга andromeda-leads.github.io
+# Копия сайта ANDROMEDA CONSULT в /consult/ закрыта от индексации:
+# рабочий сайт живёт на https://andromedaconsult.ru
+User-agent: *
+Allow: /
+Disallow: /consult/assets/docs/
