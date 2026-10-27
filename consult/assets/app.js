@@ -223,7 +223,7 @@
   var newsList = document.getElementById('newsList');
   var newsPrev = document.getElementById('newsPreview');
   if (newsList || newsPrev) {
-    fetch('assets/news.json', { cache: 'no-store' })
+    fetch('assets/news.json?v=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var items = (d && d.items) || [];
@@ -240,11 +240,15 @@
       .replace(/javascript:/gi, '');
   }
   function fmtDate(iso) {
+    /* дата без времени: у части источников времени нет, и тогда браузер
+       показывал полночь UTC как 3:00 по Москве - это и выглядело поломкой */
     if (!iso) return '';
+    var m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return m[3] + '.' + m[2] + '.' + m[1];
     var dt = new Date(iso);
     if (isNaN(dt.getTime())) return '';
     var p = function (n) { return n < 10 ? '0' + n : '' + n; };
-    return p(dt.getDate()) + '.' + p(dt.getMonth() + 1) + '.' + dt.getFullYear() + ' · ' + p(dt.getHours()) + ':' + p(dt.getMinutes());
+    return p(dt.getDate()) + '.' + p(dt.getMonth() + 1) + '.' + dt.getFullYear();
   }
   function esc(s) {
     return String(s == null ? '' : s)
@@ -253,14 +257,16 @@
   }
   function renderNews(el, items) {
     if (!el || !items.length) return;
-    var rows = items.filter(function (p) { return (p.title || p.text || p.html); });
+    /* терпим обе схемы полей: date/datetime, text/body/html - старая копия
+       файла в кэше иначе давала пустые карточки */
+    var rows = items.filter(function (p) { return (p && (p.title || p.text || p.body || p.html)); });
     if (!rows.length) return;  /* нет данных - оставляем серверную версию как есть */
     el.innerHTML = rows.map(function (p) {
       var img = p.image ? '<div style="margin:12px 0 0"><img src="' + esc(p.image) + '" alt="" style="border-radius:10px;max-width:100%"></div>' : '';
       var head = p.title ? '<h3>' + esc(p.title) + '</h3>' : '';
-      var body = p.html ? clean(p.html) : esc(p.text || '');
+      var body = p.html ? clean(p.html) : esc(p.text || p.body || '');
       var link = p.url ? '<a class="more" href="' + esc(p.url) + '" target="_blank" rel="noopener">Читать в Telegram →</a>' : '';
-      var meta = fmtDate(p.date) + (p.tag ? ' · ' + esc(p.tag) : '');
+      var meta = fmtDate(p.date || p.datetime) + (p.tag ? ' · ' + esc(p.tag) : '');
       return '<div class="news-item"><div class="date">' + meta + '</div>' + head +
         '<div class="txt">' + body + '</div>' + img + link + '</div>';
     }).join('');
