@@ -522,7 +522,7 @@ td b{color:#111826}
 .person-stat{margin-top:22px;padding:18px 20px;border-radius:14px;background:#fff;border:1px solid var(--line);border-top:2px solid var(--gold);box-shadow:var(--shadow-sm)}
 .person-stat b{display:block;font-size:26px;color:#0E1625;letter-spacing:-.02em;line-height:1.2}
 .person-stat span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
-.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.exp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .exp-grid .card{padding:20px;box-shadow:none}
 .exp-grid .card h3{font-size:16.5px;margin:0 0 8px;color:#0E1625}
 .exp-grid .card p{font-size:14px;margin:0;line-height:1.5}
