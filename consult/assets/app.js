@@ -79,7 +79,7 @@
       var profAfter = 0;
       var payBefore = payroll * 0.302;
       var payAfter = staff > 0
-        ? 0.30 * Math.min(payroll, payrollUnder) + 0.15 * Math.max(0, payroll - payrollUnder)
+        ? 0.302 * Math.min(payroll, payrollUnder) + 0.15 * Math.max(0, payroll - payrollUnder)
         : payBefore;
       var yearGain = (profBefore - profAfter) + (payBefore - payAfter);
 
@@ -118,7 +118,7 @@
           msgs.push('<div class="flag warn">Средняя зарплата по компании не выше 1,5 МРОТ: льготный тариф коснётся большинства выплат, эффект по взносам получается небольшим. Основную экономию даст 0 % по налогу на прибыль.</div>');
         }
         if (prof <= 0) {
-          msgs.push('<div class="flag warn">Прибыли нет: экономия считается только по страховым взносам (30% → 15%). Налог на прибыль 0% даст эффект, когда компания выйдет в плюс.</div>');
+          msgs.push('<div class="flag warn">Прибыли нет: экономия считается только по страховым взносам (30,2% → 15%). Налог на прибыль 0% даст эффект, когда компания выйдет в плюс.</div>');
         }
         if (rev > 0 && rev <= 1000 && prof <= 300 && prof > 0) {
           msgs.push('<div class="flag ok">Компания укладывается в лимиты участника Сколково: можно применять и 0% по налогу на прибыль, и 15% по страховым взносам.</div>');

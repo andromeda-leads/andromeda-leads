@@ -183,16 +183,16 @@ td b{color:#111826}
 .flag.ok{background:rgba(46,125,91,.16);border:1px solid rgba(46,125,91,.5);color:#BFE3D2}
 
 /* --- кейсы --- */
-.case{background:linear-gradient(180deg,#fff,#FCFBF8);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow-sm);border-top:3px solid #16213E;transition:transform .18s ease,box-shadow .18s ease}
+.case{background:linear-gradient(180deg,#fff,#FCFBF8);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:var(--shadow-sm);border-top:3px solid #16213E;transition:transform .18s ease,box-shadow .18s ease;display:flex;flex-direction:column}
 .case:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 .case .ind{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#3A4770;font-weight:700;margin-bottom:10px;text-align:center}
 .case h4{font-size:17px;margin:0 0 10px;text-align:center;color:#0E1625}
 .case p{margin:0 0 16px;font-size:14.5px;color:#4B5563;text-align:justify;hyphens:auto}
-.case .fin{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;text-align:center;font-size:12.5px;color:#4B5563;border-top:1px solid var(--line);padding-top:13px}
-.case .fin>div{flex:1 1 40%;min-width:120px}
-.case .fin b{display:block;font-size:16px;color:#16213E;margin-bottom:2px}
-.case .fin .sav{background:rgba(212,168,67,.13);border:1px solid rgba(212,168,67,.45);border-radius:10px;padding:6px 8px 8px}
-.case .fin .sav b{font-size:19px;color:#8A6716}
+.case .fin{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;text-align:center;font-size:12.5px;color:#4B5563;border-top:1px solid var(--line);padding-top:13px}
+.case .fin>div{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding:7px 8px 8px;border:1px solid transparent;border-radius:10px;min-height:60px}
+.case .fin b{display:block;font-size:17px;line-height:1.2;color:#16213E;margin-bottom:4px;white-space:nowrap}
+.case .fin .sav{background:rgba(212,168,67,.13);border-color:rgba(212,168,67,.45)}
+.case .fin .sav b{font-size:17px;color:#8A6716}
 
 /* --- плашка-иконка услуги (4:1) --- */
 .svc-card{padding:0;overflow:hidden;display:flex;flex-direction:column}
@@ -235,11 +235,33 @@ td b{color:#111826}
 .news-list{display:grid;gap:16px}
 .news-item{background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:20px 22px}
 .news-item .date{font-size:12.5px;color:#9A7420;font-weight:700;letter-spacing:.05em;margin-bottom:6px}
-.news-item .txt{font-size:15.5px;color:#374151;white-space:pre-wrap}
+.news-item .txt{font-size:15.5px;color:#374151}
 .news-item .txt a{color:#8A6716;text-decoration:underline}
-.news-item h3{font-size:18.5px;line-height:1.35;margin:2px 0 8px}
+.news-item h3{font-size:18.5px;line-height:1.35;margin:2px 0 8px;color:#0E1625}
 .news-item .more{display:inline-block;margin-top:10px;font-size:14.5px;color:#8A6716;font-weight:600;border-bottom:1px solid rgba(212,168,67,.45)}
 .news-item .txt{max-width:74ch}
+.news-item .txt p{margin:0 0 9px}
+.news-item .txt p:last-child{margin-bottom:0}
+.news-item .txt .lead-p{color:#16213E;font-weight:600;margin:10px 0 8px}
+.news-item .txt .num{color:#8A6716;font-weight:700;font-variant-numeric:tabular-nums}
+.news-item .txt ul.ticks{margin:8px 0 10px}
+.news-item .txt ul.ticks li{font-size:15px;margin-bottom:7px;color:#374151}
+
+/* --- платно и бесплатно: видно до нажатия --- */
+.paid-note{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#8A6716;background:rgba(212,168,67,.14);border:1px solid rgba(212,168,67,.5);padding:5px 12px;border-radius:999px}
+.section.dark .paid-note{color:#E8C77B;background:rgba(212,168,67,.16);border-color:rgba(212,168,67,.5)}
+.cta-note{display:block;margin:12px 0 0;font-size:13px;color:#9FABC0;max-width:52ch}
+.hero-actions .hero-note{display:inline-flex;align-items:center}
+.price-split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ps-card{background:#fff;border:1px solid var(--line);border-top:3px solid #2E7D5B;border-radius:16px;padding:26px 26px 24px;display:flex;flex-direction:column}
+.ps-card.paid{border-top-color:var(--gold);background:linear-gradient(180deg,#fff,#FFFBEF)}
+.ps-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.ps-head h3{margin:0;font-size:19px;color:#0E1625}
+.ps-price{font-size:30px;font-weight:800;color:#16213E;letter-spacing:-.02em;margin:2px 0 12px;font-variant-numeric:tabular-nums}
+.ps-card ul.ticks{margin:0 0 20px}
+.ps-card .btn{margin-top:auto}
+.note-line{margin:22px 0 0;font-size:14px;color:#4B5563;text-align:center}
+@media(max-width:860px){.price-split{grid-template-columns:1fr}.case .fin b{white-space:normal}}
 
 /* --- инвесторы --- */
 .fund{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
