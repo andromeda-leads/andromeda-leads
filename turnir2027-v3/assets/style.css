@@ -1,4 +1,4 @@
-/* Хоккей равных возможностей — общий стиль сайта
+/* Хоккей равных возможностей - общий стиль сайта
    Палитра и графика: off-white / чёрный / медь / тёмно-оранжевый */
 :root{
   --ink:#141414; --ink-2:#3a3a3a; --muted:#6e6e6e; --line:#e6ded2;
@@ -86,7 +86,7 @@ ul{margin:0;padding:0;list-style:none}
   transform:scaleX(0);transform-origin:left;transition:transform .85s var(--ease)}
 .rule.is-visible{transform:scaleX(1)}
 
-/* герой — тёмный блок с сеткой точек и «глобусом» */
+/* герой - тёмный блок с сеткой точек и «глобусом» */
 .hero{position:relative;overflow:hidden;background:var(--dark);color:#fff;padding:74px 0 66px}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:radial-gradient(rgba(217,142,74,.22) 1.3px,transparent 1.3px);background-size:26px 26px;
@@ -294,6 +294,8 @@ ul{margin:0;padding:0;list-style:none}
 .mat__tag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
   color:var(--copper-deep);background:rgba(217,142,74,.16);border-radius:8px;padding:6px 11px}
 .mat__title{font-size:17px;font-weight:800;margin-top:14px;line-height:1.32}
+.mat__title a{color:inherit;text-decoration:none;transition:color .2s var(--ease)}
+.mat__title a:hover{color:var(--orange)}
 .mat__src{font-size:12.5px;color:var(--muted);margin-top:8px}
 .mat__text{font-size:14.5px;color:var(--ink-2);margin-top:10px;flex:1 1 auto}
 .mat__link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:800;
