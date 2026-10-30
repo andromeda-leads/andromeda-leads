@@ -1,5 +1,5 @@
 /* Кэш для работы без интернета */
-var CACHE = "hockey-v3";
+var CACHE = "hockey-v4";
 var FILES = ["./", "./index.html", "./style.css", "./config.js", "./app-core.js", "./app-ui.js", "./app-report.js", "./app-events.js", "./plan.json", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", function (e) {
