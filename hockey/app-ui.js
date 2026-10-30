@@ -143,7 +143,7 @@ function renderPlan() {
   var el = $("#s-plan");
   var months = monthList();
   if (!UI.planMonth) UI.planMonth = monthKey(today()) && months.some(function (m) { return m.key === monthKey(today()); }) ? monthKey(today()) : months[0].key;
-  var h = '<div class="card"><h2>📅 План на 34 недели</h2><div class="muted">' + fmtDate(PLAN.start) + ' - ' + fmtDate(PLAN.days[PLAN.days.length - 1].date) + '. Разгрузочные недели: каждая четвёртая. Нажми на день, чтобы открыть его задания.</div></div>';
+  var h = '<div class="card"><h2>📅 План на 34 недели</h2><div class="muted">' + fmtDate(PLAN.days[0].date) + ' - ' + fmtDate(PLAN.days[PLAN.days.length - 1].date) + '. Разгрузочные недели: каждая четвёртая. Нажми на день, чтобы открыть его задания.</div></div>';
   h += '<div class="tabs">' + months.map(function (m) {
     return '<button data-month="' + m.key + '"' + (m.key === UI.planMonth ? ' class="active"' : "") + '>' + esc(m.label) + '</button>';
   }).join("") + '</div>';
