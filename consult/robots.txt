@@ -1,5 +1,5 @@
 # ANDROMEDA CONSULT - служебные файлы сайта
-# сборка 2026-10-30 05:51
+# сборка 2026-10-30 06:11
 User-agent: *
 Allow: /
 Disallow: /assets/private/
