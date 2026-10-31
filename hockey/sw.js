@@ -1,6 +1,6 @@
 /* Кэш для работы без интернета */
-var CACHE = "hockey-v4";
-var FILES = ["./", "./index.html", "./style.css", "./config.js", "./app-core.js", "./app-ui.js", "./app-report.js", "./app-events.js", "./plan.json", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
+var CACHE = "hockey-v5";
+var FILES = ["./", "./index.html", "./style.css", "./config.js", "./app-core.js", "./app-ui.js", "./app-report.js", "./app-events.js", "./test-guides.js", "./plan.json", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES).catch(function () { }); }).then(function () { return self.skipWaiting(); }));
