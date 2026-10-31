@@ -32,6 +32,21 @@
     elMain.style.overflowY = "auto";
     elSub.textContent = SONGS.length + " песен · аккорды, транспонирование, режим «учу»";
     var html = '<div class="hint">Нажми на песню. Внутри: «Играю» - текст сам едет, «Учу» - по блокам.</div>';
+    var left = Requests.left();
+    if (typeof GUITAR_BOT !== "undefined" && GUITAR_BOT) {
+      html += '<div class="song" id="wantBtn" style="border-top-color:#6ec08a">' +
+        '<div class="txt"><div class="t">Хочу песню</div>' +
+        '<div class="a">' + (left > 0 ? "напиши исполнителя и название, сегодня можно ещё " + left : "на сегодня три заявки уже есть, продолжим завтра") + '</div></div>' +
+        '<span class="m">+</span></div>';
+    }
+    var hist = Requests.all();
+    if (hist.length) {
+      html += '<div class="song" id="histBtn" style="border-top-color:#a89a88">' +
+        '<div class="txt"><div class="t">Мои заявки</div>' +
+        '<div class="a">' + hist.length + ' всего, из них добавлено: ' +
+        hist.filter(function (r) { return Requests.isAdded(r); }).length + '</div></div>' +
+        '<span class="m">›</span></div>';
+    }
     if (App.installEvent) {
       html += '<div class="song" id="installBtn" style="border-top-color:#6ec08a"><div class="txt"><div class="t">Поставить на телефон</div>' +
         '<div class="a">иконка на экране, работает без интернета</div></div><span class="m">↓</span></div>';
@@ -49,6 +64,76 @@
       App.installEvent.prompt();
       App.installEvent = null;
     });
+    var wb = document.getElementById("wantBtn");
+    if (wb) wb.addEventListener("click", openWant);
+    var hb = document.getElementById("histBtn");
+    if (hb) hb.addEventListener("click", openHistory);
+  }
+
+  /* ---------- заявки ---------- */
+
+  function openWant() {
+    if (Requests.left() <= 0) {
+      sheetCard.innerHTML = '<h3>Заявки на сегодня</h3>' +
+        '<div class="note">Три песни уже отправлены. Четвёртую приму завтра, а эти уже в работе.</div>' +
+        '<div class="row"><button class="primary" id="wClose">Понятно</button></div>';
+      sheet.classList.add("on");
+      document.getElementById("wClose").addEventListener("click", closeSheet);
+      return;
+    }
+    sheetCard.innerHTML = '<h3>Хочу песню</h3>' +
+      '<div class="note">Исполнитель и название. Остальное спрошу сам, если понадобится.</div>' +
+      '<input id="wArtist" placeholder="Исполнитель" autocapitalize="words">' +
+      '<input id="wTitle" placeholder="Песня" autocapitalize="sentences">' +
+      '<div class="note" id="wLeft" style="margin-top:10px">Сегодня можно ещё ' + Requests.left() + '</div>' +
+      '<div class="row"><button id="wCancel">Отмена</button><button class="primary" id="wSend">Написать</button></div>';
+    sheet.classList.add("on");
+    document.getElementById("wCancel").addEventListener("click", closeSheet);
+    document.getElementById("wSend").addEventListener("click", sendWant);
+  }
+
+  function sendWant() {
+    var a = document.getElementById("wArtist").value.trim();
+    var t = document.getElementById("wTitle").value.trim();
+    if (!a && !t) { App.show("Нужен исполнитель и название"); return; }
+    var text = "Песенник: хочу песню - " + (a || "?") + (t ? " - " + t : "");
+    Requests.add(a, t, text);
+    closeSheet();
+    toastThenChat(text);
+  }
+
+  function toastThenChat(text) {
+    if (!GUITAR_BOT) {
+      App.show("Заявка сохранена. Чат бота ещё не подключён");
+      renderList();
+      return;
+    }
+    var url = "https://t.me/" + GUITAR_BOT + "?text=" + encodeURIComponent(text);
+    try { if (navigator.clipboard) navigator.clipboard.writeText(text); } catch (e) {}
+    App.show("Открываю чат - отправь сообщение");
+    setTimeout(function () {
+      if (typeof window.open === "function") {
+        var w = window.open(url, "_blank");
+        if (!w) location.href = url;
+      } else { location.href = url; }
+      renderList();
+    }, 250);
+  }
+
+  function openHistory() {
+    var list = Requests.all().slice().reverse();
+    var html = '<h3>Мои заявки</h3><div class="note">Последние двадцать. Отметка «добавлена» появляется, когда песня уже в песеннике.</div>';
+    html += '<div class="hist">';
+    list.forEach(function (r) {
+      var added = Requests.isAdded(r);
+      html += '<div class="hrow"><div><div class="ht">' + esc(r.artist) + (r.title ? " - " + esc(r.title) : "") + '</div>' +
+        '<div class="hd">' + new Date(r.ts).toLocaleDateString("ru-RU") + '</div></div>' +
+        '<div class="hs ' + (added ? "ok" : "") + '">' + (added ? "добавлена" : "отправлена") + '</div></div>';
+    });
+    html += '</div><div class="row"><button class="primary" id="hClose">Закрыть</button></div>';
+    sheetCard.innerHTML = html;
+    sheet.classList.add("on");
+    document.getElementById("hClose").addEventListener("click", closeSheet);
   }
 
   elList.addEventListener("click", function (e) {
