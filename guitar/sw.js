@@ -1,11 +1,12 @@
 /* Песенник Андрея - офлайн-кэш. */
 "use strict";
 
-var CACHE = "pesennik-v1";
+var CACHE = "pesennik-v3";
 var FILES = [
   "./",
   "index.html",
   "style.css",
+  "config.js",
   "app-core.js",
   "app-ui.js",
   "songs.js",
