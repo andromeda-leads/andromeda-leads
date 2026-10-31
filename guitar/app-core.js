@@ -125,6 +125,49 @@ function songBlocks(text) {
 }
 
 var STORE_KEY = "pesennik.v1";
+var REQ_KEY = "pesennik.requests.v1";
+var DAY_LIMIT = 3;
+
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+}
+
+function readReqs() {
+  try { return JSON.parse(localStorage.getItem(REQ_KEY) || "[]") || []; } catch (e) { return []; }
+}
+
+function writeReqs(list) {
+  try { localStorage.setItem(REQ_KEY, JSON.stringify(list.slice(-20))); } catch (e) {}
+}
+
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[^а-яёa-z0-9]+/g, " ").trim();
+}
+
+var Requests = {
+  all: function () { return readReqs(); },
+  today: function () {
+    var t = todayKey();
+    return readReqs().filter(function (r) { return r.day === t; });
+  },
+  add: function (artist, title, text) {
+    var list = readReqs();
+    var item = { artist: artist, title: title, text: text, ts: Date.now(), day: todayKey(), status: "sent" };
+    list.push(item);
+    writeReqs(list);
+    return item;
+  },
+  isAdded: function (req) {
+    var want = norm(req.title);
+    if (!want) return false;
+    return SONGS.some(function (s) {
+      var have = norm(s.title);
+      return have && (have.indexOf(want) >= 0 || want.indexOf(have) >= 0);
+    });
+  },
+  left: function () { return Math.max(0, DAY_LIMIT - Requests.today().length); }
+};
 
 function loadState() {
   try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch (e) { return {}; }
