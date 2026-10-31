@@ -39,6 +39,15 @@ function bindEvents() {
   });
 
   document.addEventListener("click", function (e) {
+    var gb = e.target.closest ? e.target.closest("[data-guide],[data-guide-close]") : null;
+    if (gb) {
+      if (gb.hasAttribute("data-guide-close")) { closeGuide(); return; }
+      showGuide(gb.getAttribute("data-guide"));
+      return;
+    }
+  });
+
+  document.addEventListener("click", function (e) {
     var el = e.target.closest("[data-go],[data-month],[data-day],[data-scope],[data-delsick],[data-tsave],button");
     if (!el) return;
     var go = el.getAttribute("data-go"), mon = el.getAttribute("data-month"), d = el.getAttribute("data-day"),
@@ -86,6 +95,10 @@ function bindEvents() {
 
   document.addEventListener("change", function (e) {
     if (e.target && e.target.id === "file-import" && e.target.files && e.target.files[0]) importJson(e.target.files[0]);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { closeGuide(); closeModal(); }
   });
 }
 
