@@ -24,7 +24,8 @@ function renderTests() {
     var g = PLAN.tests[i].group;
     (groups[g] = groups[g] || []).push(PLAN.tests[i]);
   }
-  h += '<div class="card"><h2>📏 Тесты и контроль прогресса</h2><div class="muted">Замеры делаем в один день недели, в свежем состоянии - не после льда. Полный блок из 15 показателей: недели 0, 6, 14, 22, 34. Промежуточный: недели 10, 18, 26, 30. Еженедельно - прыжок вверх и один технический показатель.</div></div>';
+  h += '<div class="card"><h2>📏 Тесты и контроль прогресса</h2><div class="muted">Замеры делаем в один день недели, в свежем состоянии - не после льда. Полный блок из 15 показателей: недели 0, 6, 14, 22, 34. Промежуточный: недели 10, 18, 26, 30. Еженедельно - прыжок вверх и один технический показатель.</div>' +
+    '<div class="row" style="margin-top:12px"><button class="ghost small" data-guide="__howto">? Как сдавать тесты</button></div></div>';
   var filled = 0, tt;
   for (tt in STATE.tests) if ((STATE.tests[tt] || []).length) filled++;
   h += '<div class="card"><div class="kv"><span>Показателей с данными</span><b>' + filled + ' из ' + PLAN.tests.length + '</b>' +
@@ -39,7 +40,8 @@ function renderTests() {
       var delta = last && prev ? round(last.value - prev.value, def.unit === "с" ? 2 : 1) : null;
       var good = delta != null && ((def.dir === "up" && delta > 0) || (def.dir === "down" && delta < 0));
       var pctToTarget = last ? clamp(Math.round((def.dir === "up" ? last.value / target : target / last.value) * 100), 0, 130) : 0;
-      h += '<div class="tcard" data-tcard="' + def.id + '"><div class="t-head"><div><b>' + esc(def.name) + '</b><div class="tiny">цель к неделе 34: ' + target + ' ' + esc(def.unit) + (def.dir === "down" ? " (меньше - лучше)" : "") + '</div></div>' +
+      h += '<div class="tcard" data-tcard="' + def.id + '"><div class="t-head"><div style="flex:1 1 auto"><b>' + esc(def.name) + '</b><div class="tiny">цель к неделе 34: ' + target + ' ' + esc(def.unit) + (def.dir === "down" ? " (меньше - лучше)" : "") + '</div></div>' +
+        '<button class="qbtn" data-guide="' + def.id + '" aria-label="Как делать тест">?</button>' +
         '<div style="text-align:right"><div class="t-val">' + (last ? last.value + " " + esc(def.unit) : "-") + '</div>' +
         (delta != null ? '<div class="tiny" style="color:' + (good ? "#26794a" : "#b32b45") + '">' + (delta > 0 ? "+" : "") + delta + '</div>' : '<div class="tiny">' + (last ? esc(fmtShort(last.date)) : "нет данных") + '</div>') + '</div></div>' +
         (vals.length ? sparkline(vals.slice(-10), def.dir) : "") +
@@ -50,6 +52,39 @@ function renderTests() {
     h += '</div>';
   }
   el.innerHTML = h;
+}
+
+/* ---------- инструкция к тесту ---------- */
+function guideFor(id) {
+  return (typeof TEST_GUIDES !== "undefined" && TEST_GUIDES[id]) ? TEST_GUIDES[id] : null;
+}
+function closeGuide() { var s = $("#guide-sheet"); if (s && s.parentNode) s.parentNode.removeChild(s); }
+function showGuide(id) {
+  var g = guideFor(id);
+  if (!g) { toast("Инструкция не найдена"); return; }
+  closeGuide();
+  var body = '<div class="gtext">' + esc(g.what) + '</div>';
+  if (g.steps && g.steps.length) {
+    body += '<div class="gt">Как выполнять</div><ol class="glist">';
+    for (var i = 0; i < g.steps.length; i++) body += '<li>' + esc(g.steps[i]) + '</li>';
+    body += '</ol>';
+  }
+  if (g.tries) body += '<div class="grow"><b>Попытки и отдых</b>' + esc(g.tries) + '</div>';
+  if (g.errors && g.errors.length) {
+    body += '<div class="gt">Частые ошибки</div><ul class="glist">';
+    for (var j = 0; j < g.errors.length; j++) body += '<li>' + esc(g.errors[j]) + '</li>';
+    body += '</ul>';
+  }
+  if (g.kit) body += '<div class="grow"><b>Что нужно</b>' + esc(g.kit) + '</div>';
+  var wrap = document.createElement("div");
+  wrap.className = "sheet";
+  wrap.id = "guide-sheet";
+  wrap.innerHTML = '<div class="sheet-card"><div class="sheet-head"><div><div class="tiny">' +
+    (id === "__howto" ? "тесты и замеры" : "техника выполнения теста") + '</div><div class="sheet-title">' + esc(g.title) + '</div></div>' +
+    '<button class="sheet-x" data-guide-close="1" aria-label="Закрыть">×</button></div>' +
+    '<div class="sheet-body">' + body + '</div></div>';
+  document.body.appendChild(wrap);
+  wrap.addEventListener("click", function (e) { if (e.target === wrap) closeGuide(); });
 }
 
 /* ---------- Итоги ---------- */
