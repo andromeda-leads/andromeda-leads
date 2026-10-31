@@ -1,2 +1,2 @@
 /* Куда уходят заявки на песни. Пустая строка - чат бота ещё не подключён. */
-var GUITAR_BOT = "";
+var GUITAR_BOT = "AndrewMusicianBot";
