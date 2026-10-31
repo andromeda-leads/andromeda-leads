@@ -86,7 +86,7 @@ function renderToday() {
   }
   h += '</div>';
 
-  if (day.kind === "test") h += '<div class="card"><h2>📏 Тестирование</h2><div class="muted">' + (day.w === 0 ? "Нулевые тесты: все 15 показателей." : (PLAN.test_weeks.indexOf(day.w) >= 0 ? "Полный блок из 15 показателей." : "Прыжок вверх (CMJ) - 3 попытки и один показатель техники.")) + '</div><div class="sep"></div><button class="primary wide" data-go="tests">Внести результаты</button></div>';
+  if (day.kind === "test") h += '<div class="card"><h2>📏 Тестирование</h2><div class="muted">' + (day.w === 0 ? "Нулевые тесты: все 15 показателей." : (PLAN.test_weeks.indexOf(day.w) >= 0 ? "Полный блок из 15 показателей." : "Прыжок вверх (CMJ) - 3 попытки и один показатель техники.")) + '</div><div class="sep"></div><div class="row"><button class="primary" style="flex:1 1 150px" data-go="tests">Внести результаты</button><button class="ghost" data-guide="__howto">? Как делать</button></div></div>';
 
   h += '<div class="card"><h2>💗 Самочувствие</h2>';
   if (rd) h += '<div class="gauge">' + ringSvg(rd.score, "готовность", rd.score) + '<div><span class="pill ' + rd.zone + '">' + (rd.zone === "ok" ? "зелёная зона" : rd.zone === "mid" ? "жёлтая зона" : "красная зона") + '</span><div class="muted" style="margin-top:6px">' + esc(rd.advice) + '</div></div></div><div class="sep"></div>';
