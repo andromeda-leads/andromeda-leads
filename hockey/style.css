@@ -158,6 +158,27 @@ details p,details ul{font-size:13.5px;line-height:1.5;color:#5c3c50}
 
 @media (max-width:360px){ .grid3{grid-template-columns:1fr 1fr} }
 
+/* ---------- значок инструкции и лист с техникой ---------- */
+button.qbtn{width:22px;height:22px;min-width:22px;padding:0;border-radius:50%;border:1px solid var(--line);
+  background:#fff;color:var(--pink);font-size:12px;font-weight:800;line-height:20px;cursor:pointer;flex:0 0 auto}
+button.qbtn:active{transform:scale(.94);background:var(--pink-bg)}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(70,34,58,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet-card{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(70,34,58,.25)}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.sheet-title{font-size:17px;font-weight:800;margin-top:2px}
+button.sheet-x{width:30px;height:30px;min-width:30px;padding:0;border-radius:50%;background:var(--pink-bg);color:var(--ink-soft);font-size:18px;line-height:28px;box-shadow:none}
+.sheet-body{padding:14px 18px 22px;overflow:auto;-webkit-overflow-scrolling:touch}
+.gtext{font-size:14px;line-height:1.55;color:#5c3c50}
+.gt{margin:16px 0 6px;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);font-weight:800}
+.glist{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:#5c3c50}
+.glist li{margin-bottom:7px}
+.grow{margin-top:14px;font-size:14px;line-height:1.55;color:#5c3c50}
+.grow b{display:block;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+
+@media print{
+  .sheet{display:none!important}
+}
+
 @media print{
   #petals,.topbar,.tabbar,#toast,.noprint{display:none!important}
   body{background:#fff;padding:0}
