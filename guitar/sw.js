@@ -1,7 +1,7 @@
 /* Песенник Андрея - офлайн-кэш. */
 "use strict";
 
-var CACHE = "pesennik-v7";
+var CACHE = "pesennik-v8";
 var FILES = [
   "./",
   "index.html",
