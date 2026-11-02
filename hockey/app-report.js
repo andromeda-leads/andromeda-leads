@@ -41,7 +41,7 @@ function renderTests() {
       var good = delta != null && ((def.dir === "up" && delta > 0) || (def.dir === "down" && delta < 0));
       var pctToTarget = last ? clamp(Math.round((def.dir === "up" ? last.value / target : target / last.value) * 100), 0, 130) : 0;
       h += '<div class="tcard" data-tcard="' + def.id + '"><div class="t-head"><div style="flex:1 1 auto"><b>' + esc(def.name) + '</b><div class="tiny">цель к неделе 34: ' + target + ' ' + esc(def.unit) + (def.dir === "down" ? " (меньше - лучше)" : "") + '</div></div>' +
-        '<button class="qbtn" data-guide="' + def.id + '" aria-label="Как делать тест">?</button>' +
+        '<button class="qbtn" data-guide="t:' + def.id + '" aria-label="Как делать тест">?</button>' +
         '<div style="text-align:right"><div class="t-val">' + (last ? last.value + " " + esc(def.unit) : "-") + '</div>' +
         (delta != null ? '<div class="tiny" style="color:' + (good ? "#26794a" : "#b32b45") + '">' + (delta > 0 ? "+" : "") + delta + '</div>' : '<div class="tiny">' + (last ? esc(fmtShort(last.date)) : "нет данных") + '</div>') + '</div></div>' +
         (vals.length ? sparkline(vals.slice(-10), def.dir) : "") +
@@ -77,22 +77,28 @@ function reloadGuideFile(file, done) {
 }
 function closeGuide() { var s = $("#guide-sheet"); if (s && s.parentNode) s.parentNode.removeChild(s); }
 function showGuide(id) {
-  var g = guideFor(id);
+  /* ключ вида "t:plank" - инструкция именно теста, даже если такое же упражнение есть в списке */
+  var rawId = id;
+  var onlyTest = id.indexOf("t:") === 0;
+  if (onlyTest) id = id.slice(2);
+  var g = onlyTest ? ((typeof TEST_GUIDES !== "undefined" && TEST_GUIDES[id]) ? TEST_GUIDES[id] : null) : guideFor(id);
   if (!g) {
     var missing = (typeof EX_GUIDES === "undefined") ? "exercise-guides.js" :
                   ((typeof TEST_GUIDES === "undefined") ? "test-guides.js" : null);
-    if (missing) { reloadGuideFile(missing, function () { showGuide(id); }); return; }
+    if (missing) { reloadGuideFile(missing, function () { showGuide(rawId); }); return; }
     toast("Инструкция не найдена");
     return;
   }
   closeGuide();
+  var isEx = !onlyTest && !!exGuideFor(id);
   var body = '<div class="gtext">' + esc(g.what) + '</div>';
+  if (g.start) body += '<div class="grow"><b>Исходное положение</b>' + esc(g.start) + '</div>';
   if (g.steps && g.steps.length) {
     body += '<div class="gt">Как выполнять</div><ol class="glist">';
     for (var i = 0; i < g.steps.length; i++) body += '<li>' + esc(g.steps[i]) + '</li>';
     body += '</ol>';
   }
-  if (g.tries) body += '<div class="grow"><b>' + (exGuideFor(id) ? "Сколько и как отдыхать" : "Попытки и отдых") + '</b>' + esc(g.tries) + '</div>';
+  if (g.tries) body += '<div class="grow"><b>' + (isEx ? "Сколько и как отдыхать" : "Попытки и отдых") + '</b>' + esc(g.tries) + '</div>';
   if (g.errors && g.errors.length) {
     body += '<div class="gt">Частые ошибки</div><ul class="glist">';
     for (var j = 0; j < g.errors.length; j++) body += '<li>' + esc(g.errors[j]) + '</li>';
@@ -104,7 +110,7 @@ function showGuide(id) {
   wrap.className = "sheet";
   wrap.id = "guide-sheet";
   wrap.innerHTML = '<div class="sheet-card"><div class="sheet-head"><div><div class="tiny">' +
-    (id === "__howto" ? "тесты и замеры" : (exGuideFor(id) ? "как делать упражнение" : "техника выполнения теста")) + '</div><div class="sheet-title">' + esc(g.title) + '</div></div>' +
+    (id === "__howto" ? "тесты и замеры" : (isEx ? "как делать упражнение" : "техника выполнения теста")) + '</div><div class="sheet-title">' + esc(g.title) + '</div></div>' +
     '<button class="sheet-x" data-guide-close="1" aria-label="Закрыть">×</button></div>' +
     '<div class="sheet-body">' + body + '</div></div>';
   document.body.appendChild(wrap);
