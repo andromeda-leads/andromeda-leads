@@ -38,7 +38,7 @@ function renderToday() {
         '<div class="muted">План начинается ' + fmtDate(first) + ' и идёт 34 недели - до ' + fmtDate(last) + '.</div></div>';
       h += '<div class="card"><h2>🌱 Что сделать до старта</h2><ul class="muted">' +
         '<li>Пройти нулевое тестирование ' + fmtDate(PLAN.baseline_date) + ' - это точка отсчёта, без неё не будет видно прогресса.</li>' +
-        '<li>Собрать минимальный инвентарь: резинки разной жёсткости, гантели 5-10 кг, пояс или жилет 3-4,5 кг.</li>' +
+        '<li>Собрать минимальный инвентарь: резинки разной жёсткости, две гантели по 2 кг (уже есть), опора 40-50 см вроде ступеньки или стула.</li>' +
         '<li>Записать себя на видео в старте и спринте на льду - сбоку и сзади.</li>' +
         '<li>Проверить клюшку: длина до подбородка, жёсткость 65-75, удобный загиб.</li></ul></div>';
       h += '<div class="card"><h2>📏 Нулевые тесты</h2><div class="muted">Открой вкладку «Тесты» и внеси первые значения - все 15 показателей, включая два ледовых.</div>' +
@@ -79,9 +79,10 @@ function renderToday() {
   for (var b = 0; b < day.blocks.length; b++) {
     h += '<h3>' + esc(day.blocks[b].t) + '</h3>';
     for (var i = 0; i < day.blocks[b].items.length; i++) {
-      var id = taskId(day, b, i), on = !!dayChecked(t)[id];
+      var it = day.blocks[b].items[i], id = taskId(day, b, i), on = !!dayChecked(t)[id], ex = itemEx(it);
       h += '<div class="task ' + (on ? "done" : "") + '"><input type="checkbox" data-task="' + esc(id) + '"' + (on ? " checked" : "") + '>' +
-        '<div class="t-txt">' + esc(day.blocks[b].items[i]) + '</div></div>';
+        '<div class="t-txt">' + esc(itemText(it)) + '</div>' +
+        (ex ? '<button class="qbtn" data-guide="' + esc(ex) + '" aria-label="Как делать упражнение">?</button>' : '') + '</div>';
     }
   }
   h += '</div>';
@@ -179,7 +180,7 @@ function renderPlan() {
                  : '<div class="muted">Неделя ' + w.w + ' · ' + esc(mesoOfWeek(w.w).name) + ' · ' + esc(w.title) + (w.min ? " · " + w.min + " мин" : "") + '</div><div class="sep"></div>');
     for (var b2 = 0; b2 < w.blocks.length; b2++) {
       h += '<h3>' + esc(w.blocks[b2].t) + '</h3><ul class="muted">';
-      for (var i2 = 0; i2 < w.blocks[b2].items.length; i2++) h += '<li>' + esc(w.blocks[b2].items[i2]) + '</li>';
+      for (var i2 = 0; i2 < w.blocks[b2].items.length; i2++) h += '<li>' + esc(itemText(w.blocks[b2].items[i2])) + '</li>';
       h += '</ul>';
     }
     h += '<div class="sep"></div><div class="tiny">Статус: ' + statusRu(dayStatus(w)) + '</div></div>';
