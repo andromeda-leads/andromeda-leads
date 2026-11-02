@@ -52,6 +52,7 @@ function renderToday() {
   }
 
   var prog = dayProgress(day), st = dayStatus(day);
+  var ist = itemStats(day), wk = weekReport(day.w);
   var ms = mesoOfWeek(day.w);
   var rd = readiness(t);
   var dd = diaryOf(t);
@@ -69,6 +70,20 @@ function renderToday() {
     '<span>План на день</span><b>' + (day.min ? day.min + " мин" : "-") + '</b>' +
     '<span>Статус</span><b>' + statusRu(st) + '</b>' +
     '<span>Опыт за день</span><b>' + xpForDay(day) + ' XP</b></div></div></div></div>';
+
+  /* правило дня: срок 23:55 */
+  if (dayCounted(day)) {
+    var wline = wk.due
+      ? 'Неделя ' + day.w + ': сделано ' + wk.doneDue + ' из ' + wk.due + ' пунктов, пропущено ' + wk.missed
+      : 'Неделя ' + day.w + ': отмечено ' + wk.done + ' из ' + wk.plan + ' пунктов, срок ещё идёт';
+    var whead = '';
+    if (ist.closed && ist.missed) {
+      whead = '<h2>⌛ День закрыт</h2><div class="muted">После 23:55 неотмеченные пункты считаются пропуском. В этот день пропущено ' + ist.missed + ' из ' + ist.total + ', отметка задним числом пропуск не отменяет.</div><div class="sep"></div>';
+    }
+    h += '<div class="card">' + whead + '<div class="kv"><span>' + esc(wline) + '</span><b>' + (wk.due ? wk.pct + '%' : '-') + '</b></div>' +
+      (ist.closed ? '' : '<div class="tiny" style="margin-top:6px">Пункты этого дня закроются в 23:55. Что не отметите до этого времени - идёт в статистику как пропуск.</div>') +
+      '</div>';
+  }
 
   if (st === "sick") {
     h += '<div class="card"><h2>🌷 Болею</h2><div class="muted">День отмечен как болезнь - тренировка не считается пропуском. Возвращение к нагрузке делаем по протоколу.</div>' +
@@ -109,7 +124,7 @@ function renderToday() {
 }
 function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; if (m10 === 1 && m100 !== 11) return a; if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return b; return c; }
 function statusRu(s) {
-  return { done: "выполнено", partial: "выполнено частично", skipped: "пропуск", sick: "болею" }[s] || "не отмечено";
+  return { done: "выполнено", partial: "выполнено частично", missed: "пропущено (не отмечено до 23:55)", skipped: "пропуск", sick: "болею" }[s] || "не отмечено";
 }
 function diaryFormHtml(dd, where) {
   dd = dd || {};
@@ -162,13 +177,13 @@ function renderPlan() {
     if (!pd) { h += '<div class="cell empty"></div>'; continue; }
     var st = dayStatus(pd);
     var cls = "cell " + (st === "sick" ? "sick" : (pd.kind === "power_a" || pd.kind === "power_b" ? "power" : pd.kind)) + (st ? " " + st : "") + (dstr === today() ? " today" : "");
-    var mk2 = st === "done" ? "✓" : st === "partial" ? "◐" : st === "skipped" ? "✕" : st === "sick" ? "🤒" : "";
+    var mk2 = st === "done" ? "✓" : st === "partial" ? "◐" : st === "skipped" ? "✕" : st === "missed" ? "⌛" : st === "sick" ? "🤒" : "";
     h += '<div class="' + cls + '" data-day="' + dstr + '"><span class="mk">' + mk2 + '</span>' + d + '</div>';
   }
   h += '</div><div class="legend">' +
     '<span><i style="background:#e8f3ff"></i>лёд</span><span><i style="background:#fff2e6"></i>сила</span>' +
     '<span><i style="background:#ffeef5"></i>домашние</span><span><i style="background:#f0f8ec"></i>восстановление</span>' +
-    '<span><i style="background:#f5eaff"></i>тесты</span><span>✓ выполнено</span><span>◐ частично</span><span>✕ пропуск</span></div>' +
+    '<span><i style="background:#f5eaff"></i>тесты</span><span>✓ выполнено</span><span>◐ частично</span><span>✕ пропуск</span><span>⌛ не отмечено до 23:55</span></div>' +
     '<div class="sep"></div><div class="kv"><span>Выполнено в месяце</span><b>' + mrep.done + ' из ' + mrep.planned + ' (' + mrep.pct + '%)</b>' +
     '<span>Время тренировок</span><b>' + Math.round(mrep.mins / 60) + ' ч</b>' +
     '<span>Дней болезни</span><b>' + mrep.sick + '</b></div></div>';
