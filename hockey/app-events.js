@@ -31,7 +31,7 @@ function bindEvents() {
       var id = t.getAttribute("data-task"), date = id.split("|")[0];
       var rec = STATE.checks[date] || (STATE.checks[date] = { items: {} });
       rec.items = rec.items || {};
-      if (t.checked) rec.items[id] = true; else delete rec.items[id];
+      if (t.checked) rec.items[id] = nowTs(); else delete rec.items[id];
       if (rec.status === "skipped" && t.checked) rec.status = "";
       saveState(); renderHeader(); if (UI.tab === "today") renderToday(); else renderPlan();
       checkAchievements(); renderHeader();
