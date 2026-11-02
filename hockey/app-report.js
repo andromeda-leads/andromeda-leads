@@ -113,12 +113,16 @@ function showGuide(id) {
 
 /* ---------- Итоги ---------- */
 function mergeReports(reps) {
-  var out = { key: "__all", planned: 0, done: 0, partial: 0, missedCount: 0, sick: 0, mins: 0, tests: {}, missedList: [], diaryCount: 0, xp: 0, doneByKind: {}, weightFirst: null, weightLast: null, well: {} };
+  var out = { key: "__all", planned: 0, done: 0, partial: 0, missedCount: 0, sick: 0, mins: 0, tests: {}, missedList: [], diaryCount: 0, xp: 0, doneByKind: {}, weightFirst: null, weightLast: null, well: {},
+    itemPlan: 0, itemDue: 0, itemDone: 0, itemDoneDue: 0, itemMissed: 0, itemLate: 0, missedDays: 0 };
   var wells = [];
   for (var i = 0; i < reps.length; i++) {
     var r = reps[i];
     out.planned += r.planned; out.done += r.done; out.partial += r.partial; out.missedCount += r.missedCount;
     out.sick += r.sick; out.mins += r.mins; out.diaryCount += r.diaryCount; out.xp += r.xp;
+    out.itemPlan += r.itemPlan || 0; out.itemDue += r.itemDue || 0; out.itemDone += r.itemDone || 0;
+    out.itemDoneDue += r.itemDoneDue || 0;
+    out.itemMissed += r.itemMissed || 0; out.itemLate += r.itemLate || 0; out.missedDays += r.missedDays || 0;
     out.missedList = out.missedList.concat(r.missedList);
     if (r.weightLast) { if (out.weightFirst == null) out.weightFirst = r.weightFirst; out.weightLast = r.weightLast; }
     for (var k in r.doneByKind) out.doneByKind[k] = (out.doneByKind[k] || 0) + r.doneByKind[k];
@@ -130,6 +134,7 @@ function mergeReports(reps) {
     out.well[f] = arr.length ? avg(arr) : null;
   });
   out.pct = out.planned ? Math.round(out.done * 100 / out.planned) : 0;
+  out.itemPct = out.itemDue ? Math.round(out.itemDoneDue * 100 / out.itemDue) : 0;
   out.conclusions = conclusions(out.pct, out.well, out.missedCount, out.sick, out.doneByKind);
   return out;
 }
@@ -156,6 +161,7 @@ function renderReport() {
   h += '<div class="sep"></div><div class="kv">' +
     '<span>Частично выполнено</span><b>' + rep.partial + '</b>' +
     '<span>Пропущено дней</span><b>' + rep.missedCount + '</b>' +
+    '<span>из них без отметок к 23:55</span><b>' + (rep.missedDays || 0) + '</b>' +
     '<span>Дней болезни</span><b>' + rep.sick + '</b>' +
     '<span>Записей в дневнике</span><b>' + rep.diaryCount + '</b>' +
     '<span>Опыт за период</span><b>' + rep.xp + ' XP</b></div>';
@@ -163,6 +169,31 @@ function renderReport() {
   var kb = [];
   for (var k in rep.doneByKind) kb.push((kinds[k] || k) + " - " + rep.doneByKind[k]);
   if (kb.length) h += '<div class="tiny" style="margin-top:8px">По видам: ' + esc(kb.join(", ")) + '</div>';
+
+  /* план против факта по пунктам: срок 23:55 каждого дня */
+  if (rep.itemPlan) {
+    h += '<div class="sep"></div><h3>Пункты плана и срок 23:55</h3>';
+    h += '<div class="row" style="align-items:stretch">' +
+      statPill("пунктов по плану", rep.itemPlan, "") +
+      statPill("сделано к сроку", rep.itemDoneDue, "") +
+      statPill("пропущено", rep.itemMissed, "") + '</div>';
+    h += '<div class="kv" style="margin-top:8px">' +
+      '<span>Срок уже вышел у</span><b>' + rep.itemDue + ' пунктов</b>' +
+      '<span>Выполнено к сроку</span><b>' + (rep.itemDue ? rep.itemPct + '%' : '-') + '</b>' +
+      '<span>Отмечено сейчас (в срок или позже)</span><b>' + rep.itemDone + '</b>' +
+      (rep.itemLate ? '<span>Отмечено позже срока</span><b>' + rep.itemLate + '</b>' : '') +
+      '<span>Ещё в работе</span><b>' + Math.max(0, rep.itemPlan - rep.itemDue) + '</b></div>';
+    if (UI.reportScope === "__all") {
+      var wrs = weekReports();
+      h += '<div class="sep"></div><h3>По неделям</h3><div class="kv">';
+      for (var wi = 0; wi < wrs.length; wi++) {
+        var w2 = wrs[wi];
+        var wv = w2.due ? w2.doneDue + " из " + w2.due + " (" + w2.pct + "%)" : "срок ещё не вышел";
+        h += '<span>Неделя ' + w2.w + '</span><b>' + wv + (w2.missed ? " · пропущено " + w2.missed : "") + '</b>';
+      }
+      h += '</div>';
+    }
+  }
 
   if (rep.well && (rep.well.sleep || rep.well.hr)) {
     h += '<div class="sep"></div><h3>Самочувствие</h3><div class="kv">' +
