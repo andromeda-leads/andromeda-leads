@@ -70,7 +70,8 @@ main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:14px 14px
   border:2px solid var(--pink-soft);border-radius:8px;background:#fff;position:relative;transition:.15s}
 .task input[type=checkbox]:checked{background:linear-gradient(135deg,var(--pink),var(--purple));border-color:transparent}
 .task input[type=checkbox]:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.task .t-txt{font-size:14.5px;line-height:1.45}
+.task .t-txt{font-size:14.5px;line-height:1.45;flex:1;min-width:0}
+.task button.qbtn{margin-top:1px;flex:0 0 auto}
 .task.done .t-txt{color:var(--ink-soft);text-decoration:line-through solid rgba(255,92,138,.35)}
 .task.sick-row{opacity:.85}
 
