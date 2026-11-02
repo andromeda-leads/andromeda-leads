@@ -110,22 +110,55 @@ function isSick(date) {
   for (var i = 0; i < STATE.sick.length; i++) if (date >= STATE.sick[i].from && date <= STATE.sick[i].to) return true;
   return false;
 }
+/* ---------- правило дня: срок 23:55 ---------- */
+function nowTs() { return Date.now(); }
+function dayDeadline(date) { var d = parseIso(date); d.setHours(23, 55, 0, 0); return d.getTime(); }
+function dayClosed(date) { return nowTs() > dayDeadline(date); }
+function checkTs(v) { return (typeof v === "number" && v > 1e12) ? v : 0; }
+function dayCounted(day) { return day.kind !== "rest" && !isSick(day.date); }
+
+/* Пункт плана, не отмеченный до 23:55 своего дня, считается пропуском и так идёт в статистику.
+   Отметка, поставленная позже (в том числе задним числом), видна как «поздно», но пропуск не отменяет.
+   Дни болезни и дни отдыха в зачёт не идут. */
+function itemStats(day) {
+  var tasks = dayTasks(day), ch = dayChecked(day.date), dl = dayDeadline(day.date);
+  var onTime = 0, late = 0;
+  for (var i = 0; i < tasks.length; i++) {
+    var v = ch[tasks[i].id];
+    if (!v) continue;
+    var ts = checkTs(v);
+    if (ts && ts > dl) late++; else onTime++;
+  }
+  var total = tasks.length, closed = dayClosed(day.date), counted = dayCounted(day);
+  var isDue = closed && counted;
+  return {
+    total: total, done: onTime, doneDue: isDue ? onTime : 0, late: late, checked: onTime + late,
+    closed: closed, counted: counted,
+    due: isDue ? total : 0,
+    missed: isDue ? Math.max(0, total - onTime) : 0,
+    pct: total ? Math.round((onTime + late) * 100 / total) : 0
+  };
+}
+
 function dayStatus(day) {
   if (!day) return "";
   var rec = STATE.checks[day.date] || {};
   if (isSick(day.date)) return "sick";
   if (rec.status === "skipped") return "skipped";
-  var tasks = dayTasks(day), done = 0, ch = dayChecked(day.date);
-  for (var i = 0; i < tasks.length; i++) if (ch[tasks[i].id]) done++;
-  if (day.kind === "rest") return rec.status === "done" ? "done" : "";
-  if (day.kind === "test") return done > 0 ? (done === tasks.length ? "done" : "partial") : "";
-  if (done === 0) return "";
-  return done === tasks.length ? "done" : "partial";
+  if (day.kind === "rest") {
+    var restTasks = dayTasks(day), rch = dayChecked(day.date), restDone = 0;
+    for (var r = 0; r < restTasks.length; r++) if (rch[restTasks[r].id]) restDone++;
+    return (rec.status === "done" || restDone > 0) ? "done" : "";
+  }
+  var s = itemStats(day);
+  if (!s.checked) return s.closed ? "missed" : "";
+  if (s.checked === s.total && s.done === s.total) return "done";
+  return "partial";
 }
 function dayProgress(day) {
-  var tasks = dayTasks(day), ch = dayChecked(day.date), done = 0;
-  for (var i = 0; i < tasks.length; i++) if (ch[tasks[i].id]) done++;
-  return { done: done, total: tasks.length, pct: tasks.length ? Math.round(done * 100 / tasks.length) : 0 };
+  var s = itemStats(day);
+  return { done: s.checked, total: s.total, onTime: s.done, late: s.late,
+           missed: s.missed, closed: s.closed, pct: s.pct };
 }
 function xpForDay(day) {
   return { ice: 30, power_a: 25, power_b: 25, home: 12, recovery: 8, test: 15, rest: 5 }[day.kind] || 0;
@@ -250,17 +283,54 @@ function monthList() {
   }
   return out;
 }
+function weekList() {
+  var out = [], idx = {};
+  for (var i = 0; i < PLAN.days.length; i++) {
+    var d = PLAN.days[i], w = d.w;
+    if (!(w in idx)) { idx[w] = out.length; out.push({ w: w, from: d.date, to: d.date }); }
+    var cur = out[idx[w]];
+    if (d.date < cur.from) cur.from = d.date;
+    if (d.date > cur.to) cur.to = d.date;
+  }
+  return out;
+}
+/* План против факта по пунктам за неделю: план - все пункты, срок - те, чей день уже закрыт (23:55 прошло),
+   сделано - отмечено вовремя, пропущено - остальное. */
+function weekReport(w) {
+  var days = PLAN.days.filter(function (d) { return d.w === w; });
+  var plan = 0, due = 0, done = 0, doneDue = 0, missed = 0, late = 0, from = "", to = "";
+  for (var i = 0; i < days.length; i++) {
+    var d = days[i];
+    if (!from) from = d.date;
+    to = d.date;
+    if (!dayCounted(d)) continue;
+    var s = itemStats(d);
+    plan += s.total; due += s.due; done += s.done; doneDue += s.doneDue; missed += s.missed; late += s.late;
+  }
+  return { w: w, from: from, to: to, plan: plan, due: due, done: done, doneDue: doneDue,
+           missed: missed, late: late, pct: due ? Math.round(doneDue * 100 / due) : 0 };
+}
+function weekReports() {
+  return weekList().map(function (x) { return weekReport(x.w); });
+}
 function monthReport(key) {
   var days = PLAN.days.filter(function (d) { return monthKey(d.date) === key; });
   var done = 0, partial = 0, missed = 0, sick = 0, rest = 0, mins = 0, planned = 0, doneByKind = {};
+  var itemPlan = 0, itemDue = 0, itemDone = 0, itemDoneDue = 0, itemMissed = 0, itemLate = 0, missedDays = 0;
   var missedList = [], testsIn = {}, diaryDays = [], xpMonth = 0;
   for (var i = 0; i < days.length; i++) {
     var d = days[i], st = dayStatus(d);
     if (d.kind !== "rest") planned++;
+    if (dayCounted(d)) {
+      var is = itemStats(d);
+      itemPlan += is.total; itemDue += is.due; itemDone += is.done; itemDoneDue += is.doneDue;
+      itemMissed += is.missed; itemLate += is.late;
+    }
     if (st === "done") { done++; mins += d.min; xpMonth += xpForDay(d); doneByKind[d.kind] = (doneByKind[d.kind] || 0) + 1; }
     else if (st === "partial") { partial++; missedList.push({ date: d.date, day: d, why: "выполнено частично: " + dayProgress(d).done + " из " + dayProgress(d).total }); }
     else if (st === "sick") { sick++; }
-    else if (st === "skipped") { missed = 1; missedList.push({ date: d.date, day: d, why: "пропуск: " + ((STATE.checks[d.date] || {}).skipReason || "без причины") }); }
+    else if (st === "skipped") { missed++; missedDays++; missedList.push({ date: d.date, day: d, why: "пропуск: " + ((STATE.checks[d.date] || {}).skipReason || "без причины") }); }
+    else if (st === "missed") { missed++; missedDays++; missedList.push({ date: d.date, day: d, why: "день закрыт без отметок, пропущено пунктов: " + itemStats(d).missed }); }
     else if (d.kind === "rest") rest++;
   }
   var t;
@@ -279,11 +349,14 @@ function monthReport(key) {
   };
   var wts = dkeys.map(function (k) { return STATE.diary[k].weight; }).filter(function (v) { return v; });
   var pct = planned ? Math.round(done * 100 / planned) : 0;
-  var con = conclusions(pct, well, missedList.length, sick, doneByKind);
-  return { key: key, days: days, planned: planned, done: done, partial: partial, missedCount: missedList.length, sick: sick,
+  var con = conclusions(pct, well, missedDays, sick, doneByKind);
+  return { key: key, days: days, planned: planned, done: done, partial: partial, missedCount: missedDays, sick: sick,
     mins: mins, pct: pct, missedList: missedList, tests: testsIn, well: well, diaryCount: dkeys.length,
     weightFirst: wts.length ? wts[0] : null, weightLast: wts.length ? wts[wts.length - 1] : null,
-    xp: xpMonth, doneByKind: doneByKind, conclusions: con };
+    xp: xpMonth, doneByKind: doneByKind, conclusions: con,
+    itemPlan: itemPlan, itemDue: itemDue, itemDone: itemDone, itemDoneDue: itemDoneDue, itemMissed: itemMissed, itemLate: itemLate,
+    missedDays: missedDays,
+    itemPct: itemDue ? Math.round(itemDoneDue * 100 / itemDue) : 0 };
 }
 function conclusions(pct, well, missedN, sick, byKind) {
   var out = [];
@@ -304,6 +377,9 @@ function reportText(rep, scopeLabel) {
   L.push("Выполнено тренировок: " + rep.done + " из " + rep.planned + " (" + rep.pct + "%)");
   if (rep.partial) L.push("Частично выполнено: " + rep.partial);
   if (rep.missedCount) L.push("Пропущено дней: " + rep.missedCount);
+  if (rep.itemDue) L.push("Пункты плана: срок вышел у " + rep.itemDue + ", сделано вовремя " + rep.itemDoneDue + " (" + rep.itemPct + "%), пропущено " + rep.itemMissed);
+  else if (rep.itemPlan) L.push("Пункты плана: отмечено " + rep.itemDone + " из " + rep.itemPlan + ", срок по остальным ещё не вышел");
+  if (rep.missedDays) L.push("Из них без отметок к 23:55: " + rep.missedDays);
   if (rep.sick) L.push("Дней болезни: " + rep.sick);
   L.push("Время тренировок: " + Math.round(rep.mins / 60) + " ч (" + rep.mins + " мин)");
   var kinds = { ice: "лёд", power_a: "силовая", power_b: "мощность", home: "домашние", test: "тесты", recovery: "восстановление" };
