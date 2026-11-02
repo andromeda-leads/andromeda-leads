@@ -83,6 +83,8 @@ function renderToday() {
     h += '<div class="card">' + whead + '<div class="kv"><span>' + esc(wline) + '</span><b>' + (wk.due ? wk.pct + '%' : '-') + '</b></div>' +
       (ist.closed ? '' : '<div class="tiny" style="margin-top:6px">Пункты этого дня закроются в 23:55. Что не отметите до этого времени - идёт в статистику как пропуск.</div>') +
       '</div>';
+  } else if (day.kind !== "rest" && day.w === 0 && !isSick(day.date)) {
+    h += '<div class="card"><div class="tiny">Нулевые дни до старта программы: отметки сохраняются, но в статистику пропусков не входят. Счёт по пунктам идёт с недели 1.</div></div>';
   }
 
   if (st === "sick") {
