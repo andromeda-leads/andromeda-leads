@@ -115,7 +115,7 @@ function nowTs() { return Date.now(); }
 function dayDeadline(date) { var d = parseIso(date); d.setHours(23, 55, 0, 0); return d.getTime(); }
 function dayClosed(date) { return nowTs() > dayDeadline(date); }
 function checkTs(v) { return (typeof v === "number" && v > 1e12) ? v : 0; }
-function dayCounted(day) { return day.kind !== "rest" && !isSick(day.date); }
+function dayCounted(day) { return day.kind !== "rest" && day.w > 0 && !isSick(day.date); }
 
 /* Пункт плана, не отмеченный до 23:55 своего дня, считается пропуском и так идёт в статистику.
    Отметка, поставленная позже (в том числе задним числом), видна как «поздно», но пропуск не отменяет.
@@ -151,7 +151,7 @@ function dayStatus(day) {
     return (rec.status === "done" || restDone > 0) ? "done" : "";
   }
   var s = itemStats(day);
-  if (!s.checked) return s.closed ? "missed" : "";
+  if (!s.checked) return (s.closed && s.counted) ? "missed" : "";
   if (s.checked === s.total && s.done === s.total) return "done";
   return "partial";
 }
