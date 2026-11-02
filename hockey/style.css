@@ -113,6 +113,7 @@ label.fld span{display:block;font-size:12.5px;color:var(--ink-soft);margin-botto
 .cell.done{box-shadow:inset 0 0 0 2px var(--ok)}
 .cell.partial{box-shadow:inset 0 0 0 2px var(--warn)}
 .cell.skipped{box-shadow:inset 0 0 0 2px var(--bad);color:var(--bad)}
+.cell.missed{box-shadow:inset 0 0 0 2px rgba(226,80,107,.42);color:#b07c8a}
 .cell.sick{background:#ffe6ea;color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
 .cell.today{outline:3px solid rgba(255,92,138,.45);outline-offset:1px}
 .cell .mk{position:absolute;top:2px;right:4px;font-size:10px}
