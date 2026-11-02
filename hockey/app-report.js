@@ -188,6 +188,7 @@ function renderReport() {
       h += '<div class="sep"></div><h3>По неделям</h3><div class="kv">';
       for (var wi = 0; wi < wrs.length; wi++) {
         var w2 = wrs[wi];
+        if (!w2.plan) continue;
         var wv = w2.due ? w2.doneDue + " из " + w2.due + " (" + w2.pct + "%)" : "срок ещё не вышел";
         h += '<span>Неделя ' + w2.w + '</span><b>' + wv + (w2.missed ? " · пропущено " + w2.missed : "") + '</b>';
       }
