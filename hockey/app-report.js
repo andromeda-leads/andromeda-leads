@@ -54,8 +54,13 @@ function renderTests() {
   el.innerHTML = h;
 }
 
-/* ---------- инструкция к тесту ---------- */
+/* ---------- инструкция к тесту и к упражнению ---------- */
+function exGuideFor(id) {
+  return (typeof EX_GUIDES !== "undefined" && EX_GUIDES[id]) ? EX_GUIDES[id] : null;
+}
 function guideFor(id) {
+  var ex = exGuideFor(id);
+  if (ex) return ex;
   return (typeof TEST_GUIDES !== "undefined" && TEST_GUIDES[id]) ? TEST_GUIDES[id] : null;
 }
 function closeGuide() { var s = $("#guide-sheet"); if (s && s.parentNode) s.parentNode.removeChild(s); }
@@ -69,18 +74,19 @@ function showGuide(id) {
     for (var i = 0; i < g.steps.length; i++) body += '<li>' + esc(g.steps[i]) + '</li>';
     body += '</ol>';
   }
-  if (g.tries) body += '<div class="grow"><b>Попытки и отдых</b>' + esc(g.tries) + '</div>';
+  if (g.tries) body += '<div class="grow"><b>' + (exGuideFor(id) ? "Сколько и как отдыхать" : "Попытки и отдых") + '</b>' + esc(g.tries) + '</div>';
   if (g.errors && g.errors.length) {
     body += '<div class="gt">Частые ошибки</div><ul class="glist">';
     for (var j = 0; j < g.errors.length; j++) body += '<li>' + esc(g.errors[j]) + '</li>';
     body += '</ul>';
   }
+  if (g.level) body += '<div class="grow"><b>Проще и сложнее</b>' + esc(g.level) + '</div>';
   if (g.kit) body += '<div class="grow"><b>Что нужно</b>' + esc(g.kit) + '</div>';
   var wrap = document.createElement("div");
   wrap.className = "sheet";
   wrap.id = "guide-sheet";
   wrap.innerHTML = '<div class="sheet-card"><div class="sheet-head"><div><div class="tiny">' +
-    (id === "__howto" ? "тесты и замеры" : "техника выполнения теста") + '</div><div class="sheet-title">' + esc(g.title) + '</div></div>' +
+    (id === "__howto" ? "тесты и замеры" : (exGuideFor(id) ? "как делать упражнение" : "техника выполнения теста")) + '</div><div class="sheet-title">' + esc(g.title) + '</div></div>' +
     '<button class="sheet-x" data-guide-close="1" aria-label="Закрыть">×</button></div>' +
     '<div class="sheet-body">' + body + '</div></div>';
   document.body.appendChild(wrap);
@@ -178,7 +184,7 @@ function renderReport() {
 function renderInfo() {
   var el = $("#s-info");
   var s = STATE.settings;
-  var h = '<div class="card"><h2>⛸️ Программа 1. Мощность и скорость</h2><div class="muted">34 недели, командный лёд 2 раза в неделю (четверг и пятница), мощностных сессий не больше двух в неделю, инвентарь - резинки, гантели, при прогрессировании пояс или жилет 3-4,5 кг. Между двумя мощностными сессиями минимум 48 часов.</div>' +
+  var h = '<div class="card"><h2>⛸️ Программа 1. Мощность и скорость</h2><div class="muted">34 недели, командный лёд 2 раза в неделю (четверг и пятница), мощностных сессий не больше двух в неделю, инвентарь - две гантели по 2 кг, резинки разной жёсткости, опора 40-50 см; нагрузка растёт за счёт односторонних движений, темпа и пауз. Между двумя мощностными сессиями минимум 48 часов.</div>' +
     '<div class="sep"></div><div class="kv"><span>Старт программы</span><b>' + esc(fmtDate(PLAN.start)) + '</b>' +
     '<span>Финиш</span><b>' + esc(fmtDate(PLAN.days[PLAN.days.length - 1].date)) + '</b>' +
     '<span>Ледовых тренировок</span><b>' + PLAN.days.filter(function (d) { return d.kind === "ice"; }).length + '</b>' +
