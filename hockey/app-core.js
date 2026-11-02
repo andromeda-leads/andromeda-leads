@@ -95,11 +95,13 @@ function kindIcon(k) {
   return { ice: "⛸️", power_a: "💪", power_b: "⚡", home: "🏠", recovery: "🌿", rest: "😴", test: "📏" }[k] || "•";
 }
 function taskId(day, bi, ii) { return day.date + "|" + bi + "|" + ii; }
+function itemText(it) { return typeof it === "string" ? it : ((it && it.t) || ""); }
+function itemEx(it) { return (it && typeof it === "object" && it.ex) ? it.ex : ""; }
 function dayTasks(day) {
   var out = [];
   for (var b = 0; b < day.blocks.length; b++) {
     var bl = day.blocks[b];
-    for (var i = 0; i < bl.items.length; i++) out.push({ id: taskId(day, b, i), block: bl.t, text: bl.items[i] });
+    for (var i = 0; i < bl.items.length; i++) out.push({ id: taskId(day, b, i), block: bl.t, text: itemText(bl.items[i]), ex: itemEx(bl.items[i]) });
   }
   return out;
 }
