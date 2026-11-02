@@ -63,10 +63,28 @@ function guideFor(id) {
   if (ex) return ex;
   return (typeof TEST_GUIDES !== "undefined" && TEST_GUIDES[id]) ? TEST_GUIDES[id] : null;
 }
+/* Файл инструкций мог не загрузиться (плохая сеть, обновление сайта).
+   В этом случае догружаем его один раз и повторяем поиск. */
+var _guideRetry = {};
+function reloadGuideFile(file, done) {
+  if (_guideRetry[file]) { toast("Инструкция не загрузилась. Потяни экран вниз, чтобы обновить страницу"); return; }
+  _guideRetry[file] = true;
+  var s = document.createElement("script");
+  s.src = "./" + file + "?t=" + Date.now();
+  s.onload = function () { _guideRetry[file] = false; if (done) done(); };
+  s.onerror = function () { _guideRetry[file] = false; toast("Нет связи. Инструкция загрузится, когда появится интернет"); };
+  (document.head || document.body).appendChild(s);
+}
 function closeGuide() { var s = $("#guide-sheet"); if (s && s.parentNode) s.parentNode.removeChild(s); }
 function showGuide(id) {
   var g = guideFor(id);
-  if (!g) { toast("Инструкция не найдена"); return; }
+  if (!g) {
+    var missing = (typeof EX_GUIDES === "undefined") ? "exercise-guides.js" :
+                  ((typeof TEST_GUIDES === "undefined") ? "test-guides.js" : null);
+    if (missing) { reloadGuideFile(missing, function () { showGuide(id); }); return; }
+    toast("Инструкция не найдена");
+    return;
+  }
   closeGuide();
   var body = '<div class="gtext">' + esc(g.what) + '</div>';
   if (g.steps && g.steps.length) {
