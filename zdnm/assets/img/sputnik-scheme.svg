@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Схема обвязки АГЗУ Спутник">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B2231"/>
+      <stop offset="1" stop-color="#050D14"/>
+    </linearGradient>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="rgba(113,202,239,0.10)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#g)"/>
+
+  <g stroke="#71CAEF" stroke-opacity="0.55" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M70 470 H730"/>
+    <path d="M120 470 V330 H680 V470"/>
+  </g>
+  <g stroke="#E67818" stroke-width="2.2" fill="none" stroke-dasharray="4 12" stroke-linecap="round">
+    <path d="M70 470 H730"/>
+    <path d="M120 470 V330 H680 V470"/>
+  </g>
+
+  <g fill="#0B2231" stroke="#E67818" stroke-width="2">
+    <circle cx="120" cy="470" r="13"/>
+    <circle cx="280" cy="330" r="10"/>
+    <circle cx="400" cy="330" r="10"/>
+    <circle cx="520" cy="330" r="10"/>
+    <circle cx="680" cy="470" r="13"/>
+  </g>
+  <g fill="#0B2231" stroke="#71CAEF" stroke-opacity="0.75" stroke-width="2">
+    <rect x="180" y="290" width="120" height="80" rx="8"/>
+    <rect x="470" y="200" width="150" height="70" rx="8"/>
+  </g>
+
+  <g font-family="JetBrains Mono, ui-monospace, monospace" fill="#8CA3B3" font-size="13" letter-spacing="1.5">
+    <text x="180" y="322" fill="#DDE7EF" font-size="14">ПСМ-40</text>
+    <text x="180" y="344">переключатель скважин</text>
+    <text x="470" y="228" fill="#DDE7EF" font-size="14">ТОР-Т</text>
+    <text x="470" y="250">счётчик жидкости</text>
+    <text x="256" y="404" text-anchor="middle" fill="#E67818">РР-40</text>
+    <text x="400" y="522" text-anchor="middle" fill="#E67818">ГП-40</text>
+    <text x="70" y="540" fill="#5C7484" font-size="11">линия закачки</text>
+    <text x="730" y="540" text-anchor="end" fill="#5C7484" font-size="11">выход на коллектор</text>
+  </g>
+
+  <g stroke="#E67818" stroke-width="1.4" stroke-opacity="0.9">
+    <path d="M256 392 V430" stroke-dasharray="0"/>
+  </g>
+  <path d="M256 430 h-4 l4 8 l4 -8 z" fill="#E67818"/>
+
+  <g font-family="JetBrains Mono, ui-monospace, monospace" fill="#71CAEF" font-size="11" letter-spacing="2">
+    <text x="40" y="60">СХЕМА ОБВЯЗКИ · АГЗУ СПУТНИК</text>
+  </g>
+  <g stroke="#71CAEF" stroke-opacity="0.35">
+    <path d="M40 72 H300"/>
+  </g>
+</svg>

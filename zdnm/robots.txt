@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://andromeda-leads.github.io/andromeda-leads/zdnm/sitemap.xml
