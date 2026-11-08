@@ -57,6 +57,29 @@ main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 /* список песен */
 .list { padding: 10px 12px calc(24px + env(safe-area-inset-bottom)); }
 
+/* поиск */
+.searchbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px 2px;
+  position: sticky; top: 0; z-index: 3;
+  background: var(--bg);
+}
+.searchbar .ico { font-size: 13px; color: var(--dim); }
+.searchbar input {
+  flex: 1; min-width: 0;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; font-size: 15px; font-family: inherit;
+  -webkit-appearance: none; appearance: none;
+}
+.searchbar input::placeholder { color: #6d6357; }
+.searchbar input::-webkit-search-cancel-button { display: none; }
+.searchbar .clr {
+  width: 30px; height: 30px; border-radius: 50%; padding: 0;
+  border: 1px solid var(--line); background: var(--paper);
+  color: var(--dim); font-size: 16px; display: grid; place-items: center;
+}
+
 .list .hint { color: var(--dim); font-size: 12px; padding: 6px 4px 12px; }
 
 .song {
