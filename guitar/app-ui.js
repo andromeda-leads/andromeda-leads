@@ -21,7 +21,38 @@
     return "";
   }
 
-  /* ---------- список ---------- */
+  /* ---------- список и поиск ---------- */
+
+  function normQ(s) {
+    return String(s || "").toLowerCase().replace(/ё/g, "е").replace(/[^а-яa-z0-9]+/g, " ").trim();
+  }
+
+  function normFlat(s) {
+    return normQ(s).replace(/\s+/g, "");
+  }
+
+  function findSongs(query) {
+    var q = normQ(query);
+    if (!q) return SONGS.slice();
+    var flat = normFlat(query);
+    var hits = [];
+    SONGS.forEach(function (s, i) {
+      var t = normQ(s.title), a = normQ(s.artist);
+      var hay = t + " " + a;
+      var pos = hay.indexOf(q);
+      var flatPos = (normFlat(s.title) + normFlat(s.artist)).indexOf(flat);
+      if (pos < 0 && flatPos < 0) return;
+      var rank = 5;
+      if (t.indexOf(q) === 0) rank = 0;
+      else if (t.indexOf(q) > 0) rank = 1;
+      else if (a.indexOf(q) === 0) rank = 2;
+      else if (a.indexOf(q) > 0) rank = 3;
+      else rank = 4;
+      hits.push({ s: s, rank: rank, i: i });
+    });
+    hits.sort(function (x, y) { return x.rank - y.rank || x.i - y.i; });
+    return hits.map(function (h) { return h.s; });
+  }
 
   function renderList() {
     App.mode = "list";
@@ -30,33 +61,73 @@
     stopScroll();
     elTop.style.display = "flex";
     elMain.style.overflowY = "auto";
-    elSub.textContent = SONGS.length + " песен · аккорды, транспонирование, режим «учу»";
-    var html = '<div class="hint">Нажми на песню. Внутри: «Играю» - текст сам едет, «Учу» - по блокам.</div>';
+    elMain.innerHTML = '<div class="searchbar">' +
+      '<span class="ico">🔍</span>' +
+      '<input id="q" type="search" inputmode="search" autocomplete="off" autocorrect="off" ' +
+      'spellcheck="false" placeholder="Песня, группа или исполнитель" value="' + esc(App.query) + '">' +
+      '<button id="qClear" class="clr"' + (App.query ? "" : ' style="display:none"') + '>×</button>' +
+      '</div><div class="list" id="list"></div>';
+    elList = document.getElementById("list");
+    renderRows();
+    var q = document.getElementById("q");
+    q.addEventListener("input", function () {
+      App.query = q.value;
+      var clr = document.getElementById("qClear");
+      if (clr) clr.style.display = App.query ? "grid" : "none";
+      renderRows();
+    });
+    q.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") q.blur();
+    });
+    document.getElementById("qClear").addEventListener("click", function () {
+      App.query = "";
+      q.value = "";
+      this.style.display = "none";
+      renderRows();
+      q.focus();
+    });
+  }
+
+  function renderRows() {
+    var query = (App.query || "").replace(/^\s+|\s+$/g, "");
+    var found = findSongs(query);
+    elSub.textContent = query
+      ? "найдено " + found.length + " из " + SONGS.length
+      : SONGS.length + " песен · аккорды, транспонирование, режим «учу»";
+    var html = "";
     var left = Requests.left();
-    if (typeof GUITAR_BOT !== "undefined" && GUITAR_BOT) {
-      html += '<div class="song" id="wantBtn" style="border-top-color:#6ec08a">' +
+    var hist = Requests.all();
+    var wantRow = typeof GUITAR_BOT !== "undefined" && GUITAR_BOT
+      ? '<div class="song" id="wantBtn" style="border-top-color:#6ec08a">' +
         '<div class="txt"><div class="t">Хочу песню</div>' +
         '<div class="a">' + (left > 0 ? "напиши исполнителя и название, сегодня можно ещё " + left : "на сегодня три заявки уже есть, продолжим завтра") + '</div></div>' +
-        '<span class="m">+</span></div>';
+        '<span class="m">+</span></div>'
+      : "";
+    if (!query) {
+      html += '<div class="hint">Нажми на песню. Внутри: «Играю» - текст сам едет, «Учу» - по блокам. Строка сверху ищет по названию и исполнителю.</div>';
+      html += wantRow;
+      if (hist.length) {
+        html += '<div class="song" id="histBtn" style="border-top-color:#a89a88">' +
+          '<div class="txt"><div class="t">Мои заявки</div>' +
+          '<div class="a">' + hist.length + ' всего, из них добавлено: ' +
+          hist.filter(function (r) { return Requests.isAdded(r); }).length + '</div></div>' +
+          '<span class="m">›</span></div>';
+      }
+      if (App.installEvent) {
+        html += '<div class="song" id="installBtn" style="border-top-color:#6ec08a"><div class="txt"><div class="t">Поставить на телефон</div>' +
+          '<div class="a">иконка на экране, работает без интернета</div></div><span class="m">↓</span></div>';
+      }
     }
-    var hist = Requests.all();
-    if (hist.length) {
-      html += '<div class="song" id="histBtn" style="border-top-color:#a89a88">' +
-        '<div class="txt"><div class="t">Мои заявки</div>' +
-        '<div class="a">' + hist.length + ' всего, из них добавлено: ' +
-        hist.filter(function (r) { return Requests.isAdded(r); }).length + '</div></div>' +
-        '<span class="m">›</span></div>';
-    }
-    if (App.installEvent) {
-      html += '<div class="song" id="installBtn" style="border-top-color:#6ec08a"><div class="txt"><div class="t">Поставить на телефон</div>' +
-        '<div class="a">иконка на экране, работает без интернета</div></div><span class="m">↓</span></div>';
-    }
-    SONGS.forEach(function (s) {
+    found.forEach(function (s) {
       var n = Store.hasNote(s.id) ? ' <span class="badge">заметка</span>' : "";
       html += '<div class="song" data-id="' + s.id + '">' +
         '<div class="txt"><div class="t">' + esc(s.title) + (s.fresh ? '<span class="badge">новая</span>' : "") + n + '</div>' +
         '<div class="a">' + esc(s.artist) + '</div></div>' + markIcon(s.id) + '</div>';
     });
+    if (query && !found.length) {
+      html += '<div class="hint">Ничего не нашлось. Проверь написание или отправь заявку - «Хочу песню».</div>';
+    }
+    if (query) html += wantRow;
     elList.innerHTML = html;
     var ib = document.getElementById("installBtn");
     if (ib) ib.addEventListener("click", function () {
@@ -136,8 +207,9 @@
     document.getElementById("hClose").addEventListener("click", closeSheet);
   }
 
-  elList.addEventListener("click", function (e) {
-    var row = e.target.closest(".song");
+  elMain.addEventListener("click", function (e) {
+    if (App.mode !== "list") return;
+    var row = e.target.closest(".song[data-id]");
     if (row) openSong(row.getAttribute("data-id"));
   });
 
@@ -155,12 +227,12 @@
     return semi ? (semi > 0 ? "+" + semi : String(semi)) : "0";
   }
 
-  function openSong(id) {
+  function openSong(id, fromHistory) {
     var s = SONGS.filter(function (x) { return x.id === id; })[0];
     if (!s) return;
     App.song = s;
     App.state = Store.song(id);
-    if (history.pushState) history.pushState({ song: id }, "", "#" + id);
+    if (!fromHistory && history.pushState) history.pushState({ song: id }, "", "#" + id);
     renderSong();
   }
 
@@ -348,11 +420,26 @@
   }
 
   function backToList() {
-    if (history.replaceState) history.replaceState({}, "", location.pathname);
+    if (history.state && history.state.song) {
+      var done = false;
+      var onPop = function () { done = true; };
+      window.addEventListener("popstate", onPop);
+      history.back();
+      setTimeout(function () {
+        window.removeEventListener("popstate", onPop);
+        if (done || App.mode === "list") return;
+        if (history.replaceState) history.replaceState({}, "", location.pathname + location.search);
+        renderList();
+      }, 420);
+      return;
+    }
+    if (history.replaceState) history.replaceState({}, "", location.pathname + location.search);
     renderList();
   }
 
-  window.addEventListener("popstate", function () {
+  window.addEventListener("popstate", function (e) {
+    var st = e.state;
+    if (st && st.song) { openSong(st.song, true); return; }
     if (App.mode !== "list") renderList();
   });
 
