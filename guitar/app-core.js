@@ -200,7 +200,7 @@ var Store = {
 };
 
 var App = {
-  song: null, state: null, mode: "list", playing: false, wakeLock: null,
+  song: null, state: null, mode: "list", playing: false, wakeLock: null, query: "",
   show: function (msg) {
     var t = document.getElementById("toast");
     if (!t) return;
