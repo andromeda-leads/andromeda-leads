@@ -101,7 +101,7 @@
       ctx.clearRect(0, 0, W, H);
 
       // опорные засечки по краю
-      ctx.strokeStyle = 'rgba(113,202,239,0.13)';
+      ctx.strokeStyle = 'rgba(30,201,232,0.13)';
       ctx.lineWidth = 1;
       var step = 56;
       for (var x = 0; x < W; x += step) {
@@ -117,17 +117,17 @@
         ctx.moveTo(p.c[0].x, p.c[0].y);
         ctx.bezierCurveTo(p.c[1].x, p.c[1].y, p.c[2].x, p.c[2].y, p.c[3].x, p.c[3].y);
         ctx.lineWidth = p.w + 5;
-        ctx.strokeStyle = 'rgba(11,34,49,0.55)';
+        ctx.strokeStyle = 'rgba(19,19,25,0.55)';
         ctx.stroke();
         ctx.lineWidth = p.w;
-        ctx.strokeStyle = 'rgba(113,202,239,0.30)';
+        ctx.strokeStyle = 'rgba(30,201,232,0.30)';
         ctx.stroke();
         if (!reduced) {
           ctx.save();
           ctx.setLineDash([3, 16]);
           ctx.lineDashOffset = -tick * 0.55;
           ctx.lineWidth = p.w;
-          ctx.strokeStyle = 'rgba(230,120,24,0.55)';
+          ctx.strokeStyle = 'rgba(255,133,98,0.55)';
           ctx.stroke();
           ctx.restore();
         }
@@ -138,14 +138,14 @@
         var pulse = reduced ? 0 : (Math.sin(tick / 34 + i) + 1) / 2;
         ctx.beginPath();
         ctx.arc(n.p.x, n.p.y, n.r + 9 + pulse * 7, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(113,202,239,' + (0.16 - pulse * 0.09) + ')';
+        ctx.strokeStyle = 'rgba(30,201,232,' + (0.16 - pulse * 0.09) + ')';
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.beginPath();
         ctx.arc(n.p.x, n.p.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#0B2231';
+        ctx.fillStyle = '#121218';
         ctx.fill();
-        ctx.strokeStyle = 'rgba(230,120,24,0.9)';
+        ctx.strokeStyle = 'rgba(255,133,98,0.9)';
         ctx.lineWidth = 1.4;
         ctx.stroke();
       });
@@ -154,11 +154,11 @@
       dots.forEach(function (d) {
         var pt = bez(paths[d.path], d.t);
         var grd = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 9);
-        grd.addColorStop(0, 'rgba(255,170,80,0.95)');
-        grd.addColorStop(1, 'rgba(230,120,24,0)');
+        grd.addColorStop(0, 'rgba(255,169,143,0.95)');
+        grd.addColorStop(1, 'rgba(255,133,98,0)');
         ctx.fillStyle = grd;
         ctx.beginPath(); ctx.arc(pt.x, pt.y, 9, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#FFC78A';
+        ctx.fillStyle = '#FFB3A0';
         ctx.beginPath(); ctx.arc(pt.x, pt.y, 2.1, 0, Math.PI * 2); ctx.fill();
       });
     }
