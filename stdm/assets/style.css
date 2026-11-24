@@ -304,14 +304,14 @@ h1 em::after {
   margin-bottom: 10px;
 }
 .stat b i { font-style: normal; color: var(--fu); }
-.stat span {
+.stat > span {
   font: 500 11px/1.4 "JetBrains Mono", monospace;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--muted);
   display: block;
 }
-.stat em { display: block; color: #6F6F7D; font-size: 14px; font-style: normal; margin-top: 8px; }
+.stat > em { display: block; color: #6F6F7D; font-size: 14px; font-style: normal; margin-top: 8px; }
 
 /* ---------- услуги ---------- */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
