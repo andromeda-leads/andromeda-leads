@@ -570,8 +570,10 @@ h1 em::after {
 
 /* ---------- страницы-внутренние ---------- */
 .pg-top { padding: 62px 0 40px; }
+.pg-top .ptop { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+.pg-top .ptop > div { max-width: 760px; }
 .pg-top h1 { font-size: clamp(30px, 4.4vw, 52px); margin-bottom: 18px; }
-.pg-top p { color: var(--muted); max-width: 620px; margin: 0; font-size: 18px; }
+.pg-top p { color: var(--muted); margin: 0; font-size: 18px; }
 .crumb {
   font: 500 10.5px/1 "JetBrains Mono", monospace;
   letter-spacing: .2em;
@@ -692,6 +694,8 @@ h1 em::after {
   .ftr-in { grid-template-columns: 1fr; gap: 28px; }
   .cta-box { padding: 26px 20px; }
   .lb { padding: 16px; }
+  .pg-top .ptop { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .pg-top .ptop .btn { width: 100%; justify-content: center; }
   .ticker { margin-top: 44px; }
   .ticker-in { gap: 28px; }
   .ticker-in span { gap: 28px; font-size: 11px; }
