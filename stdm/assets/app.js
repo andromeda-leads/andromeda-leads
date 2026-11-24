@@ -3,6 +3,8 @@
   'use strict';
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // ?flat=1 - служебный режим: все блоки сразу видимы (снимок страницы целиком)
+  if (/[?&]flat=1/.test(location.search)) reduce = true;
 
   /* ---------- прогресс чтения + фон шапки ---------- */
   var prog = document.getElementById('prog');
