@@ -296,7 +296,9 @@ h1 em::after {
 .stat:last-child { border-right: 0; padding-right: 0; }
 .stat b {
   display: block;
-  font: 700 clamp(32px, 4vw, 46px)/1 Inter, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1;
   letter-spacing: -.03em;
   color: #fff;
   margin-bottom: 10px;
