@@ -357,6 +357,22 @@ h1 em::after {
 }
 .card:hover .more { opacity: 1; gap: 12px; }
 
+/* седьмая карточка занимает весь ряд */
+.card.wide {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px 32px;
+  background: linear-gradient(100deg, rgba(230, 17, 126, .10), rgba(25, 25, 32, .5) 42%, rgba(25, 25, 32, .25));
+}
+.card.wide .n { margin: 0; flex: 0 0 auto; }
+.card.wide .ico { margin: 0; flex: 0 0 auto; }
+.card.wide .cbody { flex: 1 1 auto; }
+.card.wide h3 { margin: 0 0 6px; }
+.card.wide p { max-width: 640px; }
+.card.wide .more { margin: 0 0 0 auto; flex: 0 0 auto; }
+
 /* ---------- шаги ---------- */
 .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
 .steps::before {
@@ -691,6 +707,8 @@ h1 em::after {
   .sec { padding: 62px 0; }
   .sec-head { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 30px; }
   .cards, .ind, .prin, .gal { grid-template-columns: 1fr; }
+  .card.wide { flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; }
+  .card.wide .more { margin: 4px 0 0; }
   .steps { grid-template-columns: 1fr; }
   .step { padding: 34px 0 0 0; }
   .step::before { top: 4px; }
