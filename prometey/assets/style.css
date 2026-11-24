@@ -393,3 +393,10 @@ form.lead{background:var(--paper-2);border:1px solid var(--line);border-radius:1
 /* руководитель на графите */
 .patent .mono-l{padding-top:2px}
 @media (max-width:520px){.patent-num{font-size:22px}}
+@media (max-width:760px){
+  .wrap.patent{margin-left:16px;margin-right:16px;width:auto;padding:24px}
+  .wrap.patent .patent-num{font-size:21px}
+  .dprod-photo{padding:14px}
+  .cmp{min-width:640px;font-size:13.6px}
+  .cmp td,.cmp th{padding:11px 12px}
+}
