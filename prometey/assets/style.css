@@ -460,3 +460,11 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 h1,h2,h3,h4{overflow-wrap:break-word}
 p,li,td,th,span,b,em{overflow-wrap:break-word}
+/* ---------- ключевые члены команды ---------- */
+.people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.person{background:var(--paper-2);border:1px solid var(--line);border-top:2px solid var(--teal);border-radius:var(--radius);padding:24px}
+.person .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.person h3{margin:10px 0 0;font-size:19.5px;line-height:1.25}
+.person p{margin:12px 0 0;font-size:15px;color:var(--ink-2);line-height:1.55}
+.person .edu{margin-top:16px;padding-top:13px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);line-height:1.5}
+@media (max-width:1000px){.people-grid{grid-template-columns:1fr}}
