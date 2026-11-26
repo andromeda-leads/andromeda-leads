@@ -441,3 +441,20 @@ form.lead{background:var(--paper-2);border:1px solid var(--line);border-radius:1
   .hero-note{gap:18px}
   .hero-toprule{font-size:9.5px;letter-spacing:.16em}
 }
+
+/* ---------- защита от горизонтального сдвига на телефонах ---------- */
+html,body{max-width:100%;overflow-x:hidden}
+.tscroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius)}
+.tscroll>.spec-table{min-width:520px}
+.patent,.cta,.dev,.other,.dprod-in,.tin,.form-wrap,.team-grid,.cards,.prod-grid,.stack-grid,.why-grid,.contact-grid{min-width:0}
+@media (max-width:620px){
+  .tscroll>.spec-table{min-width:0}
+  .spec-table td,.spec-table th{white-space:normal}
+  .spec-table td:first-child{white-space:normal}
+  .dev{grid-template-columns:44px 1fr}
+  .dev .meta{grid-column:2;margin-top:6px}
+  .other{grid-template-columns:32px 1fr}
+  .other .meta{grid-column:2}
+  .patent .patent-num{font-size:20px;letter-spacing:-.01em;word-break:break-word}
+  .phead h1{font-size:clamp(24px,7vw,34px)}
+}
