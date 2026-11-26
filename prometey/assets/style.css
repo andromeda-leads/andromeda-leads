@@ -468,3 +468,46 @@ p,li,td,th,span,b,em{overflow-wrap:break-word}
 .person p{margin:12px 0 0;font-size:15px;color:var(--ink-2);line-height:1.55}
 .person .edu{margin-top:16px;padding-top:13px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);line-height:1.5}
 @media (max-width:1000px){.people-grid{grid-template-columns:1fr}}
+
+
+/* ---------- НИОКР: проблема, узлы, результат, рынок, план ---------- */
+.prob{display:grid;gap:0}
+.prow{display:grid;grid-template-columns:46px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+.prow .pidx{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--teal);padding-top:5px}
+.prow h3{margin:0;font-size:18px;line-height:1.3}
+.prow p{margin:7px 0 0;font-size:15.2px;color:var(--ink-2);line-height:1.6}
+.stack-grid.uzly{grid-template-columns:repeat(2,1fr)}
+.stack-grid.go2{grid-template-columns:repeat(2,1fr)}
+.stack-grid.uzly .scard p,.stack-grid.go2 .scard p{font-size:15px;line-height:1.6;color:var(--ink-2)}
+.sect-teal .dlist li b{color:#F2EDE1}
+.sect-teal .dlist.res-grid{gap:14px 28px}
+.sect-teal .dlist li{font-size:15px;line-height:1.55;color:rgba(242,237,225,.82)}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}
+.mkt>div{border-top:2px solid var(--teal);padding-top:14px}
+.mkt b{display:block;font-size:30px;letter-spacing:-.02em;line-height:1.1;font-weight:700}
+.mkt span{display:block;margin-top:8px;font-size:13.6px;color:var(--ink-2);line-height:1.5}
+.src{margin:16px 0 0;font-size:12.5px;color:var(--ink-3)}
+.steps.road{grid-template-columns:repeat(4,1fr)}
+.steps.road .step h3{font-size:15px}
+.steps.road .step p{font-size:14.2px}
+.cmp td b{font-weight:600;color:var(--ink)}
+@media (max-width:1000px){
+  .stack-grid.uzly,.stack-grid.go2{grid-template-columns:1fr}
+  .mkt{grid-template-columns:repeat(2,1fr)}
+  .steps.road{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:620px){
+  .mkt{grid-template-columns:1fr;gap:14px}
+  .mkt b{font-size:26px}
+  .prow{grid-template-columns:32px 1fr;gap:12px}
+  .prow h3{font-size:16.5px}
+  .steps.road{grid-template-columns:1fr}
+  .steps.road .step{border-top:1px solid var(--line-2);padding:18px 0}
+}
+
+/* ---------- НИОКР: цифры на главной ---------- */
+.mini3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:6px 0 28px}
+.mini3>div{border-top:2px solid var(--teal);padding-top:12px}
+.mini3 b{display:block;font-size:26px;letter-spacing:-.02em;line-height:1.15;font-weight:700}
+.mini3 span{display:block;margin-top:6px;font-size:13.4px;color:var(--ink-2);line-height:1.5}
+@media (max-width:900px){.mini3{grid-template-columns:1fr;gap:12px}}
