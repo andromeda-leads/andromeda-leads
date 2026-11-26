@@ -458,3 +458,5 @@ html,body{max-width:100%;overflow-x:hidden}
   .patent .patent-num{font-size:20px;letter-spacing:-.01em;word-break:break-word}
   .phead h1{font-size:clamp(24px,7vw,34px)}
 }
+h1,h2,h3,h4{overflow-wrap:break-word}
+p,li,td,th,span,b,em{overflow-wrap:break-word}
